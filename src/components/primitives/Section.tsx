@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { cx } from '@/lib/cx';
-import styles from './Section.module.css';
+import * as styles from './Section.module.css';
 
 export type SectionTone = 'canvas' | 'surface' | 'subtle' | 'dark' | 'darker';
 

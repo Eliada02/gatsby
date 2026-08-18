@@ -2,7 +2,7 @@ import { Link } from 'gatsby';
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import { cx } from '@/lib/cx';
 import { VisuallyHidden } from './VisuallyHidden';
-import styles from './Button.module.css';
+import * as styles from './Button.module.css';
 
 export type ButtonVariant =
   'primary' | 'accent' | 'secondary' | 'ghost' | 'inverse' | 'inverseOutline';

@@ -1,5 +1,5 @@
 import { Link } from 'gatsby';
-import styles from './Logo.module.css';
+import * as styles from './Logo.module.css';
 
 interface LogoProps {
   /** Light mark for use on the navy footer. */

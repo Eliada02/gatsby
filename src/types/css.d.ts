@@ -1,14 +1,17 @@
 /**
- * CSS Modules return an object of generated class names. Without this
- * declaration TypeScript cannot resolve the import at all.
+ * CSS Modules return an object of generated class names.
  *
- * The index signature is `string` rather than a generated union of the actual
- * class names: generating exact types needs an extra build tool, and the value
- * is small when component styles live beside the component that uses them.
+ * Declared with `export =` rather than a default export because Gatsby compiles
+ * CSS Modules differently for the browser and for SSR: the SSR pass uses
+ * css-loader's exportOnlyLocals mode, which emits named exports and no default.
+ * A default import therefore type-checks, works in the browser, and is
+ * undefined during static HTML generation.
+ *
+ * Consumers must use `import * as styles from './x.module.css'`.
  */
 declare module '*.module.css' {
   const classes: { readonly [key: string]: string };
-  export default classes;
+  export = classes;
 }
 
 /** Plain stylesheets are imported for their side effect only. */

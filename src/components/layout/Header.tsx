@@ -5,7 +5,7 @@ import { PRIMARY_NAV } from '@/lib/navigation';
 import { Logo } from './Logo';
 import { MobileMenuPanel, MobileMenuToggle } from './MobileNav';
 import { useMobileMenu } from './useMobileMenu';
-import styles from './Header.module.css';
+import * as styles from './Header.module.css';
 
 /**
  * Fixed site header.

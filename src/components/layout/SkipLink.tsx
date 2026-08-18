@@ -1,5 +1,5 @@
 import { MAIN_CONTENT_ID } from './constants';
-import styles from './SkipLink.module.css';
+import * as styles from './SkipLink.module.css';
 
 /**
  * First focusable element on every page.

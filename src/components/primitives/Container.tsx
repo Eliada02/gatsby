@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { cx } from '@/lib/cx';
-import styles from './Container.module.css';
+import * as styles from './Container.module.css';
 
 interface ContainerProps {
   children: ReactNode;
@@ -17,6 +17,11 @@ interface ContainerProps {
  * role would produce nested landmarks that screen reader users have to navigate
  * past.
  */
+const SIZE_CLASS = {
+  default: styles.sizeDefault,
+  narrow: styles.sizeNarrow,
+} as const;
+
 export function Container({ children, size = 'default', className }: ContainerProps) {
-  return <div className={cx(styles.container, styles[size], className)}>{children}</div>;
+  return <div className={cx(styles.container, SIZE_CLASS[size], className)}>{children}</div>;
 }

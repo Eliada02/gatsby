@@ -2,7 +2,7 @@ import { Link } from 'gatsby';
 import { ButtonLink } from '@/components/primitives/Button';
 import { PRIMARY_NAV } from '@/lib/navigation';
 import type { MobileMenu } from './useMobileMenu';
-import styles from './MobileNav.module.css';
+import * as styles from './MobileNav.module.css';
 
 /**
  * The control that opens the navigation panel.

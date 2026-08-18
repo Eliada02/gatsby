@@ -7,7 +7,7 @@ TypeScript. NovaHealth is a demonstration project: it exists to show how a
 content-driven healthcare site is engineered for accessibility, measurability,
 performance and maintainability, not to sell anything.
 
-> **Status: Phase 2 of 9 complete** — project foundation and content model.
+> **Status: Phase 3 of 9 complete** — foundation, content model, design system and layout.
 > Sections below marked _Planned_ describe work that is designed but not yet
 > built. Nothing in this README describes functionality that does not exist.
 
@@ -44,14 +44,15 @@ library, and each of those omissions is a decision recorded in
 
 ## Pages
 
-| Page            | Route              | Status  |
-| --------------- | ------------------ | ------- |
-| Home            | `/`                | Planned |
-| Our Science     | `/our-science`     | Planned |
-| Treatments      | `/treatments`      | Planned |
-| Resources       | `/resources`       | Planned |
-| Resource detail | `/resources/:slug` | Planned |
-| Contact         | `/contact`         | Planned |
+| Page               | Route                 | Status             |
+| ------------------ | --------------------- | ------------------ |
+| Home               | `/`                   | Shell built        |
+| Platform           | `/platform`           | Shell built        |
+| Patient Experience | `/patient-experience` | Shell built        |
+| Resources          | `/resources`          | Shell built        |
+| Resource detail    | `/resources/:slug`    | Planned (template) |
+| Security & Trust   | `/security`           | Shell built        |
+| About & Contact    | `/about`              | Shell built        |
 
 Privacy and accessibility commitments are implemented and documented rather than
 given standalone pages, which is a scoping decision, not an omission.

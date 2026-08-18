@@ -2,7 +2,7 @@ import { Link } from 'gatsby';
 import { Container } from '@/components/primitives/Container';
 import { FOOTER_NAV } from '@/lib/navigation';
 import { Logo } from './Logo';
-import styles from './Footer.module.css';
+import * as styles from './Footer.module.css';
 
 const CURRENT_YEAR = new Date().getFullYear();
 

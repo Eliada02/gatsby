@@ -9,26 +9,25 @@ import { Seo } from '@/components/seo/Seo';
  * placement and metadata are correct from the start so navigation and heading
  * order can be tested now rather than retrofitted.
  */
-const IndexPage = () => (
+const ResourcesPage = () => (
   <Layout>
-    <Section aria-labelledby="home-heading">
+    <Section aria-labelledby="resources-heading">
       <Container>
-        <h1 id="home-heading">Healthcare, designed around people.</h1>
+        <h1 id="resources-heading">Resource library</h1>
         <p>
-          NovaHealth turns every step of the care journey into one connected digital experience,
-          from finding the right clinician to recovery check-ins.
+          Clinical research, patient guides, scientific publications and educational material,
+          searchable by topic and format.
         </p>
       </Container>
     </Section>
   </Layout>
 );
 
-export default IndexPage;
+export default ResourcesPage;
 
 export const Head: HeadFC = () => (
   <Seo
-    title="NovaHealth - Healthcare, designed around people"
-    description="A connected digital health experience: smart scheduling, unified records and care team messaging, built around the person receiving care."
-    appendSiteName={false}
+    title="Resources"
+    description="Search and filter clinical research, patient resources, scientific publications and medical education material."
   />
 );

@@ -3,7 +3,7 @@ import { MAIN_CONTENT_ID } from './constants';
 import { Footer } from './Footer';
 import { Header } from './Header';
 import { SkipLink } from './SkipLink';
-import styles from './Layout.module.css';
+import * as styles from './Layout.module.css';
 
 export { MAIN_CONTENT_ID };
 

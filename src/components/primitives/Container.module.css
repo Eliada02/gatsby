@@ -8,11 +8,17 @@
   padding-inline: var(--nh-container-pad);
 }
 
-.default {
+/*
+ * Named sizeDefault rather than default: css-loader emits one JS export per
+ * class, and `export var default` is a syntax error because default is a
+ * reserved word. The build fails with a webpack parse error that points at the
+ * generated file rather than at this one.
+ */
+.sizeDefault {
   max-width: var(--nh-container-max);
 }
 
 /* Prose measure: long-form copy stays around 65-75 characters per line. */
-.narrow {
+.sizeNarrow {
   max-width: var(--nh-container-narrow);
 }
