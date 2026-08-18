@@ -26,6 +26,12 @@ const config: GatsbyConfig = {
     },
   },
 
+  // Gatsby defaults to the classic JSX runtime (React.createElement), which
+  // requires a React import in every file. tsconfig and the Jest transform both
+  // use the automatic runtime; without this line the three disagree and SSR
+  // fails with "React is not defined" while type-checking and tests pass.
+  jsxRuntime: 'automatic',
+
   graphqlTypegen: true,
 
   plugins: [

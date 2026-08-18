@@ -30,5 +30,11 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["./src/**/*", "./gatsby-*.ts"]
+  "include": [
+    "./src/**/*",
+    "./gatsby-*.ts",
+    "./__mocks__/**/*",
+    "./jest.setup.ts",
+    "./jest.loadershim.ts"
+  ]
 }

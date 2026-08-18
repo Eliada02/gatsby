@@ -65,6 +65,20 @@ export default tseslint.config(
     },
   },
 
+  {
+    // Build tooling that must stay CommonJS (jest.config.js, jest.preprocess.js).
+    // Declaring the few Node globals used avoids adding the `globals` package.
+    files: ['**/*.js'],
+    languageOptions: {
+      globals: { module: 'writable', require: 'readonly', __dirname: 'readonly' },
+    },
+    rules: {
+      // These files must remain CommonJS: jest loads them before any ESM
+      // transform is available.
+      '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
+
   // Must be last: disables stylistic rules that would conflict with Prettier.
   prettierConfig,
 );
