@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Gatsby build artefacts
+.cache/
+public/
+
+# Test output
+coverage/
+
+# Environment - never commit secrets. Committed example lives in .env.example
+.env
+.env.*
+!.env.example
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Netlify
+.netlify/

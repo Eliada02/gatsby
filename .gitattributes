@@ -1,0 +1,15 @@
+# Normalise line endings. Development happens on Windows, CI runs on Linux;
+# without this, checkouts differ and diffs fill with phantom whitespace changes.
+* text=auto eol=lf
+
+# Binary assets must never be line-ending converted.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
