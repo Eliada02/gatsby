@@ -1,0 +1,32 @@
+[
+  {
+    "id": "discover",
+    "order": 1,
+    "title": "Discover and match",
+    "description": "Clinician matching by specialty, location and confirmed cover, so the first appointment is the right one."
+  },
+  {
+    "id": "booking",
+    "order": 2,
+    "title": "Book in one step",
+    "description": "Live availability drawn from the clinical calendar, with no double booking and an instant confirmation."
+  },
+  {
+    "id": "intake",
+    "order": 3,
+    "title": "Digital intake",
+    "description": "Pre-visit questions that adapt to the answers given, completed once and shared with the whole care team."
+  },
+  {
+    "id": "consultation",
+    "order": 4,
+    "title": "Consultation",
+    "description": "In person or remote, with an encrypted browser-based video option that needs no application install."
+  },
+  {
+    "id": "recovery",
+    "order": 5,
+    "title": "Continuous recovery",
+    "description": "Prescriptions, follow-up check-ins and direct messaging, so care continues after the appointment ends."
+  }
+]

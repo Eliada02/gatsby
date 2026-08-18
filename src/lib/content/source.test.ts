@@ -8,8 +8,12 @@ import {
   authors,
   getAuthorsByIds,
   getResourceBySlug,
+  homeContent,
+  journeyStages,
+  platformCapabilities,
   researchPrograms,
   resources,
+  securityPractices,
   treatments,
 } from './source';
 
@@ -102,6 +106,55 @@ describe('content integrity', () => {
     it('has unique slugs within each collection', () => {
       expect(new Set(treatments.map((t) => t.slug)).size).toBe(treatments.length);
       expect(new Set(researchPrograms.map((p) => p.slug)).size).toBe(researchPrograms.length);
+    });
+  });
+
+  describe('site content', () => {
+    it('numbers the journey stages consecutively from one', () => {
+      // The visible stage numbers come from this field. A gap or a duplicate
+      // would render as "Stage 04" twice with no compile-time complaint.
+      const orders = journeyStages.map((stage) => stage.order);
+
+      expect(orders).toEqual(journeyStages.map((_stage, index) => index + 1));
+    });
+
+    it('gives every collection unique ids', () => {
+      for (const collection of [journeyStages, platformCapabilities, securityPractices]) {
+        expect(new Set(collection.map((item) => item.id)).size).toBe(collection.length);
+      }
+    });
+
+    it('uses only known accent values for platform capabilities', () => {
+      for (const capability of platformCapabilities) {
+        expect(['sky', 'emerald', 'teal']).toContain(capability.accent);
+      }
+    });
+
+    it('claims no certifications in the security practices', () => {
+      // The design reference presented HIPAA, SOC 2 and "zero-knowledge" as
+      // badges. For a fictional company those are false claims of audited
+      // status, so this asserts they cannot reappear through a content edit.
+      const forbidden = /hipaa|soc\s*2|iso\s*27001|certified|compliant|accredited/i;
+
+      for (const practice of securityPractices) {
+        expect(practice.title + ' ' + practice.description).not.toMatch(forbidden);
+      }
+    });
+
+    it('labels the illustrative figures on the home page as illustrative', () => {
+      // Hero metrics and the impact model must never read as measured results.
+      expect(homeContent.hero.metricsNote).toMatch(/illustrative/i);
+      expect(homeContent.impact.disclaimer).toMatch(/illustrative/i);
+      expect(homeContent.trust.disclaimer).toMatch(/fictional/i);
+      expect(homeContent.portal.caption).toMatch(/demo data/i);
+    });
+
+    it('names no real organisation in the credibility band', () => {
+      const realOrganisations = /stanford|mayo|sinai|cleveland|kaiser|nhs|epic|cerner/i;
+
+      for (const organisation of homeContent.trust.organisations) {
+        expect(organisation.name).not.toMatch(realOrganisations);
+      }
     });
   });
 });

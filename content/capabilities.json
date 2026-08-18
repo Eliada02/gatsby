@@ -1,0 +1,23 @@
+[
+  {
+    "id": "portal",
+    "title": "Patient portal",
+    "description": "One place for appointments, results over time, symptom notes and direct messages to the care team.",
+    "note": "Responsive across mobile and desktop",
+    "accent": "sky"
+  },
+  {
+    "id": "records",
+    "title": "Standards-based records",
+    "description": "Record exchange built on HL7 and FHIR R4, so charts stay consistent across the systems a health network already runs.",
+    "note": "FHIR R4 ready by design",
+    "accent": "emerald"
+  },
+  {
+    "id": "documentation",
+    "title": "Assisted documentation",
+    "description": "Draft visit notes generated during a consultation, always reviewed and signed off by the clinician before they enter the record.",
+    "note": "Clinician reviews every draft",
+    "accent": "teal"
+  }
+]

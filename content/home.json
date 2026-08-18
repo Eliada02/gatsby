@@ -1,0 +1,127 @@
+{
+  "hero": {
+    "eyebrow": "Connected care, end to end",
+    "headingStart": "Healthcare, designed around ",
+    "headingAccent": "people.",
+    "summary": "NovaHealth turns every step of the care journey into one connected digital experience, from finding the right clinician to recovery check-ins, so people spend less time managing their care and more time receiving it.",
+    "primaryCta": {
+      "label": "Explore the platform",
+      "to": "/platform"
+    },
+    "secondaryCta": {
+      "label": "See how it works",
+      "to": "/patient-experience"
+    },
+    "metrics": [
+      {
+        "value": "3 min",
+        "label": "Typical booking journey"
+      },
+      {
+        "value": "1 record",
+        "label": "Shared across care teams"
+      },
+      {
+        "value": "24/7",
+        "label": "Care team messaging"
+      }
+    ],
+    "metricsNote": "Illustrative product targets for this demonstration, not measured results."
+  },
+  "portal": {
+    "caption": "Illustrative preview of the NovaHealth patient portal. All names, identifiers and clinical values shown are invented demo data.",
+    "patientName": "Sara",
+    "recordLine": "Record ID NH-84920 - Primary clinician: Dr Aris Thorne",
+    "coverage": "Standard cover",
+    "syncLabel": "Synced 2 minutes ago",
+    "appointment": {
+      "label": "Next visit",
+      "clinician": "Dr Aris Thorne",
+      "detail": "Cardiology - Tomorrow, 10:30",
+      "tags": ["Intake complete", "Room A-4"]
+    },
+    "vitals": {
+      "label": "Recent readings",
+      "status": "Within expected range",
+      "detail": "Resting heart rate 68 bpm - Blood pressure 118/78 mmHg",
+      "note": "Synced from a connected device"
+    },
+    "prescriptions": [
+      {
+        "id": "rx-1",
+        "name": "Example medication 10mg",
+        "detail": "One tablet daily - 3 repeats remaining",
+        "status": "Active"
+      },
+      {
+        "id": "rx-2",
+        "name": "Example medication 25mg",
+        "detail": "One tablet at night - 1 repeat remaining",
+        "status": "Active"
+      }
+    ]
+  },
+  "trust": {
+    "eyebrow": "Built for health systems of every size",
+    "heading": "One platform, many models of care",
+    "summary": "From single-site clinics to multi-region networks, NovaHealth is designed to fit existing clinical workflows rather than replace them.",
+    "organisations": [
+      {
+        "id": "meridian",
+        "name": "Meridian Health Alliance"
+      },
+      {
+        "id": "northlake",
+        "name": "Northlake Care Network"
+      },
+      {
+        "id": "cascadia",
+        "name": "Cascadia Health Partners"
+      },
+      {
+        "id": "brightpath",
+        "name": "Brightpath Medical Group"
+      }
+    ],
+    "disclaimer": "These organisations are fictional examples created for this demonstration. They are not customers, partners or endorsements."
+  },
+  "journey": {
+    "eyebrow": "The connected care journey",
+    "heading": "From first symptom to full recovery",
+    "summary": "No disconnected portals and no repeated paperwork. One care path, shared by everyone involved."
+  },
+  "platform": {
+    "eyebrow": "Platform architecture",
+    "heading": "The unified digital health workspace",
+    "summary": "Built for patients, clinicians and the administrators who keep a health system running."
+  },
+  "impact": {
+    "eyebrow": "Illustrative impact model",
+    "heading": "See how the model scales",
+    "summary": "Adjust the size of a clinical team to see how the illustrative model projects time returned to care.",
+    "sliderLabel": "Clinicians in the team",
+    "resultsLabel": "Projected annual effect",
+    "disclaimer": "This is a worked example using fixed illustrative rates, not a forecast, a quotation or a result measured from real deployments.",
+    "cta": {
+      "label": "Talk to us about your team",
+      "to": "/about#contact"
+    }
+  },
+  "security": {
+    "eyebrow": "Security and trust",
+    "heading": "Health data deserves a higher standard",
+    "summary": "Encryption, least-privilege access and auditability are treated as design constraints rather than features added later."
+  },
+  "finalCta": {
+    "heading": "Healthcare should feel simpler than this.",
+    "summary": "See how a connected care experience fits the way your teams already work.",
+    "primaryCta": {
+      "label": "Start a conversation",
+      "to": "/about#contact"
+    },
+    "secondaryCta": {
+      "label": "Explore the platform",
+      "to": "/platform"
+    }
+  }
+}

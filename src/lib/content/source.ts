@@ -1,7 +1,12 @@
 import type { Author, ResearchProgram, Resource, Treatment } from '@/types/content';
+import type { HomeContent, JourneyStage, PlatformCapability, SecurityPractice } from '@/types/site';
 import authorsJson from '../../../content/authors.json';
+import capabilitiesJson from '../../../content/capabilities.json';
+import homeJson from '../../../content/home.json';
+import journeyJson from '../../../content/journey.json';
 import researchJson from '../../../content/research.json';
 import resourcesJson from '../../../content/resources.json';
+import securityPracticesJson from '../../../content/security-practices.json';
 import treatmentsJson from '../../../content/treatments.json';
 
 /**
@@ -19,10 +24,26 @@ import treatmentsJson from '../../../content/treatments.json';
  * genuinely untrusted, and validation moves to runtime at that boundary.
  */
 
+/* ---- Editorial catalogue ---- */
+
 export const authors = authorsJson as readonly Author[];
 export const resources = resourcesJson as readonly Resource[];
 export const treatments = treatmentsJson as readonly Treatment[];
 export const researchPrograms = researchJson as readonly ResearchProgram[];
+
+/* ---- Site content ---- */
+
+/**
+ * Rendered in summary on the home page and in full on their own pages later.
+ * Sourced once so the two never disagree.
+ */
+export const journeyStages = journeyJson as readonly JourneyStage[];
+export const platformCapabilities = capabilitiesJson as readonly PlatformCapability[];
+export const securityPractices = securityPracticesJson as readonly SecurityPractice[];
+
+export const homeContent = homeJson as HomeContent;
+
+/* ---- Lookups ---- */
 
 export function getAuthorById(id: string): Author | undefined {
   return authors.find((author) => author.id === id);

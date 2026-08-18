@@ -1,0 +1,32 @@
+[
+  {
+    "id": "architecture",
+    "title": "Security-first architecture",
+    "description": "Threat modelling and data-flow review happen during design, not as a pre-launch checklist."
+  },
+  {
+    "id": "encryption",
+    "title": "Encrypted in transit and at rest",
+    "description": "Modern transport security on every connection, with stored records encrypted and keys managed separately from data."
+  },
+  {
+    "id": "access",
+    "title": "Role-based access",
+    "description": "Least-privilege access by clinical role, so people reach the records their work requires and no more."
+  },
+  {
+    "id": "audit",
+    "title": "Audit logging",
+    "description": "Every read and write against a patient record is logged, making access reviewable after the fact."
+  },
+  {
+    "id": "interoperability",
+    "title": "FHIR-ready interoperability",
+    "description": "Standards-based exchange rather than bespoke integrations, so data portability is a property of the design."
+  },
+  {
+    "id": "privacy",
+    "title": "Privacy-conscious by design",
+    "description": "Data minimisation and clear consent boundaries, with analytics that never carry identifiable health information."
+  }
+]
