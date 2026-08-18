@@ -33,6 +33,7 @@
   "include": [
     "./src/**/*",
     "./gatsby-*.ts",
+    "./gatsby-*.tsx",
     "./__mocks__/**/*",
     "./jest.setup.ts",
     "./jest.loadershim.ts"

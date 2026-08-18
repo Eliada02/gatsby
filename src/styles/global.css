@@ -1,0 +1,220 @@
+/**
+ * Global baseline: a modern reset, then base element styling driven entirely by
+ * tokens. Component-specific styling belongs in CSS Modules, not here — the only
+ * rules that earn a place in this file are ones that must apply to bare HTML.
+ */
+
+/* The webfont is imported from gatsby-browser.tsx: a JS import resolves the
+   package from node_modules reliably, whereas a bare specifier in a CSS
+   @import depends on css-loader resolver configuration. */
+@import './tokens.css';
+
+/* ============================================================
+   RESET
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*
+ * Margins are removed globally and reintroduced deliberately. Default margins
+ * collapse in ways that make vertical rhythm hard to reason about.
+ */
+* {
+  margin: 0;
+}
+
+html {
+  /*
+   * The header is fixed, so anchor targets would otherwise land underneath it.
+   * scroll-padding-top offsets every scroll-into-view, including keyboard focus
+   * and skip-link activation.
+   */
+  scroll-padding-top: calc(var(--nh-header-height) + var(--nh-space-4));
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/*
+ * Smooth scrolling is opt-in per user preference rather than global: it causes
+ * nausea for some users with vestibular disorders.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--nh-color-canvas);
+  color: var(--nh-color-text);
+  font-family: var(--nh-font-sans);
+  font-size: var(--nh-text-base);
+  line-height: var(--nh-leading-relaxed);
+  font-weight: var(--nh-weight-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background-color: var(--nh-color-selection-bg);
+  color: var(--nh-color-selection-text);
+}
+
+/* Media defaults: never overflow the container, never inherit odd baselines. */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Form controls do not inherit typography by default in any browser. */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/*
+ * overflow-wrap prevents long clinical terms and URLs from forcing horizontal
+ * page scroll on narrow viewports.
+ */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li {
+  overflow-wrap: break-word;
+}
+
+/* ============================================================
+   BASE TYPOGRAPHY
+   ============================================================ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--nh-weight-extrabold);
+  line-height: var(--nh-leading-tight);
+  letter-spacing: var(--nh-tracking-tight);
+  text-wrap: balance; /* progressive enhancement; ignored where unsupported */
+}
+
+h1 {
+  font-size: var(--nh-text-5xl);
+  letter-spacing: var(--nh-tracking-tighter);
+}
+h2 {
+  font-size: var(--nh-text-4xl);
+}
+h3 {
+  font-size: var(--nh-text-2xl);
+  line-height: var(--nh-leading-snug);
+}
+h4 {
+  font-size: var(--nh-text-xl);
+  line-height: var(--nh-leading-snug);
+  font-weight: var(--nh-weight-bold);
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--nh-color-accent-text);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--nh-color-accent-hover);
+}
+
+ul,
+ol {
+  padding-inline-start: var(--nh-space-5);
+}
+
+/* ============================================================
+   FOCUS
+   ============================================================ */
+
+/*
+ * :focus-visible rather than :focus, so a mouse click on a button does not leave
+ * a ring behind while keyboard users still get one. The outline is never removed
+ * without a replacement.
+ */
+:focus-visible {
+  outline: var(--nh-focus-width) solid var(--nh-color-focus);
+  outline-offset: var(--nh-focus-offset);
+  border-radius: var(--nh-radius-sm);
+}
+
+/* On dark sections the sky-600 ring lacks contrast; sky-300 gives 10.71:1. */
+.nh-on-dark :focus-visible {
+  outline-color: var(--nh-color-focus-inverse);
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+
+/*
+ * Screen-reader-only text. Uses the clip-path technique rather than
+ * display:none, which would remove the text from the accessibility tree.
+ */
+.nh-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Dot grid backdrop from the design reference. */
+.nh-dot-pattern {
+  background-image: radial-gradient(var(--nh-dot-color) 1px, transparent 1px);
+  background-size: var(--nh-dot-size) var(--nh-dot-size);
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+/*
+ * Animation is not removed entirely: durations are collapsed to near-zero so
+ * transitionend and animationend listeners still fire and state machines that
+ * depend on them do not stall.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

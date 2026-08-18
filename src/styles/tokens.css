@@ -1,0 +1,247 @@
+/**
+ * NovaHealth design tokens.
+ *
+ * Two layers:
+ *   1. Primitives  (--nh-slate-500)  raw palette values, never used in components
+ *   2. Semantic    (--nh-color-text) intent-named, the only tokens components use
+ *
+ * Components referencing primitives directly is a code smell: it means the
+ * design intent was not named, and a palette change then requires touching every
+ * component instead of this file.
+ *
+ * Contrast ratios in comments are measured against WCAG 2.1 and asserted in
+ * src/styles/contrast.test.ts, which parses this file. Changing a colour here
+ * without meeting the threshold fails the build.
+ */
+
+:root {
+  /* ============================================================
+     1. COLOUR PRIMITIVES
+     ============================================================ */
+
+  /* Slate — structure, text, dark sections */
+  --nh-slate-50: #f8fafc;
+  --nh-slate-100: #f1f5f9;
+  --nh-slate-200: #e2e8f0;
+  --nh-slate-300: #cbd5e1;
+  --nh-slate-400: #94a3b8;
+  --nh-slate-500: #64748b;
+  --nh-slate-600: #475569;
+  --nh-slate-700: #334155;
+  --nh-slate-800: #1e293b;
+  --nh-slate-900: #0f172a;
+  --nh-slate-950: #020617;
+
+  /* Sky — the accent. Signals interaction and progress. */
+  --nh-sky-50: #f0f9ff;
+  --nh-sky-100: #e0f2fe;
+  --nh-sky-200: #bae6fd;
+  --nh-sky-300: #7dd3fc;
+  --nh-sky-400: #38bdf8;
+  --nh-sky-500: #0ea5e9;
+  --nh-sky-600: #0284c7;
+  --nh-sky-700: #0369a1;
+  --nh-sky-800: #075985;
+
+  /* Emerald — confirmation and healthy status */
+  --nh-emerald-50: #ecfdf5;
+  --nh-emerald-100: #d1fae5;
+  --nh-emerald-300: #6ee7b7;
+  --nh-emerald-400: #34d399;
+  --nh-emerald-500: #10b981;
+  --nh-emerald-600: #059669;
+  --nh-emerald-700: #047857;
+  --nh-emerald-800: #065f46;
+
+  /* Navy — deep brand sections, cooler and darker than slate */
+  --nh-navy-900: #091224;
+  --nh-navy-950: #060b17;
+
+  /* Amber / rose — used only as decorative dots in product mockups */
+  --nh-amber-400: #fbbf24;
+  --nh-rose-400: #fb7185;
+
+  --nh-white: #ffffff;
+  --nh-canvas-raw: #fafbfd;
+
+  /* ============================================================
+     2. SEMANTIC COLOUR
+     ============================================================ */
+
+  /* Surfaces */
+  --nh-color-canvas: var(--nh-canvas-raw);
+  --nh-color-surface: var(--nh-white);
+  --nh-color-surface-subtle: var(--nh-slate-50);
+  --nh-color-surface-muted: var(--nh-slate-100);
+  --nh-color-surface-dark: var(--nh-slate-900);
+  --nh-color-surface-darker: var(--nh-navy-950);
+
+  /* Text on light surfaces */
+  --nh-color-text: var(--nh-slate-900); /* 17.24:1 on canvas — AAA */
+  --nh-color-text-muted: var(--nh-slate-600); /*  7.32:1 on canvas — AAA */
+  --nh-color-text-subtle: var(--nh-slate-500); /*  4.60:1 on canvas — AA, min 14px */
+
+  /*
+   * slate-400 is 2.56:1 on white and fails AA. The design reference used it for
+   * meta text; here it is restricted to non-text decoration only.
+   */
+  --nh-color-decorative: var(--nh-slate-400);
+
+  /* Text on dark surfaces */
+  --nh-color-text-inverse: var(--nh-white); /* 17.85:1 on slate-900 — AAA */
+  --nh-color-text-inverse-muted: var(--nh-slate-300); /* 12.02:1 on slate-900 — AAA */
+  --nh-color-text-inverse-subtle: var(--nh-slate-400); /*  6.96:1 on slate-900 — AA  */
+
+  /*
+   * sky-600 is 4.10:1 on white: fine for large display text (3:1) but failing
+   * for body-size text. Accent text therefore uses sky-700 (5.93:1), and
+   * sky-600 is reserved for large headings and non-text elements.
+   */
+  --nh-color-accent: var(--nh-sky-600);
+  --nh-color-accent-text: var(--nh-sky-700); /*  5.93:1 on white — AA  */
+  --nh-color-accent-display: var(--nh-sky-600); /*  4.10:1 — large text only   */
+  --nh-color-accent-hover: var(--nh-sky-800);
+  --nh-color-accent-inverse: var(--nh-sky-300); /* 10.71:1 on slate-900 — AAA */
+
+  /* Soft accent — eyebrow badges */
+  --nh-color-accent-soft-bg: var(--nh-sky-50);
+  --nh-color-accent-soft-text: var(--nh-sky-800); /*  7.09:1 on sky-50 — AAA */
+  --nh-color-accent-soft-border: var(--nh-sky-200);
+
+  /* Success / trust */
+  --nh-color-success: var(--nh-emerald-600);
+  --nh-color-success-soft-bg: var(--nh-emerald-50);
+  --nh-color-success-soft-text: var(--nh-emerald-800); /*  7.29:1 on emerald-50 — AAA */
+  --nh-color-success-soft-border: var(--nh-emerald-100);
+  --nh-color-success-inverse: var(--nh-emerald-300); /* 11.71:1 on slate-900 — AAA */
+
+  /* Borders */
+  --nh-color-border: var(--nh-slate-200); /* decorative card and section edges */
+  --nh-color-border-subtle: var(--nh-slate-100);
+  /*
+   * Borders that carry meaning (form fields, toggles) must reach 3:1 per WCAG
+   * 1.4.11. slate-200 is 1.23:1 and is only ever decorative.
+   */
+  --nh-color-border-interactive: var(--nh-slate-500); /*  4.76:1 on white */
+  --nh-color-border-inverse: var(--nh-slate-800);
+
+  /* Focus — 3.96:1 on canvas, clearing the 3:1 non-text requirement */
+  --nh-color-focus: var(--nh-sky-600);
+  --nh-color-focus-inverse: var(--nh-sky-300);
+
+  /* Selection, matching the reference's sky selection colour */
+  --nh-color-selection-bg: var(--nh-sky-500);
+  --nh-color-selection-text: var(--nh-white);
+
+  /* ============================================================
+     3. TYPOGRAPHY
+     ============================================================ */
+
+  /*
+   * Plus Jakarta Sans is self-hosted (see global.css). The fallback stack is
+   * ordered so the substitute has similar metrics, limiting layout shift if the
+   * webfont is slow.
+   */
+  --nh-font-sans:
+    'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --nh-font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+
+  /*
+   * Fluid scale. Each step interpolates between a mobile and a desktop size, so
+   * there are no typographic jumps at breakpoints.
+   */
+  --nh-text-2xs: 0.6875rem; /* 11px — uppercase eyebrows only, never sentences */
+  --nh-text-xs: 0.75rem; /* 12px — metadata */
+  --nh-text-sm: 0.875rem; /* 14px — smallest permitted body size */
+  --nh-text-base: 1rem; /* 16px */
+  --nh-text-lg: 1.125rem; /* 18px — lead paragraphs */
+  --nh-text-xl: 1.25rem;
+  --nh-text-2xl: clamp(1.375rem, 1.24rem + 0.68vw, 1.75rem);
+  --nh-text-3xl: clamp(1.75rem, 1.5rem + 1.25vw, 2.25rem);
+  --nh-text-4xl: clamp(2rem, 1.6rem + 2vw, 3rem);
+  --nh-text-5xl: clamp(2.5rem, 1.85rem + 3.25vw, 4rem); /* hero, 40px → 64px */
+
+  --nh-weight-normal: 400;
+  --nh-weight-medium: 500;
+  --nh-weight-semibold: 600;
+  --nh-weight-bold: 700;
+  --nh-weight-extrabold: 800;
+
+  --nh-leading-none: 1;
+  --nh-leading-tight: 1.08; /* display headings */
+  --nh-leading-snug: 1.22;
+  --nh-leading-normal: 1.5;
+  --nh-leading-relaxed: 1.65; /* body copy */
+
+  --nh-tracking-tighter: -0.03em;
+  --nh-tracking-tight: -0.02em;
+  --nh-tracking-normal: 0;
+  --nh-tracking-wide: 0.04em;
+  --nh-tracking-wider: 0.09em; /* uppercase eyebrow labels */
+
+  /* ============================================================
+     4. SPACE, LAYOUT, SHAPE
+     ============================================================ */
+
+  --nh-space-1: 0.25rem;
+  --nh-space-2: 0.5rem;
+  --nh-space-3: 0.75rem;
+  --nh-space-4: 1rem;
+  --nh-space-5: 1.25rem;
+  --nh-space-6: 1.5rem;
+  --nh-space-8: 2rem;
+  --nh-space-10: 2.5rem;
+  --nh-space-12: 3rem;
+  --nh-space-16: 4rem;
+  --nh-space-20: 5rem;
+  --nh-space-24: 6rem;
+
+  /* Vertical rhythm for page sections, fluid rather than stepped */
+  --nh-section-y: clamp(3.5rem, 2.6rem + 4vw, 6rem);
+  --nh-section-y-lg: clamp(4.5rem, 3.2rem + 5.5vw, 7.5rem);
+
+  --nh-container-max: 80rem; /* 1280px */
+  --nh-container-narrow: 48rem; /* 768px — prose measure */
+  --nh-container-pad: clamp(1rem, 0.55rem + 1.9vw, 2rem);
+
+  --nh-radius-sm: 0.5rem;
+  --nh-radius-md: 0.75rem;
+  --nh-radius-lg: 1rem;
+  --nh-radius-xl: 1.5rem;
+  --nh-radius-full: 9999px;
+
+  /*
+   * Shadows are tinted with the text colour rather than pure black, which keeps
+   * them from looking grey and muddy over the blue-tinted canvas.
+   */
+  --nh-shadow-xs: 0 1px 2px rgb(15 23 42 / 0.04);
+  --nh-shadow-sm: 0 1px 3px rgb(15 23 42 / 0.06), 0 1px 2px rgb(15 23 42 / 0.04);
+  --nh-shadow-md: 0 4px 12px rgb(15 23 42 / 0.07), 0 1px 3px rgb(15 23 42 / 0.05);
+  --nh-shadow-lg: 0 12px 28px rgb(15 23 42 / 0.09), 0 4px 10px rgb(15 23 42 / 0.05);
+  --nh-shadow-xl: 0 24px 56px rgb(15 23 42 / 0.12), 0 8px 20px rgb(15 23 42 / 0.06);
+
+  /* Dot grid used behind the hero */
+  --nh-dot-color: rgb(148 163 184 / 0.22);
+  --nh-dot-size: 24px;
+
+  /* ============================================================
+     5. MOTION, FOCUS, LAYERING
+     ============================================================ */
+
+  --nh-duration-fast: 120ms;
+  --nh-duration-base: 180ms;
+  --nh-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* 3px clears the 2px minimum of WCAG 2.2 focus appearance comfortably */
+  --nh-focus-width: 3px;
+  --nh-focus-offset: 2px;
+
+  --nh-z-base: 1;
+  --nh-z-header: 100;
+  --nh-z-overlay: 200;
+  --nh-z-skip-link: 300;
+
+  /* Header height, needed by scroll-padding and the mobile menu offset */
+  --nh-header-height: 4.5rem;
+}
