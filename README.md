@@ -7,7 +7,7 @@ TypeScript. NovaHealth is a demonstration project: it exists to show how a
 content-driven healthcare site is engineered for accessibility, measurability,
 performance and maintainability, not to sell anything.
 
-> **Status: Phase 3 of 9 complete** — foundation, content model, design system and layout.
+> **Status: Phase 4 of 9 complete** — foundation, design system, layout and home page.
 > Sections below marked _Planned_ describe work that is designed but not yet
 > built. Nothing in this README describes functionality that does not exist.
 
@@ -46,7 +46,7 @@ library, and each of those omissions is a decision recorded in
 
 | Page               | Route                 | Status             |
 | ------------------ | --------------------- | ------------------ |
-| Home               | `/`                   | Shell built        |
+| Home               | `/`                   | Complete           |
 | Platform           | `/platform`           | Shell built        |
 | Patient Experience | `/patient-experience` | Shell built        |
 | Resources          | `/resources`          | Shell built        |
