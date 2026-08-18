@@ -7,7 +7,7 @@ TypeScript. NovaHealth is a demonstration project: it exists to show how a
 content-driven healthcare site is engineered for accessibility, measurability,
 performance and maintainability, not to sell anything.
 
-> **Status: Phase 4 of 9 complete** — foundation, design system, layout and home page.
+> **Status: Phase 5 of 9 complete** — foundation, design system, layout, home page and the resource library.
 > Sections below marked _Planned_ describe work that is designed but not yet
 > built. Nothing in this README describes functionality that does not exist.
 
@@ -44,15 +44,15 @@ library, and each of those omissions is a decision recorded in
 
 ## Pages
 
-| Page               | Route                 | Status             |
-| ------------------ | --------------------- | ------------------ |
-| Home               | `/`                   | Complete           |
-| Platform           | `/platform`           | Shell built        |
-| Patient Experience | `/patient-experience` | Shell built        |
-| Resources          | `/resources`          | Shell built        |
-| Resource detail    | `/resources/:slug`    | Planned (template) |
-| Security & Trust   | `/security`           | Shell built        |
-| About & Contact    | `/about`              | Shell built        |
+| Page               | Route                 | Status      |
+| ------------------ | --------------------- | ----------- |
+| Home               | `/`                   | Complete    |
+| Platform           | `/platform`           | Shell built |
+| Patient Experience | `/patient-experience` | Shell built |
+| Resources          | `/resources`          | Complete    |
+| Resource detail    | `/resources/:slug`    | Complete    |
+| Security & Trust   | `/security`           | Shell built |
+| About & Contact    | `/about`              | Shell built |
 
 Privacy and accessibility commitments are implemented and documented rather than
 given standalone pages, which is a scoping decision, not an omission.
@@ -117,11 +117,16 @@ by convention. Tracking plan to be documented in `docs/analytics.md`.
 
 ## API architecture
 
-_Planned (Phase 5)._ Gatsby Functions serve `GET /api/resources` with real query
-parameters, status codes and server-side filtering. The contract already exists
-in [`src/types/api.ts`](src/types/api.ts) and is shared by both sides, so a
-change to the response shape breaks compilation in the handler and the client
-together.
+`GET /api/resources` is a Gatsby Function with real query parameters, status
+codes and server-side filtering, so the browser receives one page rather than
+the whole library. [`src/types/api.ts`](src/types/api.ts) is imported by both
+the handler and the client, so a change to the response shape breaks
+compilation on both sides rather than failing at runtime.
+
+Request state is a discriminated union, not three booleans, and in-flight
+requests are aborted when the query changes so a slow early response cannot
+overwrite a fast later one. Full detail in
+[docs/resources-architecture.md](docs/resources-architecture.md).
 
 ## Performance
 
