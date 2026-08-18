@@ -1,0 +1,25 @@
+[
+  {
+    "id": "a-okafor",
+    "name": "Dr Amara Okafor",
+    "role": "Chief Scientific Officer",
+    "credentials": "MD, PhD"
+  },
+  {
+    "id": "l-marchetti",
+    "name": "Dr Luca Marchetti",
+    "role": "Head of Clinical Development",
+    "credentials": "MD"
+  },
+  {
+    "id": "s-nakamura",
+    "name": "Dr Sena Nakamura",
+    "role": "Principal Investigator, Immunology",
+    "credentials": "PhD"
+  },
+  {
+    "id": "novahealth-editorial",
+    "name": "NovaHealth Editorial Team",
+    "role": "Medical Communications"
+  }
+]

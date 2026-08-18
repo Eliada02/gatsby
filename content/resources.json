@@ -1,0 +1,63 @@
+[
+  {
+    "id": "res-001",
+    "slug": "phase-ii-results-nv-204-advanced-melanoma",
+    "title": "Phase II results for NV-204 in advanced melanoma",
+    "summary": "Interim analysis of the ASCENT-2 trial reports a 41% objective response rate in patients with previously treated advanced melanoma.",
+    "body": "The ASCENT-2 trial evaluated NV-204, a selective RAF-dimer inhibitor, in 214 patients with unresectable stage III or stage IV melanoma who had progressed following at least one prior line of systemic therapy.\n\nAt the pre-specified interim analysis, the objective response rate was 41% (95% CI: 34-48), with a median duration of response of 9.2 months. Grade 3 or higher treatment-related adverse events occurred in 18% of participants, most commonly rash and transient transaminase elevation.\n\nThese findings support continued enrolment into the confirmatory Phase III programme. Full results will be submitted for peer review ahead of presentation at an international congress.",
+    "category": "clinical-research",
+    "format": "article",
+    "tags": ["oncology", "melanoma", "phase-ii", "nv-204"],
+    "publishedAt": "2026-06-12",
+    "readingTimeMinutes": 6,
+    "authorIds": ["l-marchetti", "a-okafor"],
+    "downloadUrl": "/downloads/nv-204-phase-ii-summary.pdf",
+    "fileSizeKb": 842,
+    "seo": {
+      "title": "Phase II results for NV-204 in advanced melanoma",
+      "description": "Interim ASCENT-2 data: a 41% objective response rate in previously treated advanced melanoma."
+    }
+  },
+  {
+    "id": "res-002",
+    "slug": "understanding-your-treatment-plan",
+    "title": "Understanding your treatment plan: a guide for patients",
+    "summary": "A plain-language guide explaining what to expect from a treatment plan, which questions to ask, and how to prepare for appointments.",
+    "body": "A treatment plan describes the therapy your care team recommends, how often you will receive it, and what monitoring is involved. It is written for your specific situation, so two people with the same diagnosis may follow different plans.\n\nBring a written list of questions to each appointment. Useful questions include what the treatment aims to achieve, what side effects are common, which side effects need urgent attention, and how the plan will be reviewed over time.\n\nYou can ask for any part of the plan to be explained again. Requesting a written summary at the end of an appointment is normal, and it helps when discussing your care with family or another clinician.",
+    "category": "patient-resources",
+    "format": "guide",
+    "tags": ["patient support", "treatment", "appointments"],
+    "publishedAt": "2026-05-28",
+    "readingTimeMinutes": 4,
+    "authorIds": ["novahealth-editorial"],
+    "downloadUrl": "/downloads/understanding-your-treatment-plan.pdf",
+    "fileSizeKb": 410
+  },
+  {
+    "id": "res-003",
+    "slug": "targeting-il-23-in-refractory-autoimmune-disease",
+    "title": "Targeting IL-23 in refractory autoimmune disease",
+    "summary": "A review of the mechanistic rationale for IL-23 pathway inhibition and what current evidence suggests about durability of response.",
+    "body": "Interleukin-23 sustains the differentiation and survival of pathogenic T helper 17 cells, placing it upstream of much of the inflammatory cascade observed in psoriatic and inflammatory bowel disease.\n\nSelective p19 inhibition avoids the shared p40 subunit targeted by earlier agents, which in principle preserves IL-12-dependent host defence while suppressing the IL-23 axis. Registry data suggest response durability beyond two years in a substantial subset of patients.\n\nOpen questions remain around predictive biomarkers and the management of partial responders, both of which are being examined in the ongoing NovaHealth immunology programme.",
+    "category": "scientific-publications",
+    "format": "article",
+    "tags": ["immunology", "il-23", "autoimmune", "review"],
+    "publishedAt": "2026-04-03",
+    "updatedAt": "2026-05-19",
+    "readingTimeMinutes": 11,
+    "authorIds": ["s-nakamura"]
+  },
+  {
+    "id": "res-004",
+    "slug": "interpreting-biomarker-reports-in-practice",
+    "title": "Interpreting biomarker reports in practice",
+    "summary": "A continuing-education module covering how to read a molecular pathology report and translate the findings into treatment decisions.",
+    "body": "Molecular pathology reports vary considerably between laboratories. This module works through a representative report section by section, covering variant nomenclature, allele frequency, and the distinction between pathogenic variants and variants of uncertain significance.\n\nParticular attention is given to reporting thresholds. A variant present below the limit of detection of the assay is not evidence of absence, and the report should state that limit explicitly.\n\nThe module concludes with three worked cases in which biomarker findings changed the recommended line of therapy.",
+    "category": "medical-education",
+    "format": "video",
+    "tags": ["biomarkers", "pathology", "education", "cpd"],
+    "publishedAt": "2026-03-17",
+    "readingTimeMinutes": 22,
+    "authorIds": ["a-okafor", "novahealth-editorial"]
+  }
+]

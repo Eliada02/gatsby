@@ -39,12 +39,12 @@ const config: GatsbyConfig = {
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
     {
+      // Images are sourced into the GraphQL layer because gatsby-plugin-image
+      // needs them there. Structured content is not: it is imported directly by
+      // src/lib/content/source.ts, which both the build and the REST handlers
+      // read from. Sourcing it twice would create two paths to the same data.
       resolve: 'gatsby-source-filesystem',
       options: { name: 'images', path: `${__dirname}/src/images` },
-    },
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: { name: 'content', path: `${__dirname}/content` },
     },
   ],
 };
