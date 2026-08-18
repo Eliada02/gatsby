@@ -147,6 +147,27 @@ come from the application code.
 The `@/*` path alias has the same property — it is declared three times
 (`tsconfig.json`, `gatsby-node.ts`, `jest.config.js`) and all three must match.
 
+### CSS Modules are compiled twice, and differently
+
+Gatsby runs css-loader twice: once for the browser bundle, which emits both
+named exports and a default export, and once for static HTML generation, which
+uses `exportOnlyLocals` and emits **named exports only**.
+
+A default import therefore type-checks, passes every test, works in
+`gatsby develop`, and is `undefined` during `gatsby build`:
+
+```
+TypeError: Cannot read properties of undefined (reading 'sizeDefault')
+```
+
+All CSS Module imports use `import * as styles`, and `src/types/css.d.ts`
+declares the module with `export =` so TypeScript enforces that form.
+
+A second, related trap: css-loader emits one JavaScript export per class name,
+so a class named `.default` produces `export var default`, which is a syntax
+error. Class names must avoid JavaScript reserved words. Both failures surface
+as webpack errors pointing at generated files rather than at the source.
+
 ## 8. Type-level enforcement
 
 Types are used to encode team standards, not just to catch typos:
