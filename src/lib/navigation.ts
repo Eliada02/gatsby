@@ -32,8 +32,8 @@ export const FOOTER_NAV: ReadonlyArray<{ heading: string; items: readonly NavIte
     heading: 'Resources',
     items: [
       { label: 'Resource library', to: '/resources' },
-      { label: 'Clinical research', to: '/resources?category=clinical-research' },
-      { label: 'Patient resources', to: '/resources?category=patient-resources' },
+      { label: 'Digital health', to: '/resources?category=digital-health' },
+      { label: 'Patient experience', to: '/resources?category=patient-experience' },
     ],
   },
   {

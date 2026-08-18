@@ -1,63 +1,241 @@
 [
   {
     "id": "res-001",
-    "slug": "phase-ii-results-nv-204-advanced-melanoma",
-    "title": "Phase II results for NV-204 in advanced melanoma",
-    "summary": "Interim analysis of the ASCENT-2 trial reports a 41% objective response rate in patients with previously treated advanced melanoma.",
-    "body": "The ASCENT-2 trial evaluated NV-204, a selective RAF-dimer inhibitor, in 214 patients with unresectable stage III or stage IV melanoma who had progressed following at least one prior line of systemic therapy.\n\nAt the pre-specified interim analysis, the objective response rate was 41% (95% CI: 34-48), with a median duration of response of 9.2 months. Grade 3 or higher treatment-related adverse events occurred in 18% of participants, most commonly rash and transient transaminase elevation.\n\nThese findings support continued enrolment into the confirmatory Phase III programme. Full results will be submitted for peer review ahead of presentation at an international congress.",
-    "category": "clinical-research",
+    "slug": "designing-a-patient-portal-people-actually-use",
+    "title": "Designing a patient portal people actually use",
+    "summary": "Most portals are built around the structure of the record rather than the questions people arrive with. Reversing that order changes almost every screen.",
+    "body": "Ask someone why they opened their patient portal and the answer is rarely to browse a record. It is to find out when an appointment is, whether a result has come back, or what a clinician meant by something said in a hurry.\n\nPortals organised around clinical data structures make those questions hard to answer. The record is arranged by document type and encounter, so a person looking for one number navigates three levels of an information architecture designed for a different reader.\n\nReordering the interface around intent means the landing view answers the three most common questions first, and the full record stays one step away for the smaller number of people who want it. The underlying data does not change; only the order in which it is offered does.",
+    "category": "patient-experience",
     "format": "article",
-    "tags": ["oncology", "melanoma", "phase-ii", "nv-204"],
-    "publishedAt": "2026-06-12",
-    "readingTimeMinutes": 6,
-    "authorIds": ["l-marchetti", "a-okafor"],
-    "downloadUrl": "/downloads/nv-204-phase-ii-summary.pdf",
-    "fileSizeKb": 842,
+    "tags": ["portal design", "usability", "information architecture"],
+    "publishedAt": "2026-07-22",
+    "readingTimeMinutes": 7,
+    "authorIds": ["p-raman"],
     "seo": {
-      "title": "Phase II results for NV-204 in advanced melanoma",
-      "description": "Interim ASCENT-2 data: a 41% objective response rate in previously treated advanced melanoma."
+      "title": "Designing a patient portal people actually use",
+      "description": "Most portals are built around the structure of the record rather than the questions people arrive with. Reversing that order changes almost every screen."
     }
   },
   {
     "id": "res-002",
-    "slug": "understanding-your-treatment-plan",
-    "title": "Understanding your treatment plan: a guide for patients",
-    "summary": "A plain-language guide explaining what to expect from a treatment plan, which questions to ask, and how to prepare for appointments.",
-    "body": "A treatment plan describes the therapy your care team recommends, how often you will receive it, and what monitoring is involved. It is written for your specific situation, so two people with the same diagnosis may follow different plans.\n\nBring a written list of questions to each appointment. Useful questions include what the treatment aims to achieve, what side effects are common, which side effects need urgent attention, and how the plan will be reviewed over time.\n\nYou can ask for any part of the plan to be explained again. Requesting a written summary at the end of an appointment is normal, and it helps when discussing your care with family or another clinician.",
-    "category": "patient-resources",
+    "slug": "plain-language-in-clinical-communication",
+    "title": "Plain language in clinical communication",
+    "summary": "A practical guide to writing appointment reminders, result notifications and care instructions that do not require a clinical vocabulary to understand.",
+    "body": "Written communication from a health service is often produced by clinicians for clinicians and then sent to patients unchanged. The result is accurate and unreadable.\n\nPlain language is not simplification of the underlying medicine. It is choosing the shortest accurate word, putting the action first, and stating what happens next. An instruction that begins with what the reader must do is followed more reliably than one that begins with the reasoning behind it.\n\nThis guide covers sentence length, the ordering of actions and caveats, how to express uncertainty honestly, and why reading-age tools are a starting point rather than a target.",
+    "category": "patient-experience",
     "format": "guide",
-    "tags": ["patient support", "treatment", "appointments"],
-    "publishedAt": "2026-05-28",
-    "readingTimeMinutes": 4,
-    "authorIds": ["novahealth-editorial"],
-    "downloadUrl": "/downloads/understanding-your-treatment-plan.pdf",
-    "fileSizeKb": 410
+    "tags": ["plain language", "communication", "accessibility"],
+    "publishedAt": "2026-06-30",
+    "readingTimeMinutes": 9,
+    "authorIds": ["novahealth-editorial", "p-raman"],
+    "seo": {
+      "title": "Plain language in clinical communication",
+      "description": "A practical guide to writing appointment reminders, result notifications and care instructions that do not require a clinical vocabulary to understand."
+    }
   },
   {
     "id": "res-003",
-    "slug": "targeting-il-23-in-refractory-autoimmune-disease",
-    "title": "Targeting IL-23 in refractory autoimmune disease",
-    "summary": "A review of the mechanistic rationale for IL-23 pathway inhibition and what current evidence suggests about durability of response.",
-    "body": "Interleukin-23 sustains the differentiation and survival of pathogenic T helper 17 cells, placing it upstream of much of the inflammatory cascade observed in psoriatic and inflammatory bowel disease.\n\nSelective p19 inhibition avoids the shared p40 subunit targeted by earlier agents, which in principle preserves IL-12-dependent host defence while suppressing the IL-23 axis. Registry data suggest response durability beyond two years in a substantial subset of patients.\n\nOpen questions remain around predictive biomarkers and the management of partial responders, both of which are being examined in the ongoing NovaHealth immunology programme.",
-    "category": "scientific-publications",
+    "slug": "reducing-the-cost-of-digital-intake",
+    "title": "Reducing the cost of digital intake",
+    "summary": "Pre-visit forms are the most abandoned surface in digital health. Adaptive questioning and re-use of known answers address most of the drop-off.",
+    "body": "Digital intake asks people to supply information a service often already holds. Every question that could have been pre-filled is a reason to abandon the form, and abandonment moves the work back to the clinic reception desk.\n\nTwo changes account for most of the improvement. The first is adaptive questioning: branching on earlier answers so nobody is asked about conditions irrelevant to their visit. The second is persistence, so a returning patient confirms rather than retypes.\n\nThe remaining friction is usually structural. Forms that must be completed in one sitting fail people who are interrupted, and a save-and-resume path costs little to build.",
+    "category": "patient-experience",
     "format": "article",
-    "tags": ["immunology", "il-23", "autoimmune", "review"],
-    "publishedAt": "2026-04-03",
-    "updatedAt": "2026-05-19",
-    "readingTimeMinutes": 11,
-    "authorIds": ["s-nakamura"]
+    "tags": ["intake", "forms", "conversion"],
+    "publishedAt": "2026-05-14",
+    "readingTimeMinutes": 6,
+    "authorIds": ["p-raman", "s-nakamura"],
+    "seo": {
+      "title": "Reducing the cost of digital intake",
+      "description": "Pre-visit forms are the most abandoned surface in digital health. Adaptive questioning and re-use of known answers address most of the drop-off."
+    }
   },
   {
     "id": "res-004",
-    "slug": "interpreting-biomarker-reports-in-practice",
-    "title": "Interpreting biomarker reports in practice",
-    "summary": "A continuing-education module covering how to read a molecular pathology report and translate the findings into treatment decisions.",
-    "body": "Molecular pathology reports vary considerably between laboratories. This module works through a representative report section by section, covering variant nomenclature, allele frequency, and the distinction between pathogenic variants and variants of uncertain significance.\n\nParticular attention is given to reporting thresholds. A variant present below the limit of detection of the assay is not evidence of absence, and the report should state that limit explicitly.\n\nThe module concludes with three worked cases in which biomarker findings changed the recommended line of therapy.",
-    "category": "medical-education",
-    "format": "video",
-    "tags": ["biomarkers", "pathology", "education", "cpd"],
-    "publishedAt": "2026-03-17",
-    "readingTimeMinutes": 22,
-    "authorIds": ["a-okafor", "novahealth-editorial"]
+    "slug": "what-connected-care-actually-requires",
+    "title": "What connected care actually requires",
+    "summary": "Connected care is often described as a technology problem. Most of the difficulty is in agreeing what a shared record should contain and who maintains it.",
+    "body": "The phrase connected care suggests that the obstacle is a missing integration. In practice the harder question is editorial: which parts of a record are shared, at what level of detail, and who is accountable when two sources disagree.\n\nTechnical exchange standards answer the transport question and leave the governance question open. A shared medication list is only useful if there is agreement about which system is authoritative when entries conflict.\n\nProgrammes that begin with governance and then choose transport tend to arrive faster than those that begin by connecting systems and discover the disagreements afterwards.",
+    "category": "digital-health",
+    "format": "article",
+    "tags": ["connected care", "governance", "strategy"],
+    "publishedAt": "2026-07-08",
+    "readingTimeMinutes": 8,
+    "authorIds": ["a-okafor"],
+    "seo": {
+      "title": "What connected care actually requires",
+      "description": "Connected care is often described as a technology problem. Most of the difficulty is in agreeing what a shared record should contain and who maintains it."
+    }
+  },
+  {
+    "id": "res-005",
+    "slug": "remote-consultations-beyond-video",
+    "title": "Remote consultations beyond video",
+    "summary": "Video is the visible part of remote care. The scheduling, triage and follow-up around it determine whether it saves anyone time.",
+    "body": "A remote consultation that requires the same preparation, the same waiting and the same follow-up phone calls as an in-person visit has moved the location of the appointment without changing its cost.\n\nThe gains come from the surrounding workflow: triage that routes a question to the right response, asynchronous messaging for issues that do not need a synchronous conversation, and structured follow-up that does not depend on a callback.\n\nVideo then becomes one option among several rather than the default, chosen when seeing someone genuinely changes the clinical decision.",
+    "category": "digital-health",
+    "format": "article",
+    "tags": ["telehealth", "triage", "workflow"],
+    "publishedAt": "2026-04-19",
+    "readingTimeMinutes": 7,
+    "authorIds": ["l-marchetti"],
+    "seo": {
+      "title": "Remote consultations beyond video",
+      "description": "Video is the visible part of remote care. The scheduling, triage and follow-up around it determine whether it saves anyone time."
+    }
+  },
+  {
+    "id": "res-006",
+    "slug": "measuring-digital-health-without-vanity-metrics",
+    "title": "Measuring digital health without vanity metrics",
+    "summary": "Registration counts and app downloads say little about whether care improved. A short set of measures tied to clinical and operational outcomes says more.",
+    "body": "Digital health programmes are frequently reported through adoption figures. Registrations, downloads and monthly active users are easy to collect and almost impossible to interpret, because none of them describe whether anything got better.\n\nMore useful measures tend to be smaller in number and harder to collect: time from request to appointment, proportion of appointments attended, proportion of intake completed before arrival, and the volume of administrative contact a patient must initiate.\n\nThis piece sets out a minimal measurement set and, more importantly, which measures to stop reporting.",
+    "category": "digital-health",
+    "format": "guide",
+    "tags": ["measurement", "analytics", "outcomes"],
+    "publishedAt": "2026-03-05",
+    "readingTimeMinutes": 10,
+    "authorIds": ["a-okafor", "novahealth-editorial"],
+    "seo": {
+      "title": "Measuring digital health without vanity metrics",
+      "description": "Registration counts and app downloads say little about whether care improved. A short set of measures tied to clinical and operational outcomes says more."
+    },
+    "updatedAt": "2026-05-02"
+  },
+  {
+    "id": "res-007",
+    "slug": "a-practical-introduction-to-fhir-r4",
+    "title": "A practical introduction to FHIR R4",
+    "summary": "What FHIR resources are, how they relate, and where implementations usually diverge in ways that break interoperability in practice.",
+    "body": "FHIR describes healthcare data as resources with defined relationships, exchanged over ordinary web protocols. That much is straightforward, and it is where most introductions stop.\n\nThe difficulty appears in the extension points. Two systems can both claim conformance while representing the same concept differently, because the specification permits local extension and the profiles that constrain it are chosen per implementation.\n\nThis introduction walks through the resources most commonly exchanged, then spends most of its length on profiling, terminology binding, and the questions worth asking before agreeing an integration is complete.",
+    "category": "interoperability",
+    "format": "guide",
+    "tags": ["fhir", "hl7", "standards"],
+    "publishedAt": "2026-06-11",
+    "readingTimeMinutes": 14,
+    "authorIds": ["t-berg"],
+    "seo": {
+      "title": "A practical introduction to FHIR R4",
+      "description": "What FHIR resources are, how they relate, and where implementations usually diverge in ways that break interoperability in practice."
+    }
+  },
+  {
+    "id": "res-008",
+    "slug": "when-an-integration-is-not-interoperability",
+    "title": "When an integration is not interoperability",
+    "summary": "A working point-to-point interface and an interoperable system are different things. The distinction becomes expensive at the third connection.",
+    "body": "A single interface between two systems can be built quickly by agreeing a format between two teams. It works, and it is not interoperability, because the agreement lives in the connection rather than in a standard.\n\nThe cost appears when a third system arrives. Each new participant needs its own agreement, and the number of interfaces grows faster than the number of systems.\n\nStandards-based exchange trades a slower first connection for a flat cost per additional one. The decision is not technical preference; it is a judgement about how many connections the programme will eventually need.",
+    "category": "interoperability",
+    "format": "article",
+    "tags": ["integration", "architecture", "standards"],
+    "publishedAt": "2026-02-18",
+    "readingTimeMinutes": 6,
+    "authorIds": ["t-berg", "s-nakamura"],
+    "seo": {
+      "title": "When an integration is not interoperability",
+      "description": "A working point-to-point interface and an interoperable system are different things. The distinction becomes expensive at the third connection."
+    }
+  },
+  {
+    "id": "res-009",
+    "slug": "scheduling-that-respects-clinical-capacity",
+    "title": "Scheduling that respects clinical capacity",
+    "summary": "Open booking against a clinical calendar fails quietly unless the model understands appointment types, preparation time and the limits of a working day.",
+    "body": "Exposing a clinical calendar for direct booking is technically simple and clinically risky. A calendar slot is not a unit of interchangeable time: appointment types differ in length, in preparation and in what must follow them.\n\nA scheduling model that ignores those differences produces days that look full and are unworkable, which erodes clinical trust in the system faster than any other failure.\n\nThe workable version encodes appointment types, buffers and daily limits, and treats clinician-defined constraints as authoritative rather than advisory.",
+    "category": "clinical-operations",
+    "format": "article",
+    "tags": ["scheduling", "capacity", "operations"],
+    "publishedAt": "2026-05-27",
+    "readingTimeMinutes": 8,
+    "authorIds": ["l-marchetti", "p-raman"],
+    "seo": {
+      "title": "Scheduling that respects clinical capacity",
+      "description": "Open booking against a clinical calendar fails quietly unless the model understands appointment types, preparation time and the limits of a working day."
+    }
+  },
+  {
+    "id": "res-010",
+    "slug": "reducing-missed-appointments",
+    "title": "Reducing missed appointments",
+    "summary": "Missed appointments are usually treated as a reminder problem. Access, timing and transport explain more of the variance than notification volume.",
+    "body": "The standard response to missed appointments is to send more reminders. Reminder volume has a measurable effect and reaches its limit quickly, after which additional messages mostly annoy the people who were going to attend anyway.\n\nLarger factors tend to sit upstream: how far ahead the appointment was booked, whether the time is reachable given work and transport, and how easy it is to reschedule rather than simply not attend.\n\nMaking rescheduling a one-step action often does more than any change to notification, because it converts a non-attendance into a future appointment.",
+    "category": "clinical-operations",
+    "format": "article",
+    "tags": ["attendance", "access", "operations"],
+    "publishedAt": "2026-01-29",
+    "readingTimeMinutes": 7,
+    "authorIds": ["l-marchetti"],
+    "seo": {
+      "title": "Reducing missed appointments",
+      "description": "Missed appointments are usually treated as a reminder problem. Access, timing and transport explain more of the variance than notification volume."
+    }
+  },
+  {
+    "id": "res-011",
+    "slug": "designing-role-based-access-for-clinical-teams",
+    "title": "Designing role-based access for clinical teams",
+    "summary": "Least-privilege access is straightforward to state and difficult to model, because clinical roles overlap and cover for one another.",
+    "body": "Role-based access assumes roles are stable and separable. Clinical teams are neither: staff cover for colleagues, rotate between services, and need occasional access outside their usual scope for legitimate reasons.\n\nSystems that model roles too rigidly are worked around, usually by sharing credentials, which removes the audit trail the model existed to protect.\n\nA workable design combines a conservative default with an explicit, logged break-glass path, so unusual access is possible, visible and reviewable rather than impossible and therefore circumvented.",
+    "category": "security-privacy",
+    "format": "guide",
+    "tags": ["access control", "least privilege", "audit"],
+    "publishedAt": "2026-04-02",
+    "readingTimeMinutes": 11,
+    "authorIds": ["n-haddad"],
+    "seo": {
+      "title": "Designing role-based access for clinical teams",
+      "description": "Least-privilege access is straightforward to state and difficult to model, because clinical roles overlap and cover for one another."
+    }
+  },
+  {
+    "id": "res-012",
+    "slug": "what-audit-logging-should-capture",
+    "title": "What audit logging should capture",
+    "summary": "An audit log that records everything is as unusable as one that records nothing. Capturing intent alongside action is what makes review possible.",
+    "body": "Audit logs in clinical systems frequently record that a record was opened, by whom and when. That is enough to prove access occurred and not enough to judge whether it should have.\n\nReviewable logs capture the context of access: the care relationship in effect, the workflow the user was in, and whether the access followed a break-glass path.\n\nThis piece covers what to capture, what to exclude for privacy reasons, retention considerations, and why logs intended for review need to be readable by people who are not engineers.",
+    "category": "security-privacy",
+    "format": "article",
+    "tags": ["audit", "logging", "privacy"],
+    "publishedAt": "2025-12-10",
+    "readingTimeMinutes": 9,
+    "authorIds": ["n-haddad", "s-nakamura"],
+    "seo": {
+      "title": "What audit logging should capture",
+      "description": "An audit log that records everything is as unusable as one that records nothing. Capturing intent alongside action is what makes review possible."
+    }
+  },
+  {
+    "id": "res-013",
+    "slug": "assisted-clinical-documentation-and-the-review-step",
+    "title": "Assisted clinical documentation and the review step",
+    "summary": "Automatically drafted notes save time only if the review step is designed as carefully as the generation step.",
+    "body": "Drafting a clinical note automatically moves the work from composition to verification. That is a real saving when verification is quicker than writing, and a real risk when the draft is plausible enough to be approved without close reading.\n\nDesign decisions determine which of those happens: whether the draft highlights what it inferred rather than heard, whether uncertain content is marked, and whether approval requires an action proportionate to the responsibility being taken.\n\nThe clinician remains accountable for the note. The interface should make that accountability easy to exercise rather than easy to skip.",
+    "category": "healthcare-technology",
+    "format": "article",
+    "tags": ["documentation", "assistive tools", "clinical safety"],
+    "publishedAt": "2026-07-15",
+    "readingTimeMinutes": 8,
+    "authorIds": ["a-okafor", "s-nakamura"],
+    "seo": {
+      "title": "Assisted clinical documentation and the review step",
+      "description": "Automatically drafted notes save time only if the review step is designed as carefully as the generation step."
+    }
+  },
+  {
+    "id": "res-014",
+    "slug": "accessibility-is-a-clinical-requirement",
+    "title": "Accessibility is a clinical requirement",
+    "summary": "In health services the people least able to use an inaccessible interface are frequently the people who need it most.",
+    "body": "Accessibility in most sectors is a question of reach. In health it is closer to a clinical one, because impairment and long-term condition are correlated, and the population using a health service is not the population that tested it.\n\nThe practical implications are ordinary: semantic structure, keyboard operability, sufficient contrast, content that survives magnification, and forms that state their errors clearly. None of it is exotic, and all of it is routinely missing.\n\nThis piece sets out the checks worth running on every release, which of them can be automated, and the roughly two thirds of issues that automated tooling will not find.",
+    "category": "healthcare-technology",
+    "format": "guide",
+    "tags": ["accessibility", "wcag", "inclusive design"],
+    "publishedAt": "2026-08-05",
+    "readingTimeMinutes": 12,
+    "authorIds": ["p-raman", "novahealth-editorial"],
+    "seo": {
+      "title": "Accessibility is a clinical requirement",
+      "description": "In health services the people least able to use an inaccessible interface are frequently the people who need it most."
+    }
   }
 ]

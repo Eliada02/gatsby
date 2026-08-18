@@ -47,26 +47,37 @@ export interface SeoMeta {
  * updates both, and an unknown value fails type-checking.
  */
 export const RESOURCE_CATEGORIES = [
-  'clinical-research',
-  'patient-resources',
-  'scientific-publications',
-  'medical-education',
-  'company-insights',
+  'patient-experience',
+  'digital-health',
+  'interoperability',
+  'clinical-operations',
+  'security-privacy',
+  'healthcare-technology',
 ] as const;
 
 export type ResourceCategory = (typeof RESOURCE_CATEGORIES)[number];
 
 export const RESOURCE_CATEGORY_LABELS: Record<ResourceCategory, string> = {
-  'clinical-research': 'Clinical Research',
-  'patient-resources': 'Patient Resources',
-  'scientific-publications': 'Scientific Publications',
-  'medical-education': 'Medical Education',
-  'company-insights': 'Company Insights',
+  'patient-experience': 'Patient Experience',
+  'digital-health': 'Digital Health',
+  interoperability: 'Interoperability',
+  'clinical-operations': 'Clinical Operations',
+  'security-privacy': 'Security & Privacy',
+  'healthcare-technology': 'Healthcare Technology',
 };
 
 export const RESOURCE_FORMATS = ['article', 'pdf', 'video', 'infographic', 'guide'] as const;
 
 export type ResourceFormat = (typeof RESOURCE_FORMATS)[number];
+
+/** Shown as a badge on resource cards, so the label lives beside the union. */
+export const RESOURCE_FORMAT_LABELS: Record<ResourceFormat, string> = {
+  article: 'Article',
+  pdf: 'PDF',
+  video: 'Video',
+  infographic: 'Infographic',
+  guide: 'Guide',
+};
 
 export interface Resource {
   id: string;

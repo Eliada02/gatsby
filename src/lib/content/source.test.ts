@@ -86,6 +86,52 @@ describe('content integrity', () => {
       }
     });
 
+    it('makes no certification or regulatory approval claim', () => {
+      // The library is the easiest place for a marketing claim to slip in.
+      // Certification and approval are legal statuses a fictional company
+      // cannot hold, so CI rejects them rather than relying on review.
+      const forbidden = /hipaa|soc ?2|iso ?27001|fda[- ]approved|certified|accredited/i;
+
+      for (const resource of resources) {
+        expect(resource.title + ' ' + resource.summary + ' ' + resource.body).not.toMatch(
+          forbidden,
+        );
+      }
+    });
+
+    it('names no real healthcare organisation or vendor', () => {
+      // Naming a real provider or EHR vendor implies a partnership or customer
+      // relationship that does not exist.
+      const realNames =
+        /stanford|mayo clinic|mount sinai|cleveland clinic|kaiser|epic systems|cerner|athenahealth|nhs/i;
+
+      for (const resource of resources) {
+        expect(resource.title + ' ' + resource.summary + ' ' + resource.body).not.toMatch(
+          realNames,
+        );
+      }
+    });
+
+    it('populates every field the library and detail page render', () => {
+      // A missing summary or body renders as an empty card or an empty article
+      // rather than throwing, so absence has to be asserted explicitly.
+      for (const resource of resources) {
+        expect(resource.title.trim()).not.toBe('');
+        expect(resource.summary.trim()).not.toBe('');
+        expect(resource.body.trim()).not.toBe('');
+        expect(resource.slug).toMatch(/^[a-z0-9-]+$/);
+        expect(resource.readingTimeMinutes).toBeGreaterThan(0);
+        expect(resource.tags.length).toBeGreaterThan(0);
+      }
+    });
+
+    it('holds enough entries across enough categories to exercise the library', () => {
+      // Search, filtering and pagination are only meaningfully demonstrable
+      // with more entries than fit on one page.
+      expect(resources.length).toBeGreaterThanOrEqual(12);
+      expect(new Set(resources.map((r) => r.category)).size).toBeGreaterThanOrEqual(4);
+    });
+
     it('is retrievable by slug', () => {
       const [first] = resources;
 
