@@ -1,0 +1,18 @@
+/*
+ * Horizontal layout frame. Width and gutters live here so no component has to
+ * repeat the max-width / auto-margin / padding trio.
+ */
+.container {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: var(--nh-container-pad);
+}
+
+.default {
+  max-width: var(--nh-container-max);
+}
+
+/* Prose measure: long-form copy stays around 65-75 characters per line. */
+.narrow {
+  max-width: var(--nh-container-narrow);
+}

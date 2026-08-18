@@ -1,0 +1,70 @@
+/*
+ * Vertical rhythm and surface tone for a page section. Padding is fluid, so
+ * spacing scales with the viewport rather than jumping at breakpoints.
+ */
+.section {
+  padding-block: var(--nh-section-y);
+}
+
+.spacingLarge {
+  padding-block: var(--nh-section-y-lg);
+}
+
+.spacingNone {
+  padding-block: 0;
+}
+
+/* ---- Tones ---- */
+
+.canvas {
+  background-color: var(--nh-color-canvas);
+}
+
+.surface {
+  background-color: var(--nh-color-surface);
+}
+
+.subtle {
+  background-color: var(--nh-color-surface-subtle);
+}
+
+/*
+ * Dark tones set the inverse text colours here rather than at each child, so
+ * nested components inherit correct colours without knowing their context.
+ */
+.dark,
+.darker {
+  color: var(--nh-color-text-inverse);
+}
+
+.dark {
+  background-color: var(--nh-color-surface-dark);
+}
+
+.darker {
+  background-color: var(--nh-color-surface-darker);
+}
+
+.dark :is(h1, h2, h3, h4, h5, h6),
+.darker :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--nh-color-text-inverse);
+}
+
+/* Section edges from the design reference: hairline rules between bands. */
+.borderTop {
+  border-block-start: 1px solid var(--nh-color-border);
+}
+
+.borderBottom {
+  border-block-end: 1px solid var(--nh-color-border);
+}
+
+.dark.borderTop,
+.darker.borderTop {
+  border-block-start-color: var(--nh-color-border-inverse);
+}
+
+.dark.borderBottom,
+.darker.borderBottom {
+  border-block-end-color: var(--nh-color-border-inverse);
+}
