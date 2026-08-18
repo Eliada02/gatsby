@@ -1,0 +1,26 @@
+/*
+ * Hidden until focused, then pinned to the top-left above everything else.
+ *
+ * Positioned off-screen rather than display:none: a display:none link is not
+ * focusable at all, so the skip link would never be reachable by the keyboard
+ * users it exists for.
+ */
+.skipLink {
+  position: absolute;
+  inset-block-start: -100%;
+  inset-inline-start: var(--nh-space-4);
+  z-index: var(--nh-z-skip-link);
+  padding: var(--nh-space-3) var(--nh-space-5);
+  background-color: var(--nh-color-surface);
+  color: var(--nh-color-text);
+  font-size: var(--nh-text-sm);
+  font-weight: var(--nh-weight-bold);
+  text-decoration: none;
+  border: 1px solid var(--nh-color-border-control);
+  border-radius: var(--nh-radius-md);
+  box-shadow: var(--nh-shadow-lg);
+}
+
+.skipLink:focus-visible {
+  inset-block-start: var(--nh-space-4);
+}

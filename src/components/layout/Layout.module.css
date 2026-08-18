@@ -1,0 +1,17 @@
+/*
+ * The header is fixed, so main content would otherwise start underneath it.
+ * Padding on main rather than a spacer element keeps the document free of
+ * empty presentational nodes.
+ */
+.main {
+  padding-block-start: var(--nh-header-height);
+}
+
+/*
+ * main receives focus from the skip link. It must never show a focus ring in
+ * that case: the ring around an entire page region reads as a rendering fault,
+ * and :focus-visible would not suppress it because focus arrived by keyboard.
+ */
+.main:focus {
+  outline: none;
+}
