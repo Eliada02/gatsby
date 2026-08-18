@@ -86,6 +86,8 @@ export function Button({
 
 interface ButtonLinkProps extends SharedProps {
   to: string;
+  /** Side effects on activation, e.g. closing a menu. Navigation still happens. */
+  onClick?: () => void;
 }
 
 /** Matches a protocol-qualified URL, a protocol-relative URL, or mailto/tel. */
@@ -110,6 +112,7 @@ export function ButtonLink({
   fullWidth,
   withArrow,
   className,
+  onClick,
 }: ButtonLinkProps) {
   const classes = buildClassName({ variant, size, shape, fullWidth, className });
 
@@ -120,6 +123,7 @@ export function ButtonLink({
       <a
         href={to}
         className={classes}
+        onClick={onClick}
         {...(opensInNewTab ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
       >
         {children}
@@ -130,7 +134,7 @@ export function ButtonLink({
   }
 
   return (
-    <Link to={to} className={classes}>
+    <Link to={to} className={classes} onClick={onClick}>
       {children}
       {withArrow && <Arrow />}
     </Link>

@@ -1,0 +1,94 @@
+/* The horizontal bar replaces this panel at 64rem (1024px). */
+
+.toggle {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 2.75rem; /* 44px target, WCAG 2.5.5 */
+  block-size: 2.75rem;
+  border: 1px solid var(--nh-color-border-control);
+  border-radius: var(--nh-radius-md);
+  background-color: var(--nh-color-surface);
+  color: var(--nh-color-text);
+  cursor: pointer;
+  transition: background-color var(--nh-duration-base) var(--nh-ease);
+}
+
+.toggle:hover {
+  background-color: var(--nh-color-surface-subtle);
+}
+
+.toggle svg {
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+}
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--nh-z-header) - 1);
+  background-color: rgb(2 6 23 / 0.5);
+}
+
+.panel {
+  position: fixed;
+  inset-block-start: var(--nh-header-height);
+  inset-inline: 0;
+  z-index: var(--nh-z-header);
+  display: flex;
+  flex-direction: column;
+  gap: var(--nh-space-4);
+  max-block-size: calc(100vh - var(--nh-header-height));
+  overflow-y: auto;
+  padding: var(--nh-space-5) var(--nh-container-pad) var(--nh-space-8);
+  background-color: var(--nh-color-surface);
+  border-block-end: 1px solid var(--nh-color-border);
+  box-shadow: var(--nh-shadow-lg);
+}
+
+/*
+ * The hidden attribute sets display:none, but the display:flex rule above has
+ * equal specificity and would win by source order. Without this the panel stays
+ * visible when closed.
+ */
+.panel[hidden] {
+  display: none;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nh-space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: block;
+  padding: var(--nh-space-3) var(--nh-space-4);
+  border-radius: var(--nh-radius-md);
+  color: var(--nh-color-text);
+  font-size: var(--nh-text-base);
+  font-weight: var(--nh-weight-semibold);
+  text-decoration: none;
+  transition: background-color var(--nh-duration-fast) var(--nh-ease);
+}
+
+.link:hover {
+  background-color: var(--nh-color-surface-subtle);
+  color: var(--nh-color-text);
+}
+
+.linkActive {
+  background-color: var(--nh-color-accent-soft-bg);
+  color: var(--nh-color-accent-soft-text);
+}
+
+/* Above the navigation breakpoint the horizontal bar takes over entirely. */
+@media (min-width: 64rem) {
+  .toggle,
+  .panel,
+  .scrim {
+    display: none;
+  }
+}
