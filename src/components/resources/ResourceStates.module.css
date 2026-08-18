@@ -1,0 +1,118 @@
+/* ---- Loading skeleton ---- */
+
+.skeletonGrid {
+  display: grid;
+  gap: var(--nh-space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+}
+
+/*
+ * Sized to approximate a real card so the layout does not shift when results
+ * replace it. Preventing that shift is the point of a skeleton; an indicator
+ * that collapses to nothing would move the whole page.
+ */
+.skeletonCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nh-space-3);
+  min-block-size: 15rem;
+  padding: var(--nh-space-5);
+  background-color: var(--nh-color-surface);
+  border: 1px solid var(--nh-color-border);
+  border-radius: var(--nh-radius-lg);
+}
+
+.skeletonBadge,
+.skeletonTitle,
+.skeletonLine,
+.skeletonLineShort,
+.skeletonFooter {
+  display: block;
+  border-radius: var(--nh-radius-sm);
+  background-color: var(--nh-color-surface-muted);
+  animation: pulse 1.6s var(--nh-ease) infinite;
+}
+
+.skeletonBadge {
+  inline-size: 7rem;
+  block-size: 1.5rem;
+  border-radius: var(--nh-radius-full);
+}
+
+.skeletonTitle {
+  inline-size: 85%;
+  block-size: 1.5rem;
+}
+
+.skeletonLine {
+  inline-size: 100%;
+  block-size: 0.75rem;
+}
+
+.skeletonLineShort {
+  inline-size: 60%;
+  block-size: 0.75rem;
+}
+
+.skeletonFooter {
+  inline-size: 45%;
+  block-size: 0.75rem;
+  margin-block-start: auto;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+/*
+ * Removed outright rather than left to the global reduced-motion rule. That
+ * rule collapses durations to 0.01ms, which for an infinite alternating
+ * animation would leave the element frozen at an arbitrary opacity.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .skeletonBadge,
+  .skeletonTitle,
+  .skeletonLine,
+  .skeletonLineShort,
+  .skeletonFooter {
+    animation: none;
+    opacity: 0.7;
+  }
+}
+
+/* ---- Error and empty states ---- */
+
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--nh-space-3);
+  padding: var(--nh-space-12) var(--nh-space-6);
+  text-align: center;
+  background-color: var(--nh-color-surface);
+  border: 1px solid var(--nh-color-border);
+  border-radius: var(--nh-radius-lg);
+}
+
+.stateHeading {
+  font-size: var(--nh-text-xl);
+  font-weight: var(--nh-weight-bold);
+  letter-spacing: var(--nh-tracking-tight);
+}
+
+.stateBody {
+  max-inline-size: 42ch;
+  font-size: var(--nh-text-sm);
+  line-height: var(--nh-leading-relaxed);
+  color: var(--nh-color-text-muted);
+  margin-block-end: var(--nh-space-2);
+}

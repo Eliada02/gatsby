@@ -1,0 +1,99 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--nh-space-3);
+  block-size: 100%;
+  padding: var(--nh-space-5);
+  background-color: var(--nh-color-surface);
+  border: 1px solid var(--nh-color-border);
+  border-radius: var(--nh-radius-lg);
+  box-shadow: var(--nh-shadow-xs);
+  transition:
+    box-shadow var(--nh-duration-base) var(--nh-ease),
+    border-color var(--nh-duration-base) var(--nh-ease);
+}
+
+.card:hover {
+  box-shadow: var(--nh-shadow-md);
+  border-color: var(--nh-color-border-control);
+}
+
+/*
+ * The card shows the focus ring on behalf of its title link, since the link's
+ * own outline would sit around the text while the whole card is the target.
+ */
+.card:focus-within {
+  outline: var(--nh-focus-width) solid var(--nh-color-focus);
+  outline-offset: var(--nh-focus-offset);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--nh-space-2);
+}
+
+.format {
+  font-size: var(--nh-text-2xs);
+  font-weight: var(--nh-weight-semibold);
+  letter-spacing: var(--nh-tracking-wider);
+  text-transform: uppercase;
+  color: var(--nh-color-text-subtle);
+}
+
+.title {
+  font-size: var(--nh-text-lg);
+  font-weight: var(--nh-weight-bold);
+  line-height: var(--nh-leading-snug);
+  letter-spacing: var(--nh-tracking-tight);
+}
+
+/*
+ * Stretched link: one anchor covers the card, so the whole surface is
+ * clickable while the accessibility tree still contains a single link with the
+ * title as its name. Wrapping the card in an anchor instead would swallow the
+ * metadata into the link text.
+ */
+.link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.link:hover {
+  color: var(--nh-color-accent-text);
+}
+
+.link:focus-visible {
+  outline: none;
+}
+
+.summary {
+  font-size: var(--nh-text-sm);
+  line-height: var(--nh-leading-relaxed);
+  color: var(--nh-color-text-muted);
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--nh-space-2);
+  margin-block-start: auto;
+  padding-block-start: var(--nh-space-3);
+  border-block-start: 1px solid var(--nh-color-border-subtle);
+  font-size: var(--nh-text-xs);
+  color: var(--nh-color-text-subtle);
+}
+
+.separator {
+  color: var(--nh-color-decorative);
+}

@@ -1,25 +1,37 @@
-import type { HeadFC } from 'gatsby';
+import type { HeadFC, PageProps } from 'gatsby';
 import { Layout } from '@/components/layout/Layout';
-import { Container } from '@/components/primitives/Container';
-import { Section } from '@/components/primitives/Section';
+import { ResourceLibrary } from '@/components/resources/ResourceLibrary';
+import { ResourcesHero } from '@/components/resources/ResourcesHero';
+import { FinalCta } from '@/components/sections/FinalCta';
 import { Seo } from '@/components/seo/Seo';
+import { homeContent } from '@/lib/content/source';
+import type { ResourceListResponse } from '@/types/api';
 
 /**
- * Route shell. Sections are built out in a later phase; the structure, landmark
- * placement and metadata are correct from the start so navigation and heading
- * order can be tested now rather than retrofitted.
+ * Context supplied by onCreatePage in gatsby-node.ts.
+ *
+ * Optional because Gatsby renders the page during development before the hook
+ * has run, and a missing payload only means the library fetches on mount.
  */
-const ResourcesPage = () => (
+export interface ResourcesPageContext {
+  initialResources?: ResourceListResponse;
+}
+
+/**
+ * The resource library route.
+ *
+ * `location.search` comes from the router and is passed straight down: the URL
+ * is the source of truth for search, category, sort and page, so the page holds
+ * no filter state of its own.
+ *
+ * The closing call to action is shared with the home page rather than
+ * duplicated. It is site-level copy, and two copies would drift.
+ */
+const ResourcesPage = ({ location, pageContext }: PageProps<object, ResourcesPageContext>) => (
   <Layout>
-    <Section aria-labelledby="resources-heading">
-      <Container>
-        <h1 id="resources-heading">Resource library</h1>
-        <p>
-          Clinical research, patient guides, scientific publications and educational material,
-          searchable by topic and format.
-        </p>
-      </Container>
-    </Section>
+    <ResourcesHero />
+    <ResourceLibrary search={location.search} initialData={pageContext.initialResources} />
+    <FinalCta content={homeContent.finalCta} />
   </Layout>
 );
 
@@ -28,6 +40,6 @@ export default ResourcesPage;
 export const Head: HeadFC = () => (
   <Seo
     title="Resources"
-    description="Search and filter clinical research, patient resources, scientific publications and medical education material."
+    description="Practical writing on patient experience, interoperability, clinical operations and healthcare security, searchable by topic and format."
   />
 );

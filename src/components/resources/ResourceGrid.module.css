@@ -1,0 +1,18 @@
+.grid {
+  display: grid;
+  gap: var(--nh-space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* Reflows 1 to 3 columns without a breakpoint per step. */
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+}
+
+/*
+ * Dimmed while a newer request is in flight. Results stay on screen rather than
+ * collapsing to a skeleton, so the page does not jump on every keystroke.
+ */
+.refreshing {
+  opacity: 0.55;
+  transition: opacity var(--nh-duration-base) var(--nh-ease);
+}

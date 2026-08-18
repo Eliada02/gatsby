@@ -1,0 +1,9 @@
+.results {
+  margin-block-start: var(--nh-space-8);
+}
+
+.count {
+  margin-block-end: var(--nh-space-4);
+  font-size: var(--nh-text-sm);
+  color: var(--nh-color-text-muted);
+}

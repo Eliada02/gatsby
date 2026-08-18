@@ -1,0 +1,37 @@
+.section {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--nh-section-y);
+}
+
+/* The same dot grid as the home hero, so the two pages read as one site. */
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--nh-dot-color) 1px, transparent 1px);
+  background-size: var(--nh-dot-size) var(--nh-dot-size);
+  mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--nh-space-4);
+  max-inline-size: 46rem;
+}
+
+.heading {
+  font-size: var(--nh-text-5xl);
+  letter-spacing: var(--nh-tracking-tighter);
+}
+
+.summary {
+  font-size: var(--nh-text-lg);
+  line-height: var(--nh-leading-relaxed);
+  color: var(--nh-color-text-muted);
+}

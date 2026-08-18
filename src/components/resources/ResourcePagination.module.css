@@ -1,0 +1,46 @@
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nh-space-4);
+  margin-block-start: var(--nh-space-8);
+  padding-block-start: var(--nh-space-6);
+  border-block-start: 1px solid var(--nh-color-border);
+}
+
+.status {
+  font-size: var(--nh-text-sm);
+  color: var(--nh-color-text-muted);
+}
+
+.current {
+  font-weight: var(--nh-weight-bold);
+  color: var(--nh-color-text);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: var(--nh-space-3);
+}
+
+/*
+ * The unavailable direction renders as inert text rather than a disabled link.
+ * There is no such thing as a disabled anchor: aria-disabled on a link still
+ * leaves it focusable and followable, so the link is simply not rendered and
+ * this takes its place.
+ */
+.inactive {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+  padding-inline: var(--nh-space-5);
+  font-size: var(--nh-text-sm);
+  font-weight: var(--nh-weight-bold);
+  color: var(--nh-color-text-subtle);
+  border: 1px solid var(--nh-color-border);
+  border-radius: var(--nh-radius-md);
+  background-color: var(--nh-color-surface-subtle);
+  cursor: not-allowed;
+}
