@@ -1,0 +1,41 @@
+/*
+ * The one gradient in the design. Restrained on purpose: two adjacent navy
+ * tones rather than a colour shift, so it reads as depth instead of decoration.
+ */
+.banner {
+  padding: var(--nh-space-10) var(--nh-space-6);
+  border-radius: var(--nh-radius-xl);
+  background-image: linear-gradient(135deg, var(--nh-navy-900), #0a2540);
+  box-shadow: var(--nh-shadow-xl);
+  text-align: center;
+}
+
+@media (min-width: 48rem) {
+  .banner {
+    padding: var(--nh-space-16) var(--nh-space-12);
+  }
+}
+
+.heading {
+  font-size: var(--nh-text-4xl);
+  color: var(--nh-color-text-inverse);
+  max-inline-size: 20ch;
+  margin-inline: auto;
+}
+
+.summary {
+  margin-block-start: var(--nh-space-4);
+  margin-inline: auto;
+  max-inline-size: 42ch;
+  font-size: var(--nh-text-lg);
+  line-height: var(--nh-leading-relaxed);
+  color: var(--nh-color-text-inverse-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--nh-space-3);
+  margin-block-start: var(--nh-space-8);
+}

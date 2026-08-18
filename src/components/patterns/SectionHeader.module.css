@@ -1,0 +1,28 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nh-space-3);
+  margin-block-end: var(--nh-space-10);
+}
+
+.center {
+  align-items: center;
+  text-align: center;
+  margin-inline: auto;
+  max-inline-size: 46rem;
+}
+
+.heading {
+  font-size: var(--nh-text-3xl);
+}
+
+.summary {
+  font-size: var(--nh-text-lg);
+  line-height: var(--nh-leading-relaxed);
+  color: var(--nh-color-text-muted);
+  max-inline-size: 46rem;
+}
+
+.summaryInverse {
+  color: var(--nh-color-text-inverse-muted);
+}

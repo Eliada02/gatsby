@@ -1,0 +1,31 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--nh-space-6) var(--nh-space-10);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/*
+ * Set in the brand weight rather than shown as logos: inventing logo marks for
+ * fictional organisations would make them look more real, not less.
+ */
+.organisation {
+  font-size: var(--nh-text-base);
+  font-weight: var(--nh-weight-extrabold);
+  letter-spacing: var(--nh-tracking-tight);
+  color: var(--nh-color-text-muted);
+  text-align: center;
+}
+
+.disclaimer {
+  margin-block-start: var(--nh-space-8);
+  text-align: center;
+  font-size: var(--nh-text-xs);
+  color: var(--nh-color-text-subtle);
+  max-inline-size: 46rem;
+  margin-inline: auto;
+}

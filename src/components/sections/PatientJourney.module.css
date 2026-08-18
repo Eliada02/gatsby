@@ -1,0 +1,50 @@
+.list {
+  display: grid;
+  gap: var(--nh-space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /*
+   * auto-fit with a minimum width lets the five cards reflow from one column to
+   * two, three and finally five without a breakpoint per step. The minimum is
+   * the point at which the card copy stops being comfortable to read.
+   */
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nh-space-2);
+  padding: var(--nh-space-5);
+  background-color: var(--nh-color-surface-subtle);
+  border: 1px solid var(--nh-color-border);
+  border-radius: var(--nh-radius-lg);
+  transition:
+    box-shadow var(--nh-duration-base) var(--nh-ease),
+    border-color var(--nh-duration-base) var(--nh-ease);
+}
+
+.card:hover {
+  box-shadow: var(--nh-shadow-md);
+  border-color: var(--nh-color-border-control);
+}
+
+.stage {
+  font-size: var(--nh-text-xs);
+  font-weight: var(--nh-weight-bold);
+  letter-spacing: var(--nh-tracking-wide);
+  color: var(--nh-color-accent-text);
+}
+
+.title {
+  font-size: var(--nh-text-base);
+  font-weight: var(--nh-weight-bold);
+  line-height: var(--nh-leading-snug);
+}
+
+.description {
+  font-size: var(--nh-text-sm);
+  line-height: var(--nh-leading-relaxed);
+  color: var(--nh-color-text-muted);
+}

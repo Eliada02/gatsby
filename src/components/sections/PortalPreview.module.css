@@ -1,0 +1,287 @@
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nh-space-3);
+  margin: 0;
+}
+
+/*
+ * The caption precedes the card in the DOM so screen readers hear "demo data"
+ * before the invented clinical values, and order-1 moves it below visually
+ * where it reads as a footnote.
+ */
+.caption {
+  order: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--nh-space-2);
+  font-size: var(--nh-text-xs);
+  line-height: var(--nh-leading-normal);
+  color: var(--nh-color-text-subtle);
+}
+
+.captionText {
+  flex: 1 1 16rem;
+  min-inline-size: 0;
+}
+
+.card {
+  background-color: var(--nh-color-surface);
+  border: 1px solid var(--nh-color-border);
+  border-radius: var(--nh-radius-xl);
+  box-shadow: var(--nh-shadow-xl);
+  padding: var(--nh-space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--nh-space-5);
+}
+
+@media (min-width: 40rem) {
+  .card {
+    padding: var(--nh-space-6);
+  }
+}
+
+.chrome {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nh-space-3);
+  padding-block-end: var(--nh-space-4);
+  border-block-end: 1px solid var(--nh-color-border-subtle);
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: var(--nh-space-2);
+}
+
+.dotRose,
+.dotAmber,
+.dotEmerald {
+  inline-size: 0.625rem;
+  block-size: 0.625rem;
+  border-radius: var(--nh-radius-full);
+  flex-shrink: 0;
+}
+
+.dotRose {
+  background-color: var(--nh-rose-400);
+}
+.dotAmber {
+  background-color: var(--nh-amber-400);
+}
+.dotEmerald {
+  background-color: var(--nh-emerald-400);
+}
+
+.address {
+  margin-inline-start: var(--nh-space-2);
+  padding: 0.1rem var(--nh-space-2);
+  border-radius: var(--nh-radius-sm);
+  background-color: var(--nh-color-surface-subtle);
+  font-family: var(--nh-font-mono);
+  font-size: var(--nh-text-2xs);
+  color: var(--nh-color-text-subtle);
+}
+
+.sync {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--nh-space-2);
+  font-size: var(--nh-text-xs);
+  font-weight: var(--nh-weight-semibold);
+  color: var(--nh-color-text-muted);
+}
+
+.syncDot {
+  inline-size: 0.5rem;
+  block-size: 0.5rem;
+  border-radius: var(--nh-radius-full);
+  background-color: var(--nh-color-success);
+}
+
+.greeting {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--nh-space-3);
+}
+
+.patient {
+  font-size: var(--nh-text-lg);
+  font-weight: var(--nh-weight-bold);
+  letter-spacing: var(--nh-tracking-tight);
+}
+
+.record {
+  margin-block-start: 0.15rem;
+  font-size: var(--nh-text-xs);
+  color: var(--nh-color-text-subtle);
+}
+
+.coverage {
+  padding: var(--nh-space-1) var(--nh-space-3);
+  border-radius: var(--nh-radius-full);
+  background-color: var(--nh-color-accent-soft-bg);
+  border: 1px solid var(--nh-color-accent-soft-border);
+  color: var(--nh-color-accent-soft-text);
+  font-size: var(--nh-text-xs);
+  font-weight: var(--nh-weight-bold);
+  white-space: nowrap;
+}
+
+.panels {
+  display: grid;
+  gap: var(--nh-space-4);
+}
+
+@media (min-width: 30rem) {
+  .panels {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.panelSky,
+.panelEmerald {
+  padding: var(--nh-space-4);
+  border-radius: var(--nh-radius-lg);
+  border: 1px solid transparent;
+}
+
+.panelSky {
+  background-color: var(--nh-sky-50);
+  border-color: var(--nh-sky-100);
+}
+
+.panelEmerald {
+  background-color: var(--nh-emerald-50);
+  border-color: var(--nh-emerald-100);
+}
+
+.panelLabel,
+.panelLabelSuccess {
+  font-size: var(--nh-text-2xs);
+  font-weight: var(--nh-weight-bold);
+  letter-spacing: var(--nh-tracking-wider);
+  text-transform: uppercase;
+  margin-block-end: var(--nh-space-1);
+}
+
+.panelLabel {
+  color: var(--nh-color-accent-soft-text);
+}
+
+.panelLabelSuccess {
+  color: var(--nh-color-success-soft-text);
+}
+
+.panelTitle {
+  font-size: var(--nh-text-sm);
+  font-weight: var(--nh-weight-bold);
+  color: var(--nh-color-text);
+}
+
+.panelDetail,
+.panelNote {
+  font-size: var(--nh-text-xs);
+  color: var(--nh-color-text-muted);
+  margin-block-start: 0.15rem;
+}
+
+.panelNote {
+  margin-block-start: var(--nh-space-3);
+  font-weight: var(--nh-weight-semibold);
+  color: var(--nh-color-success-soft-text);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nh-space-2);
+  margin-block-start: var(--nh-space-3);
+  padding: 0;
+  list-style: none;
+}
+
+.tag {
+  padding: 0.1rem var(--nh-space-2);
+  border-radius: var(--nh-radius-sm);
+  background-color: var(--nh-color-surface);
+  border: 1px solid var(--nh-color-border);
+  font-size: var(--nh-text-2xs);
+  font-weight: var(--nh-weight-semibold);
+  color: var(--nh-color-text-muted);
+}
+
+.listHeading {
+  font-size: var(--nh-text-2xs);
+  font-weight: var(--nh-weight-bold);
+  letter-spacing: var(--nh-tracking-wider);
+  text-transform: uppercase;
+  color: var(--nh-color-text-subtle);
+  margin-block-end: var(--nh-space-2);
+}
+
+.prescriptions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nh-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.prescription {
+  display: flex;
+  align-items: center;
+  gap: var(--nh-space-3);
+  padding: var(--nh-space-3);
+  border-radius: var(--nh-radius-md);
+  background-color: var(--nh-color-surface-subtle);
+  border: 1px solid var(--nh-color-border-subtle);
+}
+
+.rx {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  inline-size: 2rem;
+  block-size: 2rem;
+  border-radius: var(--nh-radius-sm);
+  background-color: var(--nh-sky-100);
+  color: var(--nh-color-accent-soft-text);
+  font-size: var(--nh-text-2xs);
+  font-weight: var(--nh-weight-bold);
+}
+
+.prescriptionText {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-inline-size: 0;
+}
+
+.prescriptionName {
+  font-size: var(--nh-text-xs);
+  font-weight: var(--nh-weight-bold);
+}
+
+.prescriptionDetail {
+  font-size: var(--nh-text-2xs);
+  color: var(--nh-color-text-muted);
+}
+
+.prescriptionStatus {
+  flex-shrink: 0;
+  padding: 0.15rem var(--nh-space-2);
+  border-radius: var(--nh-radius-sm);
+  background-color: var(--nh-color-success-soft-bg);
+  color: var(--nh-color-success-soft-text);
+  font-size: var(--nh-text-2xs);
+  font-weight: var(--nh-weight-semibold);
+}

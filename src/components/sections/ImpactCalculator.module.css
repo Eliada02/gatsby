@@ -1,0 +1,186 @@
+.panel {
+  display: grid;
+  gap: var(--nh-space-8);
+  padding: var(--nh-space-6);
+  border-radius: var(--nh-radius-xl);
+  background-color: var(--nh-color-surface-dark);
+  border: 1px solid var(--nh-color-border-inverse);
+  box-shadow: var(--nh-shadow-xl);
+  color: var(--nh-color-text-inverse);
+}
+
+@media (min-width: 48rem) {
+  .panel {
+    padding: var(--nh-space-10);
+  }
+}
+
+@media (min-width: 64rem) {
+  .panel {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--nh-space-12);
+    align-items: center;
+  }
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nh-space-4);
+}
+
+.label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--nh-space-3);
+  font-size: var(--nh-text-sm);
+  font-weight: var(--nh-weight-semibold);
+  color: var(--nh-color-text-inverse-muted);
+}
+
+.value {
+  font-family: var(--nh-font-mono);
+  font-size: var(--nh-text-xl);
+  font-weight: var(--nh-weight-bold);
+  color: var(--nh-color-accent-inverse);
+}
+
+/*
+ * Range input styling is the least consistent area of CSS across engines.
+ * WebKit and Blink expose ::-webkit-slider-runnable-track and
+ * ::-webkit-slider-thumb; Gecko exposes ::-moz-range-track and
+ * ::-moz-range-thumb. The rules cannot be combined into one selector list,
+ * because an unrecognised pseudo-element invalidates the whole rule.
+ *
+ * The element itself is left transparent and the track is drawn by the
+ * pseudo-elements, so the two engines produce the same result.
+ */
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  inline-size: 100%;
+  background: transparent;
+  cursor: pointer;
+  /* Reserves room for the thumb so it is not clipped at either end. */
+  block-size: 1.5rem;
+  margin: 0;
+}
+
+.slider::-webkit-slider-runnable-track {
+  block-size: 0.5rem;
+  border-radius: var(--nh-radius-full);
+  background-color: rgb(255 255 255 / 0.18);
+}
+
+.slider::-moz-range-track {
+  block-size: 0.5rem;
+  border-radius: var(--nh-radius-full);
+  background-color: rgb(255 255 255 / 0.18);
+}
+
+/*
+ * 24px thumb meets the WCAG 2.5.8 minimum target size. The negative margin
+ * centres it on the track; WebKit positions the thumb from the track's top
+ * edge, and this property must be physical rather than logical.
+ */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  margin-top: -0.5rem;
+  border-radius: var(--nh-radius-full);
+  background-color: var(--nh-color-accent-inverse);
+  border: 2px solid var(--nh-navy-950);
+}
+
+.slider::-moz-range-thumb {
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  border: 2px solid var(--nh-navy-950);
+  border-radius: var(--nh-radius-full);
+  background-color: var(--nh-color-accent-inverse);
+}
+
+/* The global focus ring is replaced here so it tracks the thumb, not the row. */
+.slider:focus-visible {
+  outline: none;
+}
+
+.slider:focus-visible::-webkit-slider-thumb {
+  outline: var(--nh-focus-width) solid var(--nh-color-focus-inverse);
+  outline-offset: var(--nh-focus-offset);
+}
+
+.slider:focus-visible::-moz-range-thumb {
+  outline: var(--nh-focus-width) solid var(--nh-color-focus-inverse);
+  outline-offset: var(--nh-focus-offset);
+}
+
+.assumptions {
+  font-size: var(--nh-text-xs);
+  line-height: var(--nh-leading-normal);
+  color: var(--nh-color-text-inverse-subtle);
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nh-space-4);
+  padding: var(--nh-space-5);
+  border-radius: var(--nh-radius-lg);
+  background-color: var(--nh-color-surface-darker);
+  border: 1px solid var(--nh-color-border-inverse);
+}
+
+.resultsHeading {
+  font-size: var(--nh-text-2xs);
+  font-weight: var(--nh-weight-bold);
+  letter-spacing: var(--nh-tracking-wider);
+  text-transform: uppercase;
+  color: var(--nh-color-text-inverse-subtle);
+}
+
+.figures {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--nh-space-3);
+  margin: 0;
+}
+
+.figure,
+.figureWide {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--nh-space-1);
+  padding: var(--nh-space-4);
+  border-radius: var(--nh-radius-md);
+  background-color: var(--nh-color-surface-dark);
+  border: 1px solid var(--nh-color-border-inverse);
+}
+
+.figureWide {
+  grid-column: 1 / -1;
+}
+
+.figureLabel {
+  font-size: var(--nh-text-xs);
+  font-weight: var(--nh-weight-semibold);
+  color: var(--nh-color-accent-inverse);
+}
+
+.figureValue {
+  margin: 0;
+  font-family: var(--nh-font-mono);
+  font-size: var(--nh-text-2xl);
+  font-weight: var(--nh-weight-bold);
+  line-height: var(--nh-leading-none);
+  color: var(--nh-color-text-inverse);
+}
+
+.disclaimer {
+  font-size: var(--nh-text-xs);
+  line-height: var(--nh-leading-normal);
+  color: var(--nh-color-text-inverse-subtle);
+}

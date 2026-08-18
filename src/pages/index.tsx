@@ -1,25 +1,37 @@
 import type { HeadFC } from 'gatsby';
 import { Layout } from '@/components/layout/Layout';
-import { Container } from '@/components/primitives/Container';
-import { Section } from '@/components/primitives/Section';
+import { FinalCta } from '@/components/sections/FinalCta';
+import { Hero } from '@/components/sections/Hero';
+import { ImpactCalculator } from '@/components/sections/ImpactCalculator';
+import { PatientJourney } from '@/components/sections/PatientJourney';
+import { PlatformOverview } from '@/components/sections/PlatformOverview';
+import { SecurityPreview } from '@/components/sections/SecurityPreview';
+import { TrustBar } from '@/components/sections/TrustBar';
 import { Seo } from '@/components/seo/Seo';
+import {
+  homeContent,
+  journeyStages,
+  platformCapabilities,
+  securityPractices,
+} from '@/lib/content/source';
 
 /**
- * Route shell. Sections are built out in a later phase; the structure, landmark
- * placement and metadata are correct from the start so navigation and heading
- * order can be tested now rather than retrofitted.
+ * The home page is composition only.
+ *
+ * Content is read here and passed down as props; no section reaches for the
+ * content module itself. That is what keeps the sections reusable on other
+ * pages and testable with fixtures, and it is the seam that lets the source
+ * become a CMS or a REST call without touching a single section.
  */
 const IndexPage = () => (
   <Layout>
-    <Section aria-labelledby="home-heading">
-      <Container>
-        <h1 id="home-heading">Healthcare, designed around people.</h1>
-        <p>
-          NovaHealth turns every step of the care journey into one connected digital experience,
-          from finding the right clinician to recovery check-ins.
-        </p>
-      </Container>
-    </Section>
+    <Hero content={homeContent.hero} portal={homeContent.portal} />
+    <TrustBar content={homeContent.trust} />
+    <PatientJourney intro={homeContent.journey} stages={journeyStages} />
+    <PlatformOverview intro={homeContent.platform} capabilities={platformCapabilities} />
+    <ImpactCalculator content={homeContent.impact} />
+    <SecurityPreview intro={homeContent.security} practices={securityPractices} />
+    <FinalCta content={homeContent.finalCta} />
   </Layout>
 );
 

@@ -1,0 +1,75 @@
+/* Inner slab, darker than the band, matching the reference's nested panel. */
+.panel {
+  background-color: var(--nh-color-surface-darker);
+  border: 1px solid var(--nh-color-border-inverse);
+  border-radius: var(--nh-radius-xl);
+  padding: var(--nh-space-6);
+  box-shadow: var(--nh-shadow-xl);
+}
+
+@media (min-width: 48rem) {
+  .panel {
+    padding: var(--nh-space-10);
+  }
+}
+
+.list {
+  display: grid;
+  gap: var(--nh-space-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nh-space-3);
+  padding: var(--nh-space-5);
+  background-color: var(--nh-color-surface-dark);
+  border: 1px solid var(--nh-color-border-inverse);
+  border-radius: var(--nh-radius-lg);
+}
+
+.title {
+  font-size: var(--nh-text-lg);
+  font-weight: var(--nh-weight-bold);
+  color: var(--nh-color-text-inverse);
+}
+
+.description {
+  font-size: var(--nh-text-sm);
+  line-height: var(--nh-leading-relaxed);
+  color: var(--nh-color-text-inverse-muted);
+}
+
+.note {
+  display: flex;
+  align-items: center;
+  gap: var(--nh-space-2);
+  margin-block-start: auto;
+  font-size: var(--nh-text-xs);
+  font-weight: var(--nh-weight-semibold);
+}
+
+.noteDot {
+  inline-size: 0.375rem;
+  block-size: 0.375rem;
+  border-radius: var(--nh-radius-full);
+  background-color: currentColor;
+  flex-shrink: 0;
+}
+
+/* All three clear 4.5:1 on the dark panel; verified in contrast.test.ts. */
+.sky {
+  color: var(--nh-color-accent-inverse);
+}
+
+.emerald {
+  color: var(--nh-color-success-inverse);
+}
+
+.teal {
+  color: var(--nh-sky-200);
+}

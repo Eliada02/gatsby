@@ -1,0 +1,113 @@
+.section {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--nh-section-y-lg);
+}
+
+/*
+ * Dot grid from the reference. A pseudo-element rather than a background on the
+ * section itself, so it can fade out toward the foot of the band without
+ * affecting the content above it.
+ */
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--nh-dot-color) 1px, transparent 1px);
+  background-size: var(--nh-dot-size) var(--nh-dot-size);
+  mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  pointer-events: none;
+}
+
+.grid {
+  position: relative;
+  display: grid;
+  gap: var(--nh-space-12);
+  align-items: center;
+}
+
+@media (min-width: 64rem) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--nh-space-16);
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--nh-space-5);
+}
+
+.heading {
+  font-size: var(--nh-text-5xl);
+  letter-spacing: var(--nh-tracking-tighter);
+  line-height: var(--nh-leading-tight);
+}
+
+/*
+ * sky-600 is 4.10:1 on the canvas, which meets the 3:1 threshold for large
+ * text only. It is used here because the heading is 40px and above at every
+ * breakpoint. Body-size accent text uses --nh-color-accent-text instead.
+ */
+.accent {
+  color: var(--nh-color-accent-display);
+}
+
+.summary {
+  font-size: var(--nh-text-lg);
+  line-height: var(--nh-leading-relaxed);
+  color: var(--nh-color-text-muted);
+  max-inline-size: 34rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nh-space-3);
+  padding-block-start: var(--nh-space-2);
+}
+
+.metrics {
+  inline-size: 100%;
+  margin: 0;
+  padding-block-start: var(--nh-space-6);
+  border-block-start: 1px solid var(--nh-color-border);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--nh-space-4);
+}
+
+/*
+ * column-reverse shows the value above its label, matching the reference,
+ * while the DOM keeps <dt> before <dd> as a description list requires. The
+ * pairing is what carries meaning, and reversing two adjacent items of one
+ * pair does not create a confusing reading order.
+ */
+.metric {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0.15rem;
+}
+
+.metricValue {
+  font-size: var(--nh-text-2xl);
+  font-weight: var(--nh-weight-extrabold);
+  letter-spacing: var(--nh-tracking-tight);
+  line-height: var(--nh-leading-none);
+}
+
+.metricLabel {
+  font-size: var(--nh-text-2xs);
+  font-weight: var(--nh-weight-semibold);
+  letter-spacing: var(--nh-tracking-wider);
+  text-transform: uppercase;
+  color: var(--nh-color-text-subtle);
+}
+
+.metricsNote {
+  font-size: var(--nh-text-xs);
+  color: var(--nh-color-text-subtle);
+}
