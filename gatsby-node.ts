@@ -48,3 +48,32 @@ export const onCreatePage: GatsbyNode['onCreatePage'] = ({ page, actions }) => {
     },
   });
 };
+
+/**
+ * One statically generated page per resource.
+ *
+ * Built from the content source directly rather than through the REST endpoint:
+ * the endpoint does not exist during a build, and going over HTTP to reach data
+ * already in memory would be indirection with no benefit.
+ */
+export const createPages: GatsbyNode['createPages'] = ({ actions }) => {
+  const template = path.resolve(__dirname, 'src/templates/ResourceDetail.tsx');
+
+  for (const resource of resources) {
+    /*
+     * Related resources are chosen at build time: same category, most recent
+     * first, excluding the resource itself. Computing this here keeps the
+     * template free of selection logic and costs nothing at runtime.
+     */
+    const related = resources
+      .filter((other) => other.category === resource.category && other.id !== resource.id)
+      .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
+      .slice(0, 3);
+
+    actions.createPage({
+      path: `/resources/${resource.slug}`,
+      component: template,
+      context: { resource, related },
+    });
+  }
+};
