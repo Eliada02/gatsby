@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { MAIN_CONTENT_ID } from './constants';
+import { ConsentBanner } from './ConsentBanner';
 import { Footer } from './Footer';
 import { Header } from './Header';
 import { SkipLink } from './SkipLink';
@@ -33,6 +34,9 @@ export function Layout({ children }: LayoutProps) {
         {children}
       </main>
       <Footer />
+      {/* Last in the document so it never precedes the page heading, and so
+          keyboard focus reaches page content before the notice. */}
+      <ConsentBanner />
     </>
   );
 }

@@ -1,0 +1,61 @@
+/*
+ * Fixed to the foot of the viewport. It sits above page content but below the
+ * mobile navigation panel, so opening the menu is never blocked by it.
+ */
+.banner {
+  position: fixed;
+  inset-inline: 0;
+  inset-block-end: 0;
+  z-index: calc(var(--nh-z-header) - 2);
+  padding: var(--nh-space-4) var(--nh-container-pad);
+  background-color: var(--nh-color-surface);
+  border-block-start: 1px solid var(--nh-color-border);
+  box-shadow: var(--nh-shadow-lg);
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nh-space-4);
+  max-inline-size: var(--nh-container-max);
+  margin-inline: auto;
+}
+
+@media (min-width: 48rem) {
+  .inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--nh-space-8);
+  }
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nh-space-1);
+}
+
+.title {
+  font-size: var(--nh-text-sm);
+  font-weight: var(--nh-weight-bold);
+}
+
+.body {
+  max-inline-size: 68ch;
+  font-size: var(--nh-text-xs);
+  line-height: var(--nh-leading-normal);
+  color: var(--nh-color-text-muted);
+}
+
+/*
+ * Both actions are the same size and sit together. Neither is visually demoted,
+ * because making refusal harder than acceptance is the failure mode of consent
+ * notices.
+ */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nh-space-3);
+  flex-shrink: 0;
+}
