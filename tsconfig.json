@@ -12,7 +12,23 @@
     "isolatedModules": true,
     "skipLibCheck": true,
     "noEmit": true,
-    "strict": true
+
+    // Type-safety settings beyond `strict`.
+    // noUncheckedIndexedAccess makes arr[i] return `T | undefined`, which forces
+    // the pagination and filtering code to handle out-of-range access explicitly.
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+
+    // Unused-code detection is delegated to ESLint, which supports an `_` escape
+    // hatch for intentionally unused values. Enabling it here too would emit the
+    // same diagnostic twice.
+
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "include": ["./src/**/*", "./gatsby-*.ts"]
 }

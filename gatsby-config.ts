@@ -6,7 +6,10 @@ import type { GatsbyConfig } from 'gatsby';
  * at production.
  */
 const siteUrl =
-  process.env.SITE_URL ?? process.env.DEPLOY_PRIME_URL ?? process.env.URL ?? 'http://localhost:8000';
+  process.env.SITE_URL ??
+  process.env.DEPLOY_PRIME_URL ??
+  process.env.URL ??
+  'http://localhost:8000';
 
 const config: GatsbyConfig = {
   siteMetadata: {
