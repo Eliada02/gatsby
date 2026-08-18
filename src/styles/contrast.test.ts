@@ -163,6 +163,20 @@ const COMBINATIONS: ReadonlyArray<{
     min: AA_NORMAL,
   },
 
+  // Solid buttons
+  {
+    what: 'primary button label',
+    fg: '--nh-color-text-inverse',
+    bg: '--nh-color-action',
+    min: AA_NORMAL,
+  },
+  {
+    what: 'accent button label',
+    fg: '--nh-color-text-inverse',
+    bg: '--nh-color-accent-solid',
+    min: AA_NORMAL,
+  },
+
   // Non-text: WCAG 1.4.11
   { what: 'focus ring on canvas', fg: '--nh-color-focus', bg: '--nh-color-canvas', min: 3 },
   { what: 'focus ring on white', fg: '--nh-color-focus', bg: '--nh-color-surface', min: 3 },
@@ -170,6 +184,18 @@ const COMBINATIONS: ReadonlyArray<{
     what: 'inverse focus ring on dark surface',
     fg: '--nh-color-focus-inverse',
     bg: '--nh-color-surface-dark',
+    min: 3,
+  },
+  {
+    what: 'control border on white',
+    fg: '--nh-color-border-control',
+    bg: '--nh-color-surface',
+    min: 3,
+  },
+  {
+    what: 'control border on canvas',
+    fg: '--nh-color-border-control',
+    bg: '--nh-color-canvas',
     min: 3,
   },
   {

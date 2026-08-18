@@ -25,6 +25,12 @@
   --nh-slate-200: #e2e8f0;
   --nh-slate-300: #cbd5e1;
   --nh-slate-400: #94a3b8;
+  /*
+   * Custom mid-tone between slate-400 and slate-500. 3.24:1 on white, which is
+   * the lightest border that satisfies WCAG 1.4.11 for control boundaries.
+   * slate-400 (2.56:1) and slate-300 (1.48:1) both fail.
+   */
+  --nh-slate-450: #8290a5;
   --nh-slate-500: #64748b;
   --nh-slate-600: #475569;
   --nh-slate-700: #334155;
@@ -124,6 +130,19 @@
    */
   --nh-color-border-interactive: var(--nh-slate-500); /*  4.76:1 on white */
   --nh-color-border-inverse: var(--nh-slate-800);
+
+  /* Solid action surfaces (buttons) */
+  --nh-color-action: var(--nh-slate-900); /* white label 17.85:1 — AAA */
+  --nh-color-action-hover: var(--nh-slate-800);
+  /*
+   * The reference used sky-600 for solid accent buttons; white on sky-600 is
+   * 4.10:1 and fails AA at label size. sky-700 gives 5.93:1.
+   */
+  --nh-color-accent-solid: var(--nh-sky-700);
+  --nh-color-accent-solid-hover: var(--nh-sky-800);
+
+  /* Boundary of a control that has no background contrast of its own */
+  --nh-color-border-control: var(--nh-slate-450);
 
   /* Focus — 3.96:1 on canvas, clearing the 3:1 non-text requirement */
   --nh-color-focus: var(--nh-sky-600);

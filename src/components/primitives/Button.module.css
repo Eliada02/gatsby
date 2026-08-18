@@ -1,0 +1,168 @@
+/*
+ * Shared styling for Button and ButtonLink. One stylesheet, two components:
+ * an action is a <button>, a navigation is an <a>, and they must look identical
+ * without being the same element.
+ */
+
+.base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--nh-space-2);
+  font-family: inherit;
+  font-weight: var(--nh-weight-bold);
+  line-height: var(--nh-leading-none);
+  letter-spacing: var(--nh-tracking-tight);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-duration: var(--nh-duration-base);
+  transition-timing-function: var(--nh-ease);
+}
+
+/*
+ * Buttons never underline on hover; the colour and background change already
+ * signal the state, and an underline on a filled button reads as a defect.
+ */
+.base:hover {
+  text-decoration: none;
+}
+
+.base:disabled,
+.base[aria-disabled='true'] {
+  cursor: not-allowed;
+  opacity: 0.55;
+  box-shadow: none;
+}
+
+/* ---- Sizes ----
+ * min-height rather than vertical padding guarantees the target size even when
+ * the label wraps or the font fails to load. 44px on md/lg meets WCAG 2.5.5
+ * (AAA); the 40px sm variant still clears the 24px AA minimum comfortably.
+ */
+
+.sm {
+  min-height: 2.5rem;
+  padding-inline: var(--nh-space-4);
+  font-size: var(--nh-text-sm);
+}
+
+.md {
+  min-height: 2.75rem;
+  padding-inline: var(--nh-space-6);
+  font-size: var(--nh-text-sm);
+}
+
+.lg {
+  min-height: 3.25rem;
+  padding-inline: var(--nh-space-8);
+  font-size: var(--nh-text-base);
+}
+
+/* ---- Shape ---- */
+
+.rounded {
+  border-radius: var(--nh-radius-md);
+}
+
+.pill {
+  border-radius: var(--nh-radius-full);
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+/* ---- Variants ---- */
+
+.primary {
+  background-color: var(--nh-color-action);
+  color: var(--nh-color-text-inverse);
+  box-shadow: var(--nh-shadow-md);
+}
+
+.primary:hover:not(:disabled) {
+  background-color: var(--nh-color-action-hover);
+  box-shadow: var(--nh-shadow-lg);
+}
+
+.accent {
+  background-color: var(--nh-color-accent-solid);
+  color: var(--nh-color-text-inverse);
+  box-shadow: var(--nh-shadow-md);
+}
+
+.accent:hover:not(:disabled) {
+  background-color: var(--nh-color-accent-solid-hover);
+}
+
+/*
+ * A white button on the near-white canvas has almost no background contrast, so
+ * its border is what identifies it as a control. That border therefore uses the
+ * 3.24:1 control token rather than the decorative hairline used on cards.
+ */
+.secondary {
+  background-color: var(--nh-color-surface);
+  color: var(--nh-color-text);
+  border-color: var(--nh-color-border-control);
+  box-shadow: var(--nh-shadow-xs);
+}
+
+.secondary:hover:not(:disabled) {
+  background-color: var(--nh-color-surface-subtle);
+  border-color: var(--nh-color-text-subtle);
+}
+
+.ghost {
+  background-color: transparent;
+  color: var(--nh-color-text-muted);
+}
+
+.ghost:hover:not(:disabled) {
+  background-color: var(--nh-color-surface-muted);
+  color: var(--nh-color-text);
+}
+
+/* ---- On dark sections ---- */
+
+.inverse {
+  background-color: var(--nh-color-surface);
+  color: var(--nh-color-text);
+}
+
+.inverse:hover:not(:disabled) {
+  background-color: var(--nh-color-surface-subtle);
+}
+
+/*
+ * Translucent fill over navy, as in the reference. The border is white at 40%
+ * rather than 20%: over --nh-color-surface-dark that lands above 3:1, where the
+ * reference's 20% did not.
+ */
+.inverseOutline {
+  background-color: rgb(255 255 255 / 0.1);
+  color: var(--nh-color-text-inverse);
+  border-color: rgb(255 255 255 / 0.4);
+}
+
+.inverseOutline:hover:not(:disabled) {
+  background-color: rgb(255 255 255 / 0.18);
+  border-color: rgb(255 255 255 / 0.6);
+}
+
+/* Trailing arrow used on primary calls to action in the reference. */
+.arrow {
+  transition: transform var(--nh-duration-base) var(--nh-ease);
+}
+
+.base:hover .arrow {
+  transform: translateX(2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .base:hover .arrow {
+    transform: none;
+  }
+}
