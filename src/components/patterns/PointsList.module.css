@@ -1,0 +1,37 @@
+/*
+ * Card grid for short titled points. The security practices, the site's data
+ * handling notes and the about principles are the same shape of content, so
+ * they share one treatment rather than three copies of it.
+ */
+
+.list {
+  display: grid;
+  gap: var(--nh-space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nh-space-2);
+  padding: var(--nh-space-5);
+  background-color: var(--nh-color-surface);
+  border: 1px solid var(--nh-color-border);
+  border-radius: var(--nh-radius-lg);
+  box-shadow: var(--nh-shadow-xs);
+}
+
+.title {
+  font-size: var(--nh-text-base);
+  font-weight: var(--nh-weight-bold);
+  line-height: var(--nh-leading-snug);
+}
+
+.description {
+  font-size: var(--nh-text-sm);
+  line-height: var(--nh-leading-relaxed);
+  color: var(--nh-color-text-muted);
+}

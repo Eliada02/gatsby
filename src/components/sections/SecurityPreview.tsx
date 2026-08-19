@@ -1,3 +1,4 @@
+import { PointsList } from '@/components/patterns/PointsList';
 import { SectionHeader } from '@/components/patterns/SectionHeader';
 import { Container } from '@/components/primitives/Container';
 import { Section } from '@/components/primitives/Section';
@@ -31,14 +32,9 @@ export function SecurityPreview({ intro, practices }: SecurityPreviewProps) {
           summary={intro.summary}
         />
 
-        <ul className={styles.list}>
-          {practices.map((practice) => (
-            <li key={practice.id} className={styles.card}>
-              <h3 className={styles.title}>{practice.title}</h3>
-              <p className={styles.description}>{practice.description}</p>
-            </li>
-          ))}
-        </ul>
+        {/* SecurityPractice is a titled point, so it uses the shared card grid
+            rather than a second copy of the same treatment. */}
+        <PointsList points={practices} />
 
         <p className={styles.footnote}>
           These describe design intent for a demonstration project. NovaHealth holds no

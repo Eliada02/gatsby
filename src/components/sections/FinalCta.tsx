@@ -33,6 +33,7 @@ export function FinalCta({ content }: { content: FinalCtaContent }) {
               size="lg"
               shape="pill"
               withArrow
+              tracking={{ name: content.primaryCta.label, location: 'final_cta' }}
             >
               {content.primaryCta.label}
             </ButtonLink>
@@ -41,6 +42,7 @@ export function FinalCta({ content }: { content: FinalCtaContent }) {
               variant="inverseOutline"
               size="lg"
               shape="pill"
+              tracking={{ name: content.secondaryCta.label, location: 'final_cta' }}
             >
               {content.secondaryCta.label}
             </ButtonLink>

@@ -1,3 +1,4 @@
+import type { ContactFieldErrors } from './contact';
 import type { Resource, ResourceCategory } from './content';
 
 /**
@@ -47,4 +48,28 @@ export type ResourceListResponse = Paginated<Resource>;
 export interface ApiErrorBody {
   code: string;
   message: string;
+}
+
+/* ---- POST /api/contact ---- */
+
+/**
+ * Accepted submission.
+ *
+ * `status` rather than a bare 200 body, so the client can distinguish "the
+ * server took this" from any proxy or gateway that happens to answer with JSON.
+ */
+export interface ContactSuccessBody {
+  status: 'received';
+  message: string;
+}
+
+/**
+ * Rejected submission.
+ *
+ * `fields` carries one message per invalid field so the form can attach each
+ * one to the input it belongs to, rather than showing a single sentence that
+ * leaves the reader to guess which field is wrong.
+ */
+export interface ContactErrorBody extends ApiErrorBody {
+  fields?: ContactFieldErrors;
 }

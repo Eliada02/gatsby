@@ -2,6 +2,8 @@ import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { navigate } from 'gatsby';
 import { axe } from 'jest-axe';
+import { setConsent } from '@/lib/analytics/consent';
+import { resetPendingEvents } from '@/lib/analytics/dataLayer';
 import { queryResources } from '@/lib/content/resource-query';
 import { resources } from '@/lib/content/source';
 import type { ResourceListResponse } from '@/types/api';
@@ -52,7 +54,14 @@ beforeEach(() => {
   mockFetch.mockReset();
   mockNavigate.mockReset();
   global.fetch = mockFetch as unknown as typeof fetch;
+  window.localStorage.clear();
+  window.dataLayer = [];
+  resetPendingEvents();
 });
+
+const dataLayer = () => window.dataLayer ?? [];
+const eventsNamed = (name: string) =>
+  dataLayer().filter((entry) => (entry as { event: string }).event === name);
 
 describe('ResourceLibrary', () => {
   describe('initial render', () => {
@@ -323,5 +332,302 @@ describe('ResourceLibrary', () => {
       await screen.findByText(/no resources match/i);
       expect(await axe(container)).toHaveNoViolations();
     });
+  });
+});
+
+/**
+ * Library analytics.
+ *
+ * Search and filter events both carry the number of results, which does not
+ * exist at the moment of the interaction. They are emitted when the results
+ * arrive, so these assertions are as much about what is *not* recorded —
+ * keystrokes, deep links, a cleared field — as about what is.
+ *
+ * navigate is mocked, so the router's half of the cycle is performed by
+ * re-rendering with the search string the component asked for.
+ */
+describe('analytics', () => {
+  it('records one resource_search for a settled term, with its result count', async () => {
+    const user = userEvent.setup();
+    setConsent('granted');
+    respondFromContent();
+    const { rerender } = render(<ResourceLibrary search="" initialData={firstPage()} />);
+
+    await user.type(screen.getByLabelText(/search resources/i), 'access');
+    await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith('/resources?search=access'));
+
+    rerender(<ResourceLibrary search="?search=access" />);
+    await waitFor(() => expect(eventsNamed('resource_search')).toHaveLength(1));
+
+    expect(eventsNamed('resource_search')[0]).toEqual({
+      event: 'resource_search',
+      search_term: 'access',
+      results_count: queryResources(resources, { q: 'access' }).meta.total,
+    });
+  });
+
+  it('does not record a search per keystroke', async () => {
+    const user = userEvent.setup();
+    setConsent('granted');
+    respondFromContent();
+    const { rerender } = render(<ResourceLibrary search="" initialData={firstPage()} />);
+
+    await user.type(screen.getByLabelText(/search resources/i), 'audit');
+    await waitFor(() => expect(mockNavigate).toHaveBeenCalledTimes(1));
+
+    rerender(<ResourceLibrary search="?search=audit" />);
+    await waitFor(() => expect(eventsNamed('resource_search')).toHaveLength(1));
+
+    // Five characters, one event.
+    expect(eventsNamed('resource_search')).toHaveLength(1);
+  });
+
+  it('records a zero-result search rather than skipping it', async () => {
+    const user = userEvent.setup();
+    setConsent('granted');
+    respondFromContent();
+    const { rerender } = render(<ResourceLibrary search="" initialData={firstPage()} />);
+
+    await user.type(screen.getByLabelText(/search resources/i), 'zzzznothing');
+    await waitFor(() => expect(mockNavigate).toHaveBeenCalled());
+
+    rerender(<ResourceLibrary search="?search=zzzznothing" />);
+
+    // Searches that find nothing are the most useful ones in the report.
+    await waitFor(() =>
+      expect(eventsNamed('resource_search')[0]).toMatchObject({ results_count: 0 }),
+    );
+  });
+
+  it('does not record a search for a page arrived at from a shared link', async () => {
+    // The filters were already in the URL. Counting that as a search would
+    // report every visit to a bookmarked query as a fresh one.
+    setConsent('granted');
+    respondFromContent();
+    render(<ResourceLibrary search="?search=access" />);
+
+    await waitFor(() => expect(screen.getAllByRole('article').length).toBeGreaterThan(0));
+    expect(eventsNamed('resource_search')).toHaveLength(0);
+  });
+
+  it('does not record clearing the search field as a search', async () => {
+    const user = userEvent.setup();
+    setConsent('granted');
+    respondFromContent();
+    const { rerender } = render(<ResourceLibrary search="?search=audit" />);
+
+    await waitFor(() => expect(screen.getAllByRole('article').length).toBeGreaterThan(0));
+    await user.click(screen.getByRole('button', { name: /clear search/i }));
+    rerender(<ResourceLibrary search="" />);
+
+    await waitFor(() => expect(screen.getAllByRole('article').length).toBeGreaterThan(0));
+    expect(eventsNamed('resource_search')).toHaveLength(0);
+  });
+
+  it('records a category filter with the count it produced', async () => {
+    const user = userEvent.setup();
+    setConsent('granted');
+    respondFromContent();
+    const { rerender } = render(<ResourceLibrary search="" initialData={firstPage()} />);
+
+    await user.selectOptions(screen.getByLabelText(/category/i), 'interoperability');
+    rerender(<ResourceLibrary search="?category=interoperability" />);
+
+    await waitFor(() => expect(eventsNamed('resource_filter')).toHaveLength(1));
+    expect(eventsNamed('resource_filter')[0]).toEqual({
+      event: 'resource_filter',
+      filter_type: 'category',
+      filter_value: 'interoperability',
+      results_count: queryResources(resources, { category: 'interoperability' }).meta.total,
+    });
+  });
+
+  it('records the sort order as a filter change', async () => {
+    const user = userEvent.setup();
+    setConsent('granted');
+    respondFromContent();
+    const { rerender } = render(<ResourceLibrary search="" initialData={firstPage()} />);
+
+    await user.selectOptions(screen.getByLabelText(/sort by/i), 'oldest');
+    rerender(<ResourceLibrary search="?sort=oldest" />);
+
+    await waitFor(() => expect(eventsNamed('resource_filter')).toHaveLength(1));
+    expect(eventsNamed('resource_filter')[0]).toMatchObject({
+      filter_type: 'sort',
+      filter_value: 'oldest',
+    });
+  });
+
+  it('records clearing the category as a filter change to all', async () => {
+    const user = userEvent.setup();
+    setConsent('granted');
+    respondFromContent();
+    const { rerender } = render(<ResourceLibrary search="?category=interoperability" />);
+
+    await waitFor(() => expect(screen.getAllByRole('article').length).toBeGreaterThan(0));
+    await user.selectOptions(screen.getByLabelText(/category/i), '');
+    rerender(<ResourceLibrary search="" />);
+
+    await waitFor(() => expect(eventsNamed('resource_filter')).toHaveLength(1));
+    expect(eventsNamed('resource_filter')[0]).toMatchObject({ filter_value: 'all' });
+  });
+
+  it('drops the pending interaction when the request fails', async () => {
+    // Attaching it to whatever loads next would report a count that was never
+    // on screen for that interaction.
+    const user = userEvent.setup();
+    setConsent('granted');
+    respondWith({ code: 'boom', message: 'nope' }, 500);
+    const { rerender } = render(<ResourceLibrary search="" initialData={firstPage()} />);
+
+    await user.selectOptions(screen.getByLabelText(/category/i), 'interoperability');
+    rerender(<ResourceLibrary search="?category=interoperability" />);
+    await screen.findByRole('alert');
+
+    respondFromContent();
+    rerender(<ResourceLibrary search="" />);
+    await waitFor(() => expect(screen.getAllByRole('article').length).toBeGreaterThan(0));
+
+    expect(eventsNamed('resource_filter')).toHaveLength(0);
+  });
+
+  it('records resource_open with the position of the card that was opened', async () => {
+    const user = userEvent.setup();
+    setConsent('granted');
+    render(<ResourceLibrary search="" initialData={firstPage()} />);
+
+    const second = firstPage().data[1]!;
+    await user.click(screen.getByRole('link', { name: second.title }));
+
+    expect(eventsNamed('resource_open')).toHaveLength(1);
+    expect(eventsNamed('resource_open')[0]).toEqual({
+      event: 'resource_open',
+      resource_id: second.id,
+      resource_title: second.title,
+      resource_category: second.category,
+      list_position: 2,
+    });
+  });
+
+  it('records nothing at all while consent is withheld', async () => {
+    const user = userEvent.setup();
+    setConsent('denied');
+    respondFromContent();
+    const { rerender } = render(<ResourceLibrary search="" initialData={firstPage()} />);
+
+    await user.selectOptions(screen.getByLabelText(/category/i), 'interoperability');
+    rerender(<ResourceLibrary search="?category=interoperability" />);
+    await waitFor(() => expect(mockFetch).toHaveBeenCalled());
+
+    await user.click(screen.getAllByRole('article')[0]!.querySelector('a')!);
+
+    expect(dataLayer()).toHaveLength(0);
+  });
+});
+
+/**
+ * Keyboard and screen reader behaviour of the library controls.
+ *
+ * The library is the one part of the site that changes its own content in
+ * place, so these are the assertions that a change is perceivable to someone
+ * who cannot see the grid redraw.
+ */
+describe('keyboard and announcements', () => {
+  it('reaches search, filters and results in the order they are read', async () => {
+    const user = userEvent.setup();
+    respondFromContent();
+    render(<ResourceLibrary search="" initialData={firstPage()} />);
+
+    await user.tab();
+    expect(screen.getByLabelText(/search resources/i)).toHaveFocus();
+
+    await user.tab();
+    expect(screen.getByLabelText(/category/i)).toHaveFocus();
+
+    await user.tab();
+    expect(screen.getByLabelText(/sort by/i)).toHaveFocus();
+
+    await user.tab();
+    // The first result, rather than anything between the toolbar and the grid.
+    expect(document.activeElement).toBe(
+      screen.getByRole('link', { name: firstPage().data[0]!.title }),
+    );
+  });
+
+  it('uses native controls, so filtering works with the keyboard alone', async () => {
+    // Native selects rather than a custom listbox: arrow keys, type-ahead,
+    // Escape and the mobile picker all come for free, and none of them can
+    // regress. The URL is the state, so the assertion is on what the control
+    // asks the router for.
+    const user = userEvent.setup();
+    respondFromContent();
+    render(<ResourceLibrary search="" initialData={firstPage()} />);
+
+    const category = screen.getByLabelText(/category/i);
+    expect(category.tagName).toBe('SELECT');
+    expect(screen.getByLabelText(/sort by/i).tagName).toBe('SELECT');
+
+    await user.selectOptions(category, 'interoperability');
+    expect(mockNavigate).toHaveBeenCalledWith('/resources?category=interoperability');
+  });
+
+  it('announces the result count through one polite region', async () => {
+    respondFromContent();
+    render(<ResourceLibrary search="" initialData={firstPage()} />);
+
+    await waitFor(() => {
+      expect(screen.getByRole('status')).toHaveTextContent(/\d+ resources found/i);
+    });
+    // Two regions would announce the same change twice; a whole page marked
+    // live would announce everything.
+    expect(screen.getAllByRole('status')).toHaveLength(1);
+  });
+
+  it('interrupts with an alert when loading fails, rather than politely', async () => {
+    // A failure the reader has to act on is the one case where interrupting is
+    // correct.
+    respondWith({ code: 'boom', message: 'nope' }, 500);
+    render(<ResourceLibrary search="" />);
+
+    const alert = await screen.findByRole('alert');
+    expect(alert).toHaveTextContent(/could not load/i);
+    // The polite region empties, so the two never talk over each other.
+    await waitFor(() => expect(screen.getByRole('status')).toBeEmptyDOMElement());
+  });
+
+  it('hides the loading placeholders from screen readers', async () => {
+    // A dozen empty skeleton cards read aloud tell the user nothing; the live
+    // region says "Loading resources" instead.
+    mockFetch.mockReturnValue(new Promise(() => {}));
+    const { container } = render(<ResourceLibrary search="?category=digital-health" />);
+
+    const skeleton = container.querySelector('[aria-hidden="true"] ');
+    expect(skeleton ?? container.querySelector('[aria-hidden="true"]')).not.toBeNull();
+    expect(screen.getByRole('status')).toHaveTextContent(/loading resources/i);
+  });
+
+  it('keeps the empty state usable by keyboard', async () => {
+    const user = userEvent.setup();
+    respondWith({ data: [], meta: { total: 0, page: 1, pageSize: 6, totalPages: 1 } });
+    render(<ResourceLibrary search="?search=zzzznothing" />);
+
+    const reset = await screen.findByRole('button', { name: /clear search and filters/i });
+    reset.focus();
+    await user.keyboard('{Enter}');
+
+    expect(mockNavigate).toHaveBeenCalledWith('/resources');
+  });
+
+  it('names each pagination control by the page it opens', async () => {
+    respondWith({
+      data: queryResources(resources).data,
+      meta: { total: 20, page: 2, pageSize: 6, totalPages: 4 },
+    });
+    render(<ResourceLibrary search="?page=2" />);
+
+    const pager = await screen.findByRole('navigation', { name: /resource library pages/i });
+    // "Previous"/"Next" alone are ambiguous in a screen reader's link list.
+    expect(within(pager).getByRole('link', { name: /previous page, page 1/i })).toBeInTheDocument();
+    expect(within(pager).getByRole('link', { name: /next page, page 3/i })).toBeInTheDocument();
   });
 });

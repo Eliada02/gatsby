@@ -1,0 +1,27 @@
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nh-space-3);
+  margin-block-end: var(--nh-space-8);
+}
+
+.summary {
+  font-size: var(--nh-text-lg);
+  line-height: var(--nh-leading-relaxed);
+  color: var(--nh-color-text-muted);
+}
+
+/*
+ * The note states what happens to a message. It is styled as a standing notice
+ * rather than fine print: someone about to type their details deserves to know
+ * before they start, not after.
+ */
+.note {
+  padding: var(--nh-space-4);
+  font-size: var(--nh-text-sm);
+  line-height: var(--nh-leading-relaxed);
+  color: var(--nh-color-text-muted);
+  background-color: var(--nh-color-surface-subtle);
+  border: 1px solid var(--nh-color-border);
+  border-radius: var(--nh-radius-md);
+}

@@ -1,32 +1,56 @@
 import type { HeadFC } from 'gatsby';
+import { ContactSection } from '@/components/contact/ContactSection';
 import { Layout } from '@/components/layout/Layout';
+import { PageHero } from '@/components/patterns/PageHero';
+import { PointsList } from '@/components/patterns/PointsList';
+import { SectionHeader } from '@/components/patterns/SectionHeader';
 import { Container } from '@/components/primitives/Container';
 import { Section } from '@/components/primitives/Section';
+import { AboutStory } from '@/components/sections/AboutStory';
 import { Seo } from '@/components/seo/Seo';
+import { aboutContent } from '@/lib/content/source';
+
+const PRINCIPLES_HEADING_ID = 'about-principles-heading';
 
 /**
- * Route shell. Sections are built out in a later phase; the structure, landmark
- * placement and metadata are correct from the start so navigation and heading
- * order can be tested now rather than retrofitted.
+ * About and contact.
+ *
+ * One page rather than two, because the navigation, the footer and every
+ * closing call to action point at /about#contact. Splitting them would leave
+ * those links either wrong or pointing at a page with one form on it.
  */
 const AboutPage = () => (
   <Layout>
-    <Section aria-labelledby="about-heading">
+    <PageHero
+      eyebrow={aboutContent.hero.eyebrow}
+      heading={aboutContent.hero.heading}
+      summary={aboutContent.hero.summary}
+    />
+
+    <AboutStory content={aboutContent.story} />
+
+    <Section tone="canvas" aria-labelledby={PRINCIPLES_HEADING_ID}>
       <Container>
-        <h1 id="about-heading">Built by people who have waited in the same queues</h1>
-        <p>
-          NovaHealth is a demonstration of what a modern, human-centred health platform can look
-          like when accessibility and clarity come first.
-        </p>
+        <SectionHeader
+          headingId={PRINCIPLES_HEADING_ID}
+          eyebrow={aboutContent.principles.eyebrow}
+          heading={aboutContent.principles.heading}
+          summary={aboutContent.principles.summary}
+        />
+
+        <PointsList points={aboutContent.principles.points} />
       </Container>
     </Section>
+
+    <ContactSection content={aboutContent.contact} />
   </Layout>
 );
 
 export default AboutPage;
 
-export const Head: HeadFC = () => (
+export const Head: HeadFC = ({ location }) => (
   <Seo
+    pathname={location.pathname}
     title="About & Contact"
     description="About NovaHealth, the thinking behind the platform, and how to start a conversation with the team."
   />

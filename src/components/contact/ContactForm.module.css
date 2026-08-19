@@ -1,0 +1,189 @@
+/*
+ * Contact form.
+ *
+ * Field styling matches the resource library's controls (visible label above,
+ * 44px target, interactive border) so the two forms on the site are recognisably
+ * the same control set.
+ */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nh-space-5);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nh-space-2);
+  min-inline-size: 0;
+}
+
+/*
+ * A visible label rather than a placeholder. A placeholder disappears as soon
+ * as the field has content, so the reader loses the description of what they
+ * typed, and it is not reliably announced as a label.
+ */
+.label {
+  font-size: var(--nh-text-xs);
+  font-weight: var(--nh-weight-bold);
+  letter-spacing: var(--nh-tracking-wider);
+  text-transform: uppercase;
+  color: var(--nh-color-text-subtle);
+}
+
+.optional {
+  text-transform: none;
+  letter-spacing: var(--nh-tracking-normal);
+  font-weight: var(--nh-weight-normal);
+}
+
+.hint {
+  font-size: var(--nh-text-sm);
+  line-height: var(--nh-leading-normal);
+  color: var(--nh-color-text-muted);
+}
+
+.input,
+.textarea {
+  inline-size: 100%;
+  min-block-size: 2.75rem;
+  padding: var(--nh-space-3) var(--nh-space-4);
+  font-size: var(--nh-text-base);
+  color: var(--nh-color-text);
+  background-color: var(--nh-color-surface);
+  /* 4.76:1 — a form border carries meaning, so it must clear WCAG 1.4.11. */
+  border: 1px solid var(--nh-color-border-interactive);
+  border-radius: var(--nh-radius-md);
+}
+
+.textarea {
+  min-block-size: 9rem;
+  line-height: var(--nh-leading-relaxed);
+  /* Vertical only: horizontal resizing breaks the column layout. */
+  resize: vertical;
+}
+
+/*
+ * The invalid state is drawn from aria-invalid rather than a class, so the
+ * visual state and the state announced to assistive technology cannot drift
+ * apart — there is only one source for both.
+ */
+.input[aria-invalid='true'],
+.textarea[aria-invalid='true'] {
+  border-color: var(--nh-color-danger);
+  /* A second border-width, so the state is visible without relying on hue. */
+  border-inline-start-width: 4px;
+}
+
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--nh-space-2);
+  font-size: var(--nh-text-sm);
+  line-height: var(--nh-leading-normal);
+  color: var(--nh-color-danger);
+}
+
+.errorIcon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  margin-block-start: 0.1rem;
+  font-size: var(--nh-text-xs);
+  font-weight: var(--nh-weight-bold);
+  color: var(--nh-color-surface);
+  background-color: var(--nh-color-danger);
+  border-radius: var(--nh-radius-full);
+}
+
+/* ---- Error summary ---- */
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nh-space-2);
+  padding: var(--nh-space-5);
+  background-color: var(--nh-color-danger-soft-bg);
+  border: 1px solid var(--nh-color-danger-soft-border);
+  /* The heavy edge repeats what the colour says, for anyone who cannot see it. */
+  border-inline-start: 4px solid var(--nh-color-danger);
+  border-radius: var(--nh-radius-md);
+}
+
+.summaryHeading {
+  font-size: var(--nh-text-lg);
+  color: var(--nh-color-danger);
+}
+
+.summaryList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nh-space-1);
+  margin: 0;
+  padding-inline-start: var(--nh-space-5);
+  font-size: var(--nh-text-sm);
+}
+
+.summaryList a {
+  color: var(--nh-color-danger);
+  text-decoration: underline;
+}
+
+.failure {
+  padding: var(--nh-space-5);
+  font-size: var(--nh-text-sm);
+  line-height: var(--nh-leading-relaxed);
+  color: var(--nh-color-danger);
+  background-color: var(--nh-color-danger-soft-bg);
+  border: 1px solid var(--nh-color-danger-soft-border);
+  border-inline-start: 4px solid var(--nh-color-danger);
+  border-radius: var(--nh-radius-md);
+}
+
+/* ---- Confirmation ---- */
+
+.confirmation {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--nh-space-4);
+  padding: var(--nh-space-6);
+  background-color: var(--nh-color-success-soft-bg);
+  border: 1px solid var(--nh-color-success-soft-border);
+  border-inline-start: 4px solid var(--nh-color-success);
+  border-radius: var(--nh-radius-lg);
+}
+
+.confirmationHeading {
+  display: flex;
+  align-items: center;
+  gap: var(--nh-space-2);
+  font-size: var(--nh-text-xl);
+  color: var(--nh-color-success-soft-text);
+}
+
+.confirmationMark {
+  display: grid;
+  place-items: center;
+  inline-size: 1.75rem;
+  block-size: 1.75rem;
+  font-size: var(--nh-text-base);
+  color: var(--nh-color-surface);
+  background-color: var(--nh-color-success);
+  border-radius: var(--nh-radius-full);
+}
+
+.confirmationBody {
+  font-size: var(--nh-text-sm);
+  line-height: var(--nh-leading-relaxed);
+  color: var(--nh-color-text-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nh-space-3);
+}

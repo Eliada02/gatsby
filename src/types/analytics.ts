@@ -49,6 +49,20 @@ export interface CtaClickEvent {
   destination: string;
 }
 
+/**
+ * Everything a UI component needs to emit `cta_click`.
+ *
+ * Passed to Button and ButtonLink as a single `tracking` prop, so a call site
+ * describes *what* the call to action is and the component decides *when* to
+ * record it. No component that renders a CTA imports the analytics facade, and
+ * none of them knows that GTM exists.
+ */
+export interface CtaTracking {
+  name: string;
+  location: AnalyticsLocation;
+  destination: string;
+}
+
 export interface ResourceSearchEvent {
   event: 'resource_search';
   search_term: string;

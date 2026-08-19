@@ -34,6 +34,8 @@
     "./src/**/*",
     "./gatsby-*.ts",
     "./gatsby-*.tsx",
+    // Root-level test files (project.test.ts) are checked like any other source.
+    "./*.test.ts",
     "./__mocks__/**/*",
     "./jest.setup.ts",
     "./jest.loadershim.ts"

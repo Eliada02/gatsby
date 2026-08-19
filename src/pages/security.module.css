@@ -1,0 +1,9 @@
+/* Matches the practices footnote above it, so the two disclaimers read alike. */
+.footnote {
+  margin-block-start: var(--nh-space-8);
+  text-align: center;
+  font-size: var(--nh-text-xs);
+  color: var(--nh-color-text-subtle);
+  max-inline-size: 52rem;
+  margin-inline: auto;
+}

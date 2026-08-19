@@ -32,8 +32,14 @@ export const FOOTER_NAV: ReadonlyArray<{ heading: string; items: readonly NavIte
     heading: 'Resources',
     items: [
       { label: 'Resource library', to: '/resources' },
-      { label: 'Digital health', to: '/resources?category=digital-health' },
-      { label: 'Patient experience', to: '/resources?category=patient-experience' },
+      /*
+       * Named "... resources" rather than "Digital health": a screen reader's
+       * link list shows names without their surrounding heading, and the bare
+       * labels were indistinguishable from the primary navigation entries that
+       * lead somewhere else entirely.
+       */
+      { label: 'Digital health resources', to: '/resources?category=digital-health' },
+      { label: 'Patient experience resources', to: '/resources?category=patient-experience' },
     ],
   },
   {

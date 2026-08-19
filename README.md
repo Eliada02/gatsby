@@ -104,24 +104,39 @@ Accessibility is enforced structurally rather than audited at the end:
   behavioural ones
 - Content tests reject empty alt text on non-decorative images
 
-_Planned:_ keyboard navigation, focus management on client-side route changes,
-accessible mobile menu, form validation and announcements, contrast verification,
-reduced-motion support, and a manual screen reader pass documented in
-`docs/accessibility.md`.
+Beyond the tooling, the interface itself is built for it: a skip link, one set
+of landmarks per page, a mobile menu with a focus trap and focus restoration,
+form errors tied to their fields with a summary that takes focus, live regions
+that are debounced rather than chatty, `prefers-reduced-motion` support, and
+contrast computed from the design tokens in CI.
+
+The full audit — what was checked, the issues it found, what remains untested,
+and the rules for adding new components — is in
+[docs/accessibility.md](docs/accessibility.md).
 
 ## Analytics
 
-_Planned (Phase 6)._ A GTM-compatible `dataLayer` abstraction with a typed event
-catalogue, so event and parameter names are enforced by the compiler rather than
-by convention. Tracking plan to be documented in `docs/analytics.md`.
+A GTM-compatible `dataLayer` abstraction with a typed event catalogue, so event
+and parameter names are enforced by the compiler rather than by convention. Six
+events are instrumented: `page_view`, `cta_click`, `resource_search`,
+`resource_filter`, `resource_open` and `form_submit`.
+
+Consent defaults to **denied** and is checked in one place, so nothing is
+measured before the visitor agrees. No third-party script is loaded unless
+`GATSBY_GTM_ID` is set. The full tracking plan, the consent behaviour and the
+rules for adding an event are in [docs/analytics.md](docs/analytics.md).
 
 ## API architecture
 
 `GET /api/resources` is a Gatsby Function with real query parameters, status
 codes and server-side filtering, so the browser receives one page rather than
-the whole library. [`src/types/api.ts`](src/types/api.ts) is imported by both
-the handler and the client, so a change to the response shape breaks
-compilation on both sides rather than failing at runtime.
+the whole library. `POST /api/contact` is the second, validating submissions on
+the server — method, required fields, email format and field lengths — because
+client-side validation is a convenience and never a control.
+
+[`src/types/api.ts`](src/types/api.ts) is imported by both the handler and the
+client, so a change to the response shape breaks compilation on both sides
+rather than failing at runtime.
 
 Request state is a discriminated union, not three booleans, and in-flight
 requests are aborted when the query changes so a slow early response cannot
@@ -130,8 +145,39 @@ overwrite a fast later one. Full detail in
 
 ## Performance
 
-_Planned (Phase 8)._ Static generation, `gatsby-plugin-image` for responsive
-AVIF/WebP, lazy loading below the fold, and no runtime CSS-in-JS.
+Every route is statically generated, there is no runtime CSS-in-JS, and no
+third-party script loads unless a tag manager container is configured.
+
+The site ships no raster images at all — every graphic is an inline SVG that
+repeats visible text — so the image pipeline is configured and ready rather than
+exercised. The optimisation that mattered was the font: the packaged stylesheet
+declared four subsets and inlined two of them into the render-blocking CSS as
+base64, which cost 13.4 kB per page for scripts the site has no content in.
+Declaring only the latin subsets cut that stylesheet from 20.0 kB to 9.3 kB
+gzipped.
+
+Baseline measurements, what changed, and the Lighthouse methodology are in
+[docs/performance.md](docs/performance.md).
+
+## SEO
+
+One component owns everything a page contributes to `<head>`: title,
+description, canonical, robots, Open Graph, Twitter and JSON-LD. `pathname` is a
+required prop, so a page cannot be shipped without a canonical.
+
+- **Sitemap** — generated from the pages Gatsby built, 404s excluded.
+- **robots.txt** — written at build time so the sitemap URL is absolute. It does
+  not block `/api/`: a crawler rendering the resource library needs that fetch.
+- **Structured data** — Organization, WebSite with a working `SearchAction`, and
+  Article plus BreadcrumbList on resource pages, as one `@graph` per page. The
+  Organization node states in `disambiguatingDescription` that the company is
+  fictional, and a test rejects ratings, reviews, prices, credentials and any
+  `Medical*` type.
+- **Production URL** — `SITE_URL` (or Netlify's `DEPLOY_PRIME_URL` / `URL`). No
+  domain is invented: with no origin configured, absolute URLs are omitted
+  rather than pointed at localhost.
+
+Full detail in [docs/seo.md](docs/seo.md).
 
 ## Testing
 
@@ -152,8 +198,19 @@ validation, and keyboard navigation.
 
 ## CI/CD
 
-_Planned (Phase 8)._ GitHub Actions running install → lint → typecheck → test →
-build on Node 22, deploying to Netlify.
+GitHub Actions runs on every pull request and on pushes to `main`:
+
+```
+npm ci → lint → format:check → typecheck → test → build
+```
+
+Node comes from `.nvmrc`, dependencies from the lockfile, and the workflow holds
+`contents: read` with no secrets and only first-party actions. A test asserts
+those properties, so a future edit that adds a write permission or a
+third-party action fails the suite.
+
+The pipeline validates; it does not deploy — no environment is configured in
+this repository. See [docs/ci.md](docs/ci.md).
 
 ## AI-assisted development
 
@@ -196,10 +253,21 @@ explicit `tsc` run, a type error builds successfully.
 
 ## Environment variables
 
-None are required for local development. `SITE_URL` overrides the canonical
-origin; on Netlify, `DEPLOY_PRIME_URL` and `URL` are read automatically so
-preview deploys emit their own canonical and Open Graph URLs rather than
-production's.
+None are required for local development, for CI, or for a successful build.
+Every one has a documented fallback; [.env.example](.env.example) is the full
+list.
+
+| Variable              | Scope      | Effect when unset                                                      |
+| --------------------- | ---------- | ---------------------------------------------------------------------- |
+| `SITE_URL`            | Build only | Canonical, Open Graph and sitemap URLs are omitted rather than guessed |
+| `GATSBY_GTM_ID`       | Public     | No tag manager loads, no third-party request, no cookie                |
+| `GATSBY_API_BASE_URL` | Public     | The API is called on the same origin, which is correct by default      |
+
+On Netlify, `DEPLOY_PRIME_URL` and `URL` are read automatically, so preview
+deploys emit their own URLs rather than production's.
+
+Anything prefixed `GATSBY_` is inlined into the browser bundle and is therefore
+public. Never put a secret in one.
 
 ## Deployment
 
@@ -211,20 +279,28 @@ previews per pull request.
 | Phase | Scope                                       | Status   |
 | ----- | ------------------------------------------- | -------- |
 | 2     | Foundation and tooling                      | Complete |
-| 3     | Design system, layout, navigation           | Next     |
-| 4     | Home, Our Science, Treatments               | Planned  |
-| 5     | Resources, resource detail, REST API        | Planned  |
-| 6     | Contact form, analytics and dataLayer       | Planned  |
-| 7     | Accessibility review and testing            | Planned  |
-| 8     | Performance, SEO, CI/CD                     | Planned  |
+| 3     | Design system, layout, navigation           | Complete |
+| 4     | Home page                                   | Complete |
+| 5     | Resources, resource detail, REST API        | Complete |
+| 6     | Security & Trust, About/Contact, analytics  | Complete |
+| 7     | Accessibility review and testing            | Complete |
+| 8     | Performance, SEO, CI/CD                     | Complete |
 | 9     | Documentation, `.ai/`, debugging case study | Planned  |
 
 ## Known limitations
 
 - Content is served from JSON files rather than a live CMS. The boundary that
   would change is isolated to a single module.
-- No end-to-end tests yet; cross-browser verification is currently manual.
+- No end-to-end tests yet; cross-browser verification is currently manual, and
+  no screen-reader session has been run — see
+  [docs/accessibility.md](docs/accessibility.md).
 - The seed content is intentionally small while the content model stabilises.
+- The site has never been deployed, so there is no field performance data and no
+  production URL. `SITE_URL` has to be supplied at build time.
+- `npm audit` reports advisories in the Gatsby 5.16 dependency tree. They are
+  build-tooling packages that ship no code to the browser, and clearing them
+  would mean a framework migration — see
+  [docs/performance.md](docs/performance.md).
 
 ## Licence
 

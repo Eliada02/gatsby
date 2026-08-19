@@ -121,7 +121,14 @@ export function ImpactCalculator({ content }: { content: ImpactContent }) {
 
             <p className={styles.disclaimer}>{content.disclaimer}</p>
 
-            <ButtonLink to={content.cta.to} variant="inverse" size="md" fullWidth withArrow>
+            <ButtonLink
+              to={content.cta.to}
+              variant="inverse"
+              size="md"
+              fullWidth
+              withArrow
+              tracking={{ name: content.cta.label, location: 'impact_calculator' }}
+            >
               {content.cta.label}
             </ButtonLink>
           </div>

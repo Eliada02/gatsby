@@ -1,6 +1,8 @@
 import { Link } from 'gatsby';
-import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import type { ButtonHTMLAttributes, MouseEvent, ReactNode } from 'react';
+import { trackCtaClick } from '@/lib/analytics/track';
 import { cx } from '@/lib/cx';
+import type { CtaTracking } from '@/types/analytics';
 import { VisuallyHidden } from './VisuallyHidden';
 import * as styles from './Button.module.css';
 
@@ -19,6 +21,27 @@ interface SharedProps {
   withArrow?: boolean;
   className?: string;
 }
+
+/**
+ * Call-to-action tracking.
+ *
+ * Opting in is a single prop describing the CTA; the component emits
+ * `cta_click` once per activation and nothing else changes. The alternative —
+ * an onClick handler at every call site that calls the analytics helper — is
+ * how a codebase ends up with three spellings of the same event and a handful
+ * of CTAs that quietly measure nothing.
+ *
+ * The consent gate lives in the analytics facade, so a tracked button behaves
+ * identically to an untracked one until the visitor has agreed.
+ */
+type TrackingProps = {
+  tracking?: CtaTracking;
+};
+
+/** ButtonLink knows where it is going, so `destination` defaults to `to`. */
+type LinkTrackingProps = {
+  tracking?: Omit<CtaTracking, 'destination'> & { destination?: string };
+};
 
 type StyleProps = Pick<SharedProps, 'variant' | 'size' | 'shape' | 'fullWidth' | 'className'>;
 
@@ -48,7 +71,9 @@ function Arrow() {
   );
 }
 
-type ButtonProps = SharedProps & Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'>;
+type ButtonProps = SharedProps &
+  TrackingProps &
+  Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'>;
 
 /**
  * An action: submits, opens, toggles, filters.
@@ -69,13 +94,27 @@ export function Button({
   fullWidth,
   withArrow,
   className,
+  tracking,
+  onClick,
   type = 'button',
   ...rest
 }: ButtonProps) {
+  /*
+   * One handler, so an activation records at most one event. The caller's
+   * onClick still runs, and it runs after the event is recorded: a handler that
+   * navigates or unmounts the button must not be able to prevent the
+   * measurement it was measured for.
+   */
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    if (tracking) trackCtaClick(tracking);
+    onClick?.(event);
+  };
+
   return (
     <button
       type={type}
       className={buildClassName({ variant, size, shape, fullWidth, className })}
+      onClick={handleClick}
       {...rest}
     >
       {children}
@@ -84,7 +123,7 @@ export function Button({
   );
 }
 
-interface ButtonLinkProps extends SharedProps {
+interface ButtonLinkProps extends SharedProps, LinkTrackingProps {
   to: string;
   /** Side effects on activation, e.g. closing a menu. Navigation still happens. */
   onClick?: () => void;
@@ -112,9 +151,17 @@ export function ButtonLink({
   fullWidth,
   withArrow,
   className,
+  tracking,
   onClick,
 }: ButtonLinkProps) {
   const classes = buildClassName({ variant, size, shape, fullWidth, className });
+
+  // Recorded before navigation starts, and before any caller side effect such
+  // as closing the mobile menu.
+  const handleClick = () => {
+    if (tracking) trackCtaClick({ ...tracking, destination: tracking.destination ?? to });
+    onClick?.();
+  };
 
   if (EXTERNAL_HREF.test(to)) {
     const opensInNewTab = /^https?:/i.test(to);
@@ -123,7 +170,7 @@ export function ButtonLink({
       <a
         href={to}
         className={classes}
-        onClick={onClick}
+        onClick={handleClick}
         {...(opensInNewTab ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
       >
         {children}
@@ -134,7 +181,7 @@ export function ButtonLink({
   }
 
   return (
-    <Link to={to} className={classes} onClick={onClick}>
+    <Link to={to} className={classes} onClick={handleClick}>
       {children}
       {withArrow && <Arrow />}
     </Link>

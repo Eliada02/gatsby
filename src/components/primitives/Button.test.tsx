@@ -1,7 +1,17 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
+import { setConsent } from '@/lib/analytics/consent';
+import { resetPendingEvents } from '@/lib/analytics/dataLayer';
 import { Button, ButtonLink } from './Button';
+
+const dataLayer = () => window.dataLayer ?? [];
+
+beforeEach(() => {
+  window.localStorage.clear();
+  window.dataLayer = [];
+  resetPendingEvents();
+});
 
 describe('Button', () => {
   it('renders a real button element with an accessible name', () => {
@@ -102,5 +112,178 @@ describe('ButtonLink', () => {
     const { container } = render(<ButtonLink to="/resources">Resources</ButtonLink>);
 
     expect(await axe(container)).toHaveNoViolations();
+  });
+});
+
+/**
+ * CTA tracking.
+ *
+ * The prop is the whole API: a call site describes the call to action and the
+ * component decides when to record it. These assertions are about the two
+ * properties that matter — that measuring never changes what the button does,
+ * and that nothing is measured before consent.
+ */
+describe('CTA tracking', () => {
+  it('records nothing when no tracking is configured', async () => {
+    const user = userEvent.setup();
+    setConsent('granted');
+    render(<Button>Plain</Button>);
+
+    await user.click(screen.getByRole('button', { name: 'Plain' }));
+
+    expect(dataLayer()).toHaveLength(0);
+  });
+
+  it('records one cta_click per activation of a button', async () => {
+    const user = userEvent.setup();
+    setConsent('granted');
+    render(
+      <Button
+        tracking={{
+          name: 'Clear filters',
+          location: 'resource_library',
+          destination: '/resources',
+        }}
+      >
+        Clear filters
+      </Button>,
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Clear filters' }));
+
+    expect(dataLayer()).toHaveLength(1);
+    expect(dataLayer()[0]).toEqual({
+      event: 'cta_click',
+      cta_name: 'Clear filters',
+      cta_location: 'resource_library',
+      destination: '/resources',
+    });
+  });
+
+  it('does not fire twice for one activation', async () => {
+    // A handler on the element and another on a wrapper is the usual way a
+    // click ends up counted twice.
+    const user = userEvent.setup();
+    setConsent('granted');
+    render(
+      <Button tracking={{ name: 'Once', location: 'hero', destination: '/platform' }}>Once</Button>,
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Once' }));
+
+    expect(dataLayer()).toHaveLength(1);
+  });
+
+  it('still calls the onClick supplied by the caller, exactly once', async () => {
+    const user = userEvent.setup();
+    const onClick = jest.fn();
+    setConsent('granted');
+    render(
+      <Button
+        tracking={{ name: 'Retry', location: 'resource_library', destination: '/resources' }}
+        onClick={onClick}
+      >
+        Retry
+      </Button>,
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Retry' }));
+
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('records nothing while consent is withheld', async () => {
+    const user = userEvent.setup();
+    setConsent('denied');
+    render(
+      <Button tracking={{ name: 'Explore', location: 'hero', destination: '/platform' }}>
+        Explore
+      </Button>,
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Explore' }));
+
+    expect(dataLayer()).toHaveLength(0);
+  });
+
+  it('records nothing before a choice has been made', async () => {
+    // The default is denied, not "not yet decided means yes".
+    const user = userEvent.setup();
+    render(
+      <Button tracking={{ name: 'Explore', location: 'hero', destination: '/platform' }}>
+        Explore
+      </Button>,
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Explore' }));
+
+    expect(dataLayer()).toHaveLength(0);
+  });
+
+  it('is measured by keyboard activation as well as by click', async () => {
+    const user = userEvent.setup();
+    setConsent('granted');
+    render(
+      <Button tracking={{ name: 'Keyboard', location: 'footer', destination: '/about' }}>
+        Keyboard
+      </Button>,
+    );
+
+    await user.tab();
+    await user.keyboard('{Enter}');
+
+    expect(dataLayer()).toHaveLength(1);
+  });
+
+  it('takes the destination of a link from its href by default', async () => {
+    const user = userEvent.setup();
+    setConsent('granted');
+    render(
+      <ButtonLink to="/about#contact" tracking={{ name: 'Contact us', location: 'header' }}>
+        Contact us
+      </ButtonLink>,
+    );
+
+    await user.click(screen.getByRole('link', { name: 'Contact us' }));
+
+    expect(dataLayer()[0]).toEqual({
+      event: 'cta_click',
+      cta_name: 'Contact us',
+      cta_location: 'header',
+      destination: '/about#contact',
+    });
+  });
+
+  it('records the click on an external link too', async () => {
+    const user = userEvent.setup();
+    setConsent('granted');
+    render(
+      <ButtonLink to="https://example.org/report" tracking={{ name: 'Report', location: 'footer' }}>
+        Report
+      </ButtonLink>,
+    );
+
+    await user.click(screen.getByRole('link', { name: /report/i }));
+
+    expect(dataLayer()).toHaveLength(1);
+    expect(dataLayer()[0]).toMatchObject({ destination: 'https://example.org/report' });
+  });
+
+  it('keeps the side effect of a link working', async () => {
+    // The mobile menu closes itself through this prop; tracking must not
+    // displace it.
+    const user = userEvent.setup();
+    const onClick = jest.fn();
+    setConsent('granted');
+    render(
+      <ButtonLink to="/about" tracking={{ name: 'About', location: 'header' }} onClick={onClick}>
+        About
+      </ButtonLink>,
+    );
+
+    await user.click(screen.getByRole('link', { name: 'About' }));
+
+    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(dataLayer()).toHaveLength(1);
   });
 });

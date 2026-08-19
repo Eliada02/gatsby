@@ -8,6 +8,7 @@ import { ResourceCard } from '@/components/resources/ResourceCard';
 import { Seo } from '@/components/seo/Seo';
 import { getAuthorsByIds } from '@/lib/content/source';
 import { formatPublishedDate } from '@/lib/resources/format';
+import { buildArticle, buildBreadcrumbs } from '@/lib/seo/structured-data';
 import type { Resource } from '@/types/content';
 import { RESOURCE_CATEGORY_LABELS, RESOURCE_FORMAT_LABELS } from '@/types/content';
 import * as styles from './ResourceDetail.module.css';
@@ -125,9 +126,9 @@ const ResourceDetailTemplate = ({ pageContext }: PageProps<object, ResourceDetai
                 More on {RESOURCE_CATEGORY_LABELS[resource.category]}
               </h2>
               <ul className={styles.relatedGrid}>
-                {related.map((item) => (
+                {related.map((item, index) => (
                   <li key={item.id}>
-                    <ResourceCard resource={item} />
+                    <ResourceCard resource={item} position={index + 1} />
                   </li>
                 ))}
               </ul>
@@ -142,13 +143,50 @@ const ResourceDetailTemplate = ({ pageContext }: PageProps<object, ResourceDetai
 export default ResourceDetailTemplate;
 
 /**
- * Per-resource metadata. Falls back to the title and summary when the content
- * has no explicit SEO override, so every page has a unique title and
- * description without requiring the fields to be filled in.
+ * Per-resource metadata.
+ *
+ * Everything is derived from the resource as published: the title and
+ * description fall back to the content's own when no SEO override is set, the
+ * Open Graph article properties come from the same dates and tags the page
+ * renders, and the Article node describes exactly what is on screen. There is
+ * no generic per-page description anywhere in this template.
+ *
+ * The JSON-LD is built from the canonical URL that Seo resolves, so the article
+ * and the canonical can never disagree about where this page lives.
  */
-export const Head: HeadFC<object, ResourceDetailContext> = ({ pageContext }) => (
-  <Seo
-    title={pageContext.resource.seo?.title ?? pageContext.resource.title}
-    description={pageContext.resource.seo?.description ?? pageContext.resource.summary}
-  />
-);
+export const Head: HeadFC<object, ResourceDetailContext> = ({ location, pageContext }) => {
+  const { resource } = pageContext;
+  const authors = getAuthorsByIds(resource.authorIds);
+
+  return (
+    <Seo
+      title={resource.seo?.title ?? resource.title}
+      description={resource.seo?.description ?? resource.summary}
+      pathname={location.pathname}
+      type="article"
+      noIndex={resource.seo?.noIndex ?? false}
+      article={{
+        publishedTime: resource.publishedAt,
+        ...(resource.updatedAt ? { modifiedTime: resource.updatedAt } : {}),
+        authors: authors.map((author) => author.name),
+        section: RESOURCE_CATEGORY_LABELS[resource.category],
+        tags: resource.tags,
+      }}
+      jsonLd={({ site, canonicalUrl }) =>
+        canonicalUrl
+          ? [
+              buildArticle({ site, resource, authors, url: canonicalUrl }),
+              /*
+               * The trail the page actually shows: an "All resources" link back
+               * to the library, then this resource.
+               */
+              buildBreadcrumbs([
+                { name: 'Resources', url: `${site.siteUrl}/resources/` },
+                { name: resource.title, url: canonicalUrl },
+              ]),
+            ]
+          : []
+      }
+    />
+  );
+};

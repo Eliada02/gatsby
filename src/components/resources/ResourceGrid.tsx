@@ -19,9 +19,10 @@ interface ResourceGridProps {
 export function ResourceGrid({ resources, isRefreshing }: ResourceGridProps) {
   return (
     <ul className={cx(styles.grid, isRefreshing && styles.refreshing)}>
-      {resources.map((resource) => (
+      {resources.map((resource, index) => (
         <li key={resource.id}>
-          <ResourceCard resource={resource} />
+          {/* 1-based position within the page of results, recorded on open. */}
+          <ResourceCard resource={resource} position={index + 1} />
         </li>
       ))}
     </ul>

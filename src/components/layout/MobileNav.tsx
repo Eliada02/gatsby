@@ -75,6 +75,7 @@ export function MobileMenuPanel({ menu }: { menu: MobileMenu }) {
           size="md"
           shape="pill"
           fullWidth
+          tracking={{ name: 'Contact us', location: 'header' }}
           onClick={menu.close}
         >
           Contact us

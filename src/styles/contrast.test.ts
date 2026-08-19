@@ -177,9 +177,58 @@ const COMBINATIONS: ReadonlyArray<{
     min: AA_NORMAL,
   },
 
+  // Validation
+  {
+    what: 'error text on white',
+    fg: '--nh-color-danger',
+    bg: '--nh-color-surface',
+    min: AA_NORMAL,
+  },
+  {
+    what: 'error text on the error panel',
+    fg: '--nh-color-danger',
+    bg: '--nh-color-danger-soft-bg',
+    min: AA_NORMAL,
+  },
+  {
+    what: 'error field border on white',
+    fg: '--nh-color-danger',
+    bg: '--nh-color-surface',
+    min: AA_LARGE_OR_NON_TEXT,
+  },
+
   // Non-text: WCAG 1.4.11
   { what: 'focus ring on canvas', fg: '--nh-color-focus', bg: '--nh-color-canvas', min: 3 },
   { what: 'focus ring on white', fg: '--nh-color-focus', bg: '--nh-color-surface', min: 3 },
+  /*
+   * The ring has to clear 3:1 against every surface it can land on, not only
+   * the page background. These are the two it actually appears over elsewhere:
+   * the navigation pill group and the subtle panels.
+   */
+  {
+    what: 'focus ring on the navigation pill group',
+    fg: '--nh-color-focus',
+    bg: '--nh-color-surface-muted',
+    min: 3,
+  },
+  {
+    what: 'focus ring on a subtle surface',
+    fg: '--nh-color-focus',
+    bg: '--nh-color-surface-subtle',
+    min: 3,
+  },
+  {
+    what: 'inverse focus ring on the darker surface',
+    fg: '--nh-color-focus-inverse',
+    bg: '--nh-color-surface-darker',
+    min: 3,
+  },
+  {
+    what: 'error field border on the error panel',
+    fg: '--nh-color-danger',
+    bg: '--nh-color-danger-soft-bg',
+    min: AA_LARGE_OR_NON_TEXT,
+  },
   {
     what: 'inverse focus ring on dark surface',
     fg: '--nh-color-focus-inverse',

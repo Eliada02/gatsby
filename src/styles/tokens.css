@@ -63,6 +63,12 @@
   --nh-navy-900: #091224;
   --nh-navy-950: #060b17;
 
+  /* Red — validation failure. Introduced with the contact form: the palette had
+     no error colour because nothing until then could be in an invalid state. */
+  --nh-red-50: #fef2f2;
+  --nh-red-200: #fecaca;
+  --nh-red-700: #b91c1c;
+
   /* Amber / rose — used only as decorative dots in product mockups */
   --nh-amber-400: #fbbf24;
   --nh-rose-400: #fb7185;
@@ -120,6 +126,12 @@
   --nh-color-success-soft-text: var(--nh-emerald-800); /*  7.29:1 on emerald-50 — AAA */
   --nh-color-success-soft-border: var(--nh-emerald-100);
   --nh-color-success-inverse: var(--nh-emerald-300); /* 11.71:1 on slate-900 — AAA */
+
+  /* Validation failure. The colour reinforces the message and never carries it:
+     every error is also a sentence beginning with the word "Error". */
+  --nh-color-danger: var(--nh-red-700); /*  6.47:1 on white — AA  */
+  --nh-color-danger-soft-bg: var(--nh-red-50);
+  --nh-color-danger-soft-border: var(--nh-red-200);
 
   /* Borders */
   --nh-color-border: var(--nh-slate-200); /* decorative card and section edges */

@@ -1,0 +1,35 @@
+{
+  "hero": {
+    "eyebrow": "Security and trust",
+    "heading": "Security and trust by design",
+    "summary": "Health data carries a duty of care. Our architecture treats encryption, least-privilege access and auditability as design constraints rather than features added later."
+  },
+  "dataHandling": {
+    "eyebrow": "This website",
+    "heading": "How this site itself handles data",
+    "summary": "The practices above describe the product. These describe the site you are reading, and every one of them is implemented in the code behind it.",
+    "points": [
+      {
+        "id": "consent",
+        "title": "Analytics stay off until you agree",
+        "description": "Measurement defaults to denied. Nothing is recorded before you choose, declining is as prominent as accepting, and the choice is kept in your browser rather than on a server."
+      },
+      {
+        "id": "no-health-data",
+        "title": "No health information is measured",
+        "description": "Recorded events carry page paths, the name of a call to action, a search term and which resource was opened. Names, email addresses and message contents are never sent to analytics."
+      },
+      {
+        "id": "server-validation",
+        "title": "Form submissions are validated on the server",
+        "description": "The contact endpoint checks the request method, the required fields, the email format and the field lengths again on the server, because client-side validation is a convenience and never a control."
+      },
+      {
+        "id": "third-party",
+        "title": "No third-party script without a reason",
+        "description": "A tag manager is loaded only when a container is configured for the deployment. With none configured, the site makes no third-party request and sets no cookie."
+      }
+    ]
+  },
+  "footnote": "These statements describe how this demonstration project is built and how this website behaves, and each of them is visible in the repository behind it. They are engineering commitments rather than an audited assurance or a contractual guarantee."
+}

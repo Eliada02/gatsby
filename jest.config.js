@@ -31,6 +31,17 @@ const config = {
 
   globals: { __PATH_PREFIX__: '' },
 
+  /*
+   * Raised from the 5s default for the accessibility suite.
+   *
+   * A full-page jest-axe run walks the whole rendered tree and takes several
+   * seconds in jsdom; on a loaded machine the largest pages intermittently
+   * crossed the default and failed as timeouts rather than as violations. The
+   * assertions are unchanged — this only stops a slow check being reported as
+   * a broken one.
+   */
+  testTimeout: 15_000,
+
   collectCoverageFrom: ['src/**/*.{ts,tsx}', '!src/**/*.d.ts'],
 };
 

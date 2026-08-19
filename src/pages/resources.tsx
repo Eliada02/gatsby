@@ -37,8 +37,9 @@ const ResourcesPage = ({ location, pageContext }: PageProps<object, ResourcesPag
 
 export default ResourcesPage;
 
-export const Head: HeadFC = () => (
+export const Head: HeadFC = ({ location }) => (
   <Seo
+    pathname={location.pathname}
     title="Resources"
     description="Practical writing on patient experience, interoperability, clinical operations and healthcare security, searchable by topic and format."
   />

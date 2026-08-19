@@ -1,11 +1,20 @@
 import type { Author, ResearchProgram, Resource, Treatment } from '@/types/content';
-import type { HomeContent, JourneyStage, PlatformCapability, SecurityPractice } from '@/types/site';
+import type {
+  AboutPageContent,
+  HomeContent,
+  JourneyStage,
+  PlatformCapability,
+  SecurityPageContent,
+  SecurityPractice,
+} from '@/types/site';
+import aboutJson from '../../../content/about.json';
 import authorsJson from '../../../content/authors.json';
 import capabilitiesJson from '../../../content/capabilities.json';
 import homeJson from '../../../content/home.json';
 import journeyJson from '../../../content/journey.json';
 import researchJson from '../../../content/research.json';
 import resourcesJson from '../../../content/resources.json';
+import securityJson from '../../../content/security.json';
 import securityPracticesJson from '../../../content/security-practices.json';
 import treatmentsJson from '../../../content/treatments.json';
 
@@ -42,6 +51,14 @@ export const platformCapabilities = capabilitiesJson as readonly PlatformCapabil
 export const securityPractices = securityPracticesJson as readonly SecurityPractice[];
 
 export const homeContent = homeJson as HomeContent;
+
+/**
+ * Copy for the two content pages that are not compositions of home-page bands.
+ * The security practices themselves stay in their own collection, because the
+ * home page and the security page render the same list.
+ */
+export const securityContent = securityJson as SecurityPageContent;
+export const aboutContent = aboutJson as AboutPageContent;
 
 /* ---- Lookups ---- */
 

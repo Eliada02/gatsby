@@ -1,0 +1,47 @@
+{
+  "hero": {
+    "eyebrow": "About NovaHealth",
+    "heading": "Built by people who have waited in the same queues",
+    "summary": "NovaHealth is a demonstration of what a modern, human-centred health platform can look like when accessibility and clarity come first."
+  },
+  "story": {
+    "heading": "Why this project exists",
+    "paragraphs": [
+      "Most healthcare software is written for the organisation that buys it rather than the person who depends on it. The result is familiar: three portals for one course of treatment, a form filled in twice because two systems cannot speak to each other, and a phone call to find out what a letter meant.",
+      "NovaHealth is a portfolio project that takes the opposite starting point. Every screen begins with the question of what the person in front of it is trying to finish, and the architecture follows from that rather than the other way round.",
+      "It is deliberately built the way production software is built: typed content, a real HTTP boundary, tested accessibility, and measurement that asks permission first. The company is invented; the engineering decisions are not."
+    ]
+  },
+  "principles": {
+    "eyebrow": "How this is built",
+    "heading": "Principles that survived contact with the code",
+    "summary": "Four commitments that shaped the decisions in this project, each of them visible in the repository rather than only in the copy.",
+    "points": [
+      {
+        "id": "accessible",
+        "title": "Accessible by construction",
+        "description": "Semantic HTML, real form labels, visible focus and tested colour contrast. Accessibility is asserted in the test suite, so a regression fails the build rather than reaching a reader."
+      },
+      {
+        "id": "honest",
+        "title": "Honest about what is real",
+        "description": "No invented statistics, certifications or customers. Where a figure is illustrative it says so, and automated tests reject content that reintroduces a claim a fictional company cannot make."
+      },
+      {
+        "id": "consent",
+        "title": "Consent before measurement",
+        "description": "Analytics ask first, default to no, and pass through a single gate that every event has to cross. Removing the whole measurement layer would not affect anything else on the site."
+      },
+      {
+        "id": "boundaries",
+        "title": "Clear boundaries",
+        "description": "One content source, one HTTP client, one analytics facade. Each of them can be replaced without touching the components that use it."
+      }
+    ]
+  },
+  "contact": {
+    "heading": "Start a conversation",
+    "summary": "Tell us what you are trying to build and we will come back to you. Every field except the organisation is needed before the message can be sent.",
+    "note": "NovaHealth is a fictional company created for this portfolio project. Submissions are validated by the site's own /api/contact endpoint and are not forwarded to a mailbox, so please do not send personal, clinical or confidential information."
+  }
+}

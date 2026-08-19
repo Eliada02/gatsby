@@ -31,6 +31,17 @@ const NotFoundPage = () => (
 
 export default NotFoundPage;
 
-export const Head: HeadFC = () => (
-  <Seo title="Page not found" description="The page you requested could not be found." />
+/**
+ * noindex, because a mistyped URL should never become a search result — and
+ * without structured data, because there is no content here to describe. The
+ * page still links onward, so `follow` is correct: a crawler that lands here
+ * should keep going.
+ */
+export const Head: HeadFC = ({ location }) => (
+  <Seo
+    title="Page not found"
+    description="The page you requested could not be found. The resource library is the best place to start looking."
+    pathname={location.pathname}
+    noIndex
+  />
 );

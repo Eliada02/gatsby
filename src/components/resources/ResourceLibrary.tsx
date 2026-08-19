@@ -1,9 +1,10 @@
 import { navigate } from 'gatsby';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Container } from '@/components/primitives/Container';
 import { Section } from '@/components/primitives/Section';
 import { useDebouncedValue } from '@/hooks/useDebouncedValue';
 import { useResources } from '@/hooks/useResources';
+import { trackResourceFilter, trackResourceSearch } from '@/lib/analytics/track';
 import { buildResourcesPath } from '@/lib/api/resources';
 import {
   DEFAULT_RESOURCE_SORT,
@@ -25,6 +26,21 @@ import * as styles from './ResourceLibrary.module.css';
 
 const HEADING_ID = 'resource-library-heading';
 const ANNOUNCE_DELAY_MS = 500;
+
+/** Value recorded for `filter_value` when the category filter is cleared. */
+const ALL_CATEGORIES = 'all';
+
+/**
+ * An interaction that has been made but not yet measured.
+ *
+ * `resource_search` and `resource_filter` both carry a results count, and that
+ * count does not exist at the moment of the interaction — the URL has only just
+ * changed and the request has not returned. So the interaction is recorded here
+ * and the event is emitted once its results arrive, which also means the
+ * measurement describes what the reader actually saw.
+ */
+type PendingInteraction =
+  { kind: 'search'; term: string } | { kind: 'filter'; type: 'category' | 'sort'; value: string };
 
 interface ResourceLibraryProps {
   /** location.search, owned by the router. The single source of filter state. */
@@ -69,15 +85,76 @@ export function ResourceLibrary({ search, initialData }: ResourceLibraryProps) {
     void navigate(RESOURCES_PATH);
   }, []);
 
-  const handleSearchChange = useCallback((term: string) => updateQuery({ q: term }), [updateQuery]);
+  /*
+   * Analytics intent, not analytics state: nothing renders from this, so a ref
+   * avoids a render pass per interaction.
+   */
+  const pendingInteraction = useRef<PendingInteraction | null>(null);
+
+  const handleSearchChange = useCallback(
+    (term: string) => {
+      const trimmed = term.trim();
+      /*
+       * The search field debounces, so this runs once the reader stops typing
+       * rather than once per keystroke. Clearing the field is not a search and
+       * is deliberately not recorded as one.
+       */
+      pendingInteraction.current = trimmed === '' ? null : { kind: 'search', term: trimmed };
+      updateQuery({ q: term });
+    },
+    [updateQuery],
+  );
+
   const handleCategoryChange = useCallback(
-    (category: ResourceCategory | undefined) => updateQuery({ category }),
+    (category: ResourceCategory | undefined) => {
+      pendingInteraction.current = {
+        kind: 'filter',
+        type: 'category',
+        value: category ?? ALL_CATEGORIES,
+      };
+      updateQuery({ category });
+    },
     [updateQuery],
   );
+
   const handleSortChange = useCallback(
-    (sort: ResourceSort) => updateQuery({ sort }),
+    (sort: ResourceSort) => {
+      pendingInteraction.current = { kind: 'filter', type: 'sort', value: sort };
+      updateQuery({ sort });
+    },
     [updateQuery],
   );
+
+  /*
+   * Emits the event for the interaction above once its results land.
+   *
+   * Only interactions are measured. A page loaded from a shared link already
+   * carries filters in the URL, and counting that as a search would report
+   * every visit to a bookmarked query as a fresh one.
+   *
+   * A failed request drops the pending interaction rather than holding it: the
+   * next successful response belongs to a different query, and attaching the
+   * old interaction to it would report a count that was never on screen.
+   */
+  useEffect(() => {
+    if (state.status === 'error') {
+      pendingInteraction.current = null;
+      return;
+    }
+    if (state.status !== 'success') return;
+
+    const interaction = pendingInteraction.current;
+    if (!interaction) return;
+    pendingInteraction.current = null;
+
+    const resultsCount = state.data.meta.total;
+
+    if (interaction.kind === 'search') {
+      trackResourceSearch(interaction.term, resultsCount);
+    } else {
+      trackResourceFilter(interaction.type, interaction.value, resultsCount);
+    }
+  }, [state]);
 
   /*
    * One live region describes the whole library: loading, then the result

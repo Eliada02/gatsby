@@ -5,6 +5,7 @@ import {
   THERAPEUTIC_AREAS,
 } from '@/types/content';
 import {
+  aboutContent,
   authors,
   getAuthorsByIds,
   getResourceBySlug,
@@ -13,6 +14,7 @@ import {
   platformCapabilities,
   researchPrograms,
   resources,
+  securityContent,
   securityPractices,
   treatments,
 } from './source';
@@ -202,5 +204,62 @@ describe('content integrity', () => {
         expect(organisation.name).not.toMatch(realOrganisations);
       }
     });
+  });
+});
+
+/**
+ * Page copy for the security and about pages.
+ *
+ * Held to the same standard as the collections: it is the copy a reader checks
+ * before deciding whether to trust the product, and it is written in a file
+ * rather than in a component precisely so it can be checked here.
+ */
+describe('content page copy', () => {
+  it('populates every field the security page renders', () => {
+    expect(securityContent.hero.heading.trim()).not.toBe('');
+    expect(securityContent.hero.summary.trim()).not.toBe('');
+    expect(securityContent.dataHandling.points.length).toBeGreaterThan(0);
+    expect(securityContent.footnote.trim()).not.toBe('');
+
+    for (const point of securityContent.dataHandling.points) {
+      expect(point.title.trim()).not.toBe('');
+      expect(point.description.trim()).not.toBe('');
+    }
+  });
+
+  it('populates every field the about page renders', () => {
+    expect(aboutContent.hero.heading.trim()).not.toBe('');
+    expect(aboutContent.story.paragraphs.length).toBeGreaterThan(0);
+    expect(aboutContent.principles.points.length).toBeGreaterThan(0);
+    expect(aboutContent.contact.heading.trim()).not.toBe('');
+    expect(aboutContent.contact.note.trim()).not.toBe('');
+  });
+
+  it('gives every point a unique id', () => {
+    for (const collection of [
+      securityContent.dataHandling.points,
+      aboutContent.principles.points,
+    ]) {
+      expect(new Set(collection.map((point) => point.id)).size).toBe(collection.length);
+    }
+  });
+
+  it('claims no certification or audited status on the security page', () => {
+    // The same guard the practices collection has. A page-level claim would
+    // otherwise slip past it.
+    const forbidden = /hipaa|soc\s*2|iso\s*27001|certified|accredited|guarantee[sd]?\b/i;
+    const copy = [
+      securityContent.hero.summary,
+      securityContent.dataHandling.summary ?? '',
+      ...securityContent.dataHandling.points.map((point) => `${point.title} ${point.description}`),
+    ].join(' ');
+
+    expect(copy).not.toMatch(forbidden);
+  });
+
+  it('states on the contact page that nothing is delivered', () => {
+    // A fictional company must not imply that a reply is coming.
+    expect(aboutContent.contact.note).toMatch(/fictional/i);
+    expect(aboutContent.contact.note).toMatch(/not forwarded|no mailbox|not sent/i);
   });
 });

@@ -25,8 +25,9 @@ const PatientExperiencePage = () => (
 
 export default PatientExperiencePage;
 
-export const Head: HeadFC = () => (
+export const Head: HeadFC = ({ location }) => (
   <Seo
+    pathname={location.pathname}
     title="Patient Experience"
     description="How NovaHealth connects discovery, booking, intake, consultation and recovery into one continuous patient journey."
   />

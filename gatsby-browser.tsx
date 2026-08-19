@@ -1,9 +1,15 @@
 import type { GatsbyBrowser } from 'gatsby';
 import { trackPageView } from './src/lib/analytics/track';
 
-// Self-hosted variable font (weights 200-800 in one file). Imported before the
-// global stylesheet so the @font-face rules are registered first.
-import '@fontsource-variable/plus-jakarta-sans/wght.css';
+/*
+ * Self-hosted variable font (weights 200-800 in one file), declared in our own
+ * stylesheet rather than imported from the package: see src/styles/fonts.css
+ * for why the package's four-subset stylesheet is not used directly.
+ *
+ * Imported before the global stylesheet so the @font-face rules are registered
+ * first.
+ */
+import './src/styles/fonts.css';
 
 import './src/styles/global.css';
 

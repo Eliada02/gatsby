@@ -37,10 +37,16 @@ const IndexPage = () => (
 
 export default IndexPage;
 
-export const Head: HeadFC = () => (
+/**
+ * The home page is the site's identity, so it sets its own full title rather
+ * than appending the site name to a section label. The Organization and WebSite
+ * nodes it needs are emitted by Seo for every indexable page.
+ */
+export const Head: HeadFC = ({ location }) => (
   <Seo
     title="NovaHealth - Healthcare, designed around people"
     description="A connected digital health experience: smart scheduling, unified records and care team messaging, built around the person receiving care."
+    pathname={location.pathname}
     appendSiteName={false}
   />
 );

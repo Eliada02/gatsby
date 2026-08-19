@@ -115,7 +115,7 @@ describe('Header', () => {
       expect(toggle).toHaveFocus();
     });
 
-    it('closes when a destination is chosen', async () => {
+    it('closes when a destination is chosen, and hands focus back', async () => {
       const user = userEvent.setup();
       render(<Header />);
 
@@ -125,6 +125,22 @@ describe('Header', () => {
       await user.click(within(panel).getByRole('link', { name: 'Resources' }));
 
       expect(toggle).toHaveAttribute('aria-expanded', 'false');
+      // Focus cannot be left inside a panel that is now display:none, or the
+      // next Tab starts from the top of the document.
+      expect(toggle).toHaveFocus();
+    });
+
+    it('keeps the closed panel out of the tab order entirely', () => {
+      // hidden removes it from the accessibility tree; the stylesheet re-asserts
+      // display:none because the panel's own display:flex would otherwise win
+      // on source order and leave focusable links in a panel nobody can see.
+      render(<Header />);
+
+      const toggle = screen.getByRole('button', { name: 'Open main menu' });
+      const panel = document.getElementById(toggle.getAttribute('aria-controls')!)!;
+
+      expect(panel).toHaveAttribute('hidden');
+      expect(panel).not.toBeVisible();
     });
 
     it('locks background scrolling only while open', async () => {

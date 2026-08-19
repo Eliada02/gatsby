@@ -37,10 +37,21 @@ export function Hero({ content, portal }: HeroProps) {
             <p className={styles.summary}>{content.summary}</p>
 
             <div className={styles.actions}>
-              <ButtonLink to={content.primaryCta.to} variant="primary" size="lg" withArrow>
+              <ButtonLink
+                to={content.primaryCta.to}
+                variant="primary"
+                size="lg"
+                withArrow
+                tracking={{ name: content.primaryCta.label, location: 'hero' }}
+              >
                 {content.primaryCta.label}
               </ButtonLink>
-              <ButtonLink to={content.secondaryCta.to} variant="secondary" size="lg">
+              <ButtonLink
+                to={content.secondaryCta.to}
+                variant="secondary"
+                size="lg"
+                tracking={{ name: content.secondaryCta.label, location: 'hero' }}
+              >
                 {content.secondaryCta.label}
               </ButtonLink>
             </div>

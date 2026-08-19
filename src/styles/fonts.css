@@ -1,0 +1,44 @@
+/*
+ * Plus Jakarta Sans, self-hosted.
+ *
+ * The @fontsource package ships one stylesheet covering four subsets —
+ * cyrillic-ext, vietnamese, latin-ext and latin. Importing it put all four
+ * @font-face rules into the site's render-blocking stylesheet, and webpack
+ * inlined the two smallest as base64: 13.4 kB of font data for scripts this
+ * site has no content in, downloaded on every page before anything could
+ * paint. (unicode-range means an unused subset is never fetched — but only
+ * while it is a URL. Inlined, it arrives whether it is used or not.)
+ *
+ * These are the same two files the package ships, referenced rather than
+ * imported wholesale, so the font is still self-hosted and versioned with the
+ * dependency. latin-ext is kept: it costs nothing until a glyph in its range
+ * appears, and then it is needed.
+ *
+ * font-display: swap keeps text visible during loading (WCAG-adjacent, and the
+ * reason the fallback stack in tokens.css is metric-similar).
+ */
+
+@font-face {
+  font-family: 'Plus Jakarta Sans Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url('@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Sans Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url('@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-ext-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}

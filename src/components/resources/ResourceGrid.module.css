@@ -5,7 +5,9 @@
   padding: 0;
   list-style: none;
   /* Reflows 1 to 3 columns without a breakpoint per step. */
-  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  /* min() keeps the column from demanding 18rem on a 280px screen, which
+     would push the page into horizontal scrolling (WCAG 1.4.10). */
+  grid-template-columns: repeat(auto-fill, minmax(min(18rem, 100%), 1fr));
 }
 
 /*

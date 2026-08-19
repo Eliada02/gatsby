@@ -1,0 +1,9 @@
+.paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nh-space-4);
+  margin-block-start: var(--nh-space-5);
+  font-size: var(--nh-text-lg);
+  line-height: var(--nh-leading-relaxed);
+  color: var(--nh-color-text-muted);
+}

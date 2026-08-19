@@ -1,10 +1,16 @@
+/*
+ * Shared page hero. Extracted from the resources hero when the security and
+ * about pages needed the same treatment: three copies of a dot grid and a
+ * fluid heading would drift apart on the first design change.
+ */
+
 .section {
   position: relative;
   overflow: hidden;
   padding-block: var(--nh-section-y);
 }
 
-/* The same dot grid as the home hero, so the two pages read as one site. */
+/* The same dot grid as the home hero, so every page reads as one site. */
 .section::before {
   content: '';
   position: absolute;

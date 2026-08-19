@@ -90,6 +90,70 @@ describe('ConsentBanner', () => {
     expect(region).toHaveTextContent(/fictional demonstration/i);
   });
 
+  describe('not obscuring the page', () => {
+    /*
+     * The banner is fixed to the foot of the viewport, so anything at the
+     * bottom of the document sits underneath it — including a footer link that
+     * has just taken keyboard focus. WCAG 2.2 adds 2.4.11 Focus Not Obscured
+     * for that case, and scroll-padding cannot help once the page is already
+     * scrolled to its end, so the space has to be reserved instead.
+     */
+    const BANNER_HEIGHT = 180;
+
+    beforeEach(() => {
+      Object.defineProperty(HTMLElement.prototype, 'offsetHeight', {
+        configurable: true,
+        get: () => BANNER_HEIGHT,
+      });
+    });
+
+    afterEach(() => {
+      Reflect.deleteProperty(HTMLElement.prototype, 'offsetHeight');
+      document.body.style.removeProperty('padding-block-end');
+    });
+
+    it('reserves its own height at the foot of the document while it is showing', async () => {
+      render(<ConsentBanner />);
+      await screen.findByRole('region', { name: /analytics consent/i });
+
+      expect(document.body.style.paddingBlockEnd).toBe(`${BANNER_HEIGHT}px`);
+    });
+
+    it('releases the space as soon as a choice is made', async () => {
+      const user = userEvent.setup();
+      render(<ConsentBanner />);
+
+      await user.click(await screen.findByRole('button', { name: /decline/i }));
+
+      expect(document.body.style.paddingBlockEnd).toBe('');
+    });
+
+    it('reserves nothing when a choice already exists', async () => {
+      setConsent('granted');
+      render(<ConsentBanner />);
+
+      await waitFor(() => {
+        expect(
+          screen.queryByRole('region', { name: /analytics consent/i }),
+        ).not.toBeInTheDocument();
+      });
+      expect(document.body.style.paddingBlockEnd).toBe('');
+    });
+
+    it('re-measures when the viewport changes, since the notice wraps', async () => {
+      render(<ConsentBanner />);
+      await screen.findByRole('region', { name: /analytics consent/i });
+
+      Object.defineProperty(HTMLElement.prototype, 'offsetHeight', {
+        configurable: true,
+        get: () => 320,
+      });
+      window.dispatchEvent(new Event('resize'));
+
+      await waitFor(() => expect(document.body.style.paddingBlockEnd).toBe('320px'));
+    });
+  });
+
   it('has no accessibility violations', async () => {
     const { container } = render(<ConsentBanner />);
     await screen.findByRole('region', { name: /analytics consent/i });

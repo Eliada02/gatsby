@@ -60,6 +60,7 @@ export function Header() {
               size="sm"
               shape="pill"
               className={styles.contactCta}
+              tracking={{ name: 'Contact us', location: 'header' }}
             >
               Contact us
             </ButtonLink>

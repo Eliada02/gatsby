@@ -123,6 +123,62 @@ export interface FinalCtaContent {
   secondaryCta: Cta;
 }
 
+/* ---- Content pages ---- */
+
+/** The opening band of a content page: eyebrow badge, h1 and a lead paragraph. */
+export interface PageHeroContent {
+  eyebrow: string;
+  heading: string;
+  summary: string;
+}
+
+/** A short titled point, rendered as a card in a list. */
+export interface ContentPoint {
+  id: string;
+  title: string;
+  description: string;
+}
+
+/**
+ * How the website itself handles data.
+ *
+ * Separate from SecurityPractice, which describes the product. Every point here
+ * describes behaviour implemented in this repository, so it stays checkable
+ * rather than becoming marketing copy.
+ */
+export interface SecurityDataHandling extends SectionIntro {
+  points: ContentPoint[];
+}
+
+export interface SecurityPageContent {
+  hero: PageHeroContent;
+  dataHandling: SecurityDataHandling;
+  footnote: string;
+}
+
+export interface AboutStory {
+  heading: string;
+  paragraphs: string[];
+}
+
+export interface AboutPrinciples extends SectionIntro {
+  points: ContentPoint[];
+}
+
+export interface ContactIntro {
+  heading: string;
+  summary: string;
+  /** Shown with the form, stating what does and does not happen to a message. */
+  note: string;
+}
+
+export interface AboutPageContent {
+  hero: PageHeroContent;
+  story: AboutStory;
+  principles: AboutPrinciples;
+  contact: ContactIntro;
+}
+
 export interface HomeContent {
   hero: HeroContent;
   portal: PortalPreview;

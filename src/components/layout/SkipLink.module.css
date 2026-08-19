@@ -21,6 +21,13 @@
   box-shadow: var(--nh-shadow-lg);
 }
 
+/*
+ * :focus as well as :focus-visible. A skip link that is focused but still
+ * off-screen is the worst of both worlds — sighted keyboard users see the focus
+ * ring vanish — and focus-visible does not match when focus is moved
+ * programmatically, which is how some assistive technologies reach it.
+ */
+.skipLink:focus,
 .skipLink:focus-visible {
   inset-block-start: var(--nh-space-4);
 }

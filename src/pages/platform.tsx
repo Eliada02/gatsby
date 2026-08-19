@@ -25,8 +25,9 @@ const PlatformPage = () => (
 
 export default PlatformPage;
 
-export const Head: HeadFC = () => (
+export const Head: HeadFC = ({ location }) => (
   <Seo
+    pathname={location.pathname}
     title="Platform"
     description="A unified digital health workspace for patients, clinicians and administrators, with interoperable records and scheduling."
   />

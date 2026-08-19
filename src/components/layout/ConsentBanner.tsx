@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/primitives/Button';
 import { flushPending } from '@/lib/analytics/dataLayer';
 import type { ConsentState } from '@/lib/analytics/consent';
@@ -25,12 +25,42 @@ import * as styles from './ConsentBanner.module.css';
  */
 export function ConsentBanner() {
   const [state, setState] = useState<ConsentState | null>(null);
+  const bannerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     setState(readConsent());
     // Keeps tabs in step: a choice made in one applies in the others.
     return subscribeToConsent(() => setState(readConsent()));
   }, []);
+
+  /*
+   * Reserves space at the foot of the document while the notice is showing.
+   *
+   * The banner is fixed, so without this it covers whatever is at the bottom of
+   * the page — including a footer link that has just taken keyboard focus.
+   * WCAG 2.2 adds 2.4.11 Focus Not Obscured for exactly that case, and
+   * scroll-padding cannot fix it: once the document is scrolled to its end
+   * there is nothing left to scroll.
+   *
+   * The height is measured rather than assumed, because the notice is two lines
+   * on a wide screen and considerably taller on a narrow one.
+   */
+  useEffect(() => {
+    const banner = bannerRef.current;
+    if (state !== 'unset' || !banner) return;
+
+    const reserveSpace = () => {
+      document.body.style.setProperty('padding-block-end', `${banner.offsetHeight}px`);
+    };
+
+    reserveSpace();
+    window.addEventListener('resize', reserveSpace);
+
+    return () => {
+      window.removeEventListener('resize', reserveSpace);
+      document.body.style.removeProperty('padding-block-end');
+    };
+  }, [state]);
 
   if (state !== 'unset') return null;
 
@@ -43,7 +73,7 @@ export function ConsentBanner() {
   };
 
   return (
-    <section className={styles.banner} aria-label="Analytics consent">
+    <section className={styles.banner} aria-label="Analytics consent" ref={bannerRef}>
       <div className={styles.inner}>
         <div className={styles.text}>
           <p className={styles.title}>Help us understand how this site is used</p>

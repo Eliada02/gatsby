@@ -1,0 +1,62 @@
+name: CI
+
+# Pull requests are validated before review; pushes to main are validated again
+# because a merge can produce a combination neither branch contained.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Read-only. Nothing in this pipeline publishes, comments or tags, so nothing
+# here needs write access to the repository or to packages.
+permissions:
+  contents: read
+
+# A new push supersedes the run it interrupted. Cancelling saves minutes and
+# stops a stale run reporting after a newer one has already passed.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Lint, typecheck, test, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      # node-version-file rather than a literal: .nvmrc is the single source of
+      # truth for the Node version, shared with local development.
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      # ci, not install: it installs exactly what package-lock.json pins and
+      # fails if the lockfile and package.json have drifted apart.
+      - name: Install dependencies
+        run: npm ci
+
+      # Each step gates the ones after it, cheapest first, so a formatting slip
+      # is reported in seconds rather than after a four-minute build.
+      - name: Lint
+        run: npm run lint
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test -- --ci
+
+      # No SITE_URL is set here on purpose. The build must succeed without one,
+      # and this exercises the path where absolute URLs are omitted rather than
+      # guessed. A deploy supplies the origin.
+      - name: Build
+        run: npm run build
