@@ -1,4 +1,4 @@
-import type { Author, ResearchProgram, Resource, Treatment } from '@/types/content';
+import type { Author, Resource } from '@/types/content';
 import type {
   AboutPageContent,
   HomeContent,
@@ -12,11 +12,9 @@ import authorsJson from '../../../content/authors.json';
 import capabilitiesJson from '../../../content/capabilities.json';
 import homeJson from '../../../content/home.json';
 import journeyJson from '../../../content/journey.json';
-import researchJson from '../../../content/research.json';
 import resourcesJson from '../../../content/resources.json';
 import securityJson from '../../../content/security.json';
 import securityPracticesJson from '../../../content/security-practices.json';
-import treatmentsJson from '../../../content/treatments.json';
 
 /**
  * The single point at which content enters the application.
@@ -37,8 +35,6 @@ import treatmentsJson from '../../../content/treatments.json';
 
 export const authors = authorsJson as readonly Author[];
 export const resources = resourcesJson as readonly Resource[];
-export const treatments = treatmentsJson as readonly Treatment[];
-export const researchPrograms = researchJson as readonly ResearchProgram[];
 
 /* ---- Site content ---- */
 
@@ -73,8 +69,4 @@ export function getAuthorsByIds(ids: readonly string[]): Author[] {
 
 export function getResourceBySlug(slug: string): Resource | undefined {
   return resources.find((resource) => resource.slug === slug);
-}
-
-export function getTreatmentBySlug(slug: string): Treatment | undefined {
-  return treatments.find((treatment) => treatment.slug === slug);
 }

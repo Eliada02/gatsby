@@ -1,9 +1,4 @@
-import {
-  RESOURCE_CATEGORIES,
-  RESOURCE_FORMATS,
-  DEVELOPMENT_STAGES,
-  THERAPEUTIC_AREAS,
-} from '@/types/content';
+import { RESOURCE_CATEGORIES, RESOURCE_FORMATS } from '@/types/content';
 import {
   aboutContent,
   authors,
@@ -12,11 +7,9 @@ import {
   homeContent,
   journeyStages,
   platformCapabilities,
-  researchPrograms,
   resources,
   securityContent,
   securityPractices,
-  treatments,
 } from './source';
 
 /**
@@ -35,8 +28,6 @@ const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 describe('content integrity', () => {
   it('ships content in every collection', () => {
     expect(resources.length).toBeGreaterThan(0);
-    expect(treatments.length).toBeGreaterThan(0);
-    expect(researchPrograms.length).toBeGreaterThan(0);
     expect(authors.length).toBeGreaterThan(0);
   });
 
@@ -140,20 +131,6 @@ describe('content integrity', () => {
       expect(first).toBeDefined();
       expect(getResourceBySlug(first!.slug)).toEqual(first);
       expect(getResourceBySlug('does-not-exist')).toBeUndefined();
-    });
-  });
-
-  describe('treatments and research programmes', () => {
-    it('uses only known therapeutic areas and development stages', () => {
-      for (const item of [...treatments, ...researchPrograms]) {
-        expect(THERAPEUTIC_AREAS).toContain(item.therapeuticArea);
-        expect(DEVELOPMENT_STAGES).toContain(item.stage);
-      }
-    });
-
-    it('has unique slugs within each collection', () => {
-      expect(new Set(treatments.map((t) => t.slug)).size).toBe(treatments.length);
-      expect(new Set(researchPrograms.map((p) => p.slug)).size).toBe(researchPrograms.length);
     });
   });
 
