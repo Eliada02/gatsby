@@ -36,11 +36,11 @@ and a runtime query endpoint.
 
 ## 2. Rendering strategy
 
-| Page                                   | Strategy                     | Reason                                          |
-| -------------------------------------- | ---------------------------- | ----------------------------------------------- |
-| Home, Our Science, Treatments, Contact | SSG                          | Static content; maximum performance and SEO     |
-| Resource detail                        | SSG via `createPages`        | One indexable URL per resource                  |
-| Resources                              | SSG shell + client-side data | Indexable landing page that becomes interactive |
+| Page                                                        | Strategy                     | Reason                                          |
+| ----------------------------------------------------------- | ---------------------------- | ----------------------------------------------- |
+| Home, Platform, Patient Experience, Security, About/Contact | SSG                          | Static content; maximum performance and SEO     |
+| Resource detail                                             | SSG via `createPages`        | One indexable URL per resource                  |
+| Resources                                                   | SSG shell + client-side data | Indexable landing page that becomes interactive |
 
 The resources page renders a first page of results into the static HTML, then
 hydrates. Crawlers and users without JavaScript get real content; everyone else
@@ -193,15 +193,20 @@ Three levels, in order of reliability:
 2. **Explicitly implemented** — skip link, focus management on client-side route
    changes, focus-trapped mobile menu, live-region result announcements,
    `aria-describedby` error messaging, reduced-motion support.
-3. **Verified** — `jest-axe` in unit tests, a manual keyboard pass, and a screen
-   reader pass with NVDA.
+3. **Verified** — `jest-axe` in unit tests, and a code-level keyboard and
+   screen-reader review carried out against how NVDA with Chrome behaves.
+   **No screen reader was actually run**: this environment has none, and
+   [accessibility.md](accessibility.md) records that as an open limitation
+   rather than a completed pass.
 
-Automated tooling catches roughly 30–40% of accessibility issues. It is a floor,
+Automated tooling catches a minority of accessibility issues. It is a floor,
 not a certificate, which is why levels 1 and 3 exist.
 
-Note on client-side routing: Gatsby does not move focus or announce anything on
-navigation, so a screen reader user hears silence after activating a link. Focus
-management on route change is therefore a required feature, not a refinement.
+Note on client-side routing: Gatsby ships its own route-change handling — a
+`gatsby-focus-wrapper` element that takes focus and a `gatsby-announcer` live
+region that reads the new page title, both visible in the built HTML. This
+project therefore does not implement focus management on navigation, and the
+focus management it does implement is listed in accessibility.md.
 
 ## 10. Testing strategy
 

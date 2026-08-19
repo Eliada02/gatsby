@@ -12,15 +12,28 @@ network dependency in CI, and the content is reviewable in a pull request.
 
 ## Shape
 
-Every file is an array of entries matching a type in
-[`src/types/content.ts`](../src/types/content.ts):
+Every file matches a type, and every file is read by at least one page or
+endpoint:
 
-| File              | Type                | Used by                           |
-| ----------------- | ------------------- | --------------------------------- |
-| `resources.json`  | `Resource[]`        | Resources library, resource pages |
-| `treatments.json` | `Treatment[]`       | Treatments page                   |
-| `research.json`   | `ResearchProgram[]` | Our Science page                  |
-| `authors.json`    | `Author[]`          | Resource attribution              |
+| File                      | Type                   | Used by                                 |
+| ------------------------- | ---------------------- | --------------------------------------- |
+| `resources.json`          | `Resource[]`           | Resource library, resource detail pages |
+| `authors.json`            | `Author[]`             | Resource attribution, Article JSON-LD   |
+| `home.json`               | `HomeContent`          | Home page bands                         |
+| `journey.json`            | `JourneyStage[]`       | Home: connected care journey            |
+| `capabilities.json`       | `PlatformCapability[]` | Home: platform overview                 |
+| `security-practices.json` | `SecurityPractice[]`   | Home preview and the Security page      |
+| `security.json`           | `SecurityPageContent`  | Security & Trust page                   |
+| `about.json`              | `AboutPageContent`     | About & Contact page                    |
+
+Types live in [`src/types/content.ts`](../src/types/content.ts) for the editorial
+catalogue and [`src/types/site.ts`](../src/types/site.ts) for page copy. The
+split mirrors a CMS, where catalogue entries and marketing copy are different
+content types owned by different people.
+
+`treatments.json` and `research.json` were removed in the final phase. They
+modelled a pharmaceutical pipeline for pages that were never built — the site
+became a digital health platform instead — and nothing rendered them.
 
 The model follows CMS conventions rather than component convenience:
 

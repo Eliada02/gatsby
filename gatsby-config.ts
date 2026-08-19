@@ -57,10 +57,18 @@ const config: GatsbyConfig = {
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
     {
-      // Images are sourced into the GraphQL layer because gatsby-plugin-image
-      // needs them there. Structured content is not: it is imported directly by
-      // src/lib/content/source.ts, which both the build and the REST handlers
-      // read from. Sourcing it twice would create two paths to the same data.
+      /*
+       * Images are sourced into the GraphQL layer because gatsby-plugin-image
+       * needs them there. Structured content is not: it is imported directly by
+       * src/lib/content/source.ts, which both the build and the REST handlers
+       * read from. Sourcing it twice would create two paths to the same data.
+       *
+       * As of the final phase src/images/ holds only .gitkeep — the site ships
+       * no raster images, so this source and the three sharp plugins above are
+       * configured and inert. They are kept so that adding an image follows the
+       * supported path. The directory itself must exist or this plugin warns at
+       * every build, which is what .gitkeep is for.
+       */
       resolve: 'gatsby-source-filesystem',
       options: { name: 'images', path: `${__dirname}/src/images` },
     },
